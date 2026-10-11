@@ -2,15 +2,143 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>привет этот сайт был создан для покупки доната по секрету тут очень дешево</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>тайгерный мир гриферов - Донат</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f0f0f0; }
-        h1 { color: #333; }
-        p { color: #666; }
+        /* Базовые настройки и цвета */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0f0f16; color: #ffffff; }
+        
+        /* Шапка сайта */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background-color: #1a1a24; border-bottom: 1px solid #2a2a3a; }
+        .logo { font-weight: bold; font-size: 20px; color: #b47aff; }
+        .nav-links a { color: #a0a0b0; text-decoration: none; margin: 0 15px; font-size: 14px; transition: 0.3s; }
+        .nav-links a:hover { color: #ffffff; }
+        .auth-buttons button { background: #2a2a3a; color: #fff; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-left: 10px; }
+        
+        /* Баннер (Hero) */
+        .hero { position: relative; height: 300px; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80') center/cover; display: flex; flex-direction: column; justify-content: center; padding-left: 50px; }
+        .hero h1 { font-size: 36px; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
+        .hero p { color: #cccccc; margin-bottom: 20px; }
+        .hero button { background: linear-gradient(90deg, #8a2be2, #b47aff); color: white; border: none; padding: 12px 25px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; width: fit-content; transition: 0.3s; }
+        .hero button:hover { opacity: 0.8; transform: scale(1.05); }
+        
+        /* Фильтры */
+        .filters { padding: 20px 40px; display: flex; gap: 10px; overflow-x: auto; }
+        .filter-btn { background: #1a1a24; color: #a0a0b0; border: 1px solid #2a2a3a; padding: 8px 20px; border-radius: 20px; cursor: pointer; white-space: nowrap; transition: 0.3s; }
+        .filter-btn.active, .filter-btn:hover { background: #8a2be2; color: white; border-color: #8a2be2; }
+        
+        /* Сетка с товарами */
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 20px 40px; }
+        
+        /* Карточка товара */
+        .card { background: #1a1a24; border-radius: 12px; overflow: hidden; border: 1px solid #2a2a3a; transition: 0.3s; display: flex; flex-direction: column; position: relative; }
+        .card:hover { transform: translateY(-5px); border-color: #8a2be2; box-shadow: 0 10px 20px rgba(138, 43, 226, 0.2); }
+        
+        /* Картинка товара и скидка */
+        .card-image { position: relative; height: 200px; background-color: #2a2a3a; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; }
+        .discount { position: absolute; top: 10px; right: 10px; background: #ff4d4d; color: white; padding: 4px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; }
+        
+        /* Информация о товаре */
+        .card-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
+        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
+        .card-price { color: #b47aff; font-size: 18px; font-weight: bold; margin-bottom: 15px; }
+        
+        /* Кнопка "Подробнее" */
+        .card-btn { background: linear-gradient(90deg, #8a2be2, #b47aff); color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: auto; transition: 0.3s; }
+        .card-btn:hover { opacity: 0.8; }
     </style>
 </head>
 <body>
-    <h1>Привет,друг!</h1>
-    <p>привет этот сайт я создавал сам} .</p>
+
+    <!-- Шапка -->
+    <header>
+        <div class="logo">🌲 Заколдованный мир</div>
+        <div class="nav-links">
+            <a href="#">Главная</a>
+            <a href="#">Правила</a>
+            <a href="#">Донат</a>
+            <a href="#">Форум</a>
+        </div>
+        <div class="auth-buttons">
+            <button>Войти</button>
+            <button style="background: #8a2be2;">0 ₽</button>
+        </div>
+    </header>
+
+    <!-- Баннер -->
+    <section class="hero">
+        <h1>тайгерный мир гриферов!</h1>
+        <p>Поддержи сервер и получи уникальные возможности</p>
+        <button>Начать играть</button>
+    </section>
+
+    <!-- Фильтры -->
+    <div class="filters">
+        <button class="filter-btn active">Все</button>
+        <button class="filter-btn">Привилегии</button>
+        <button class="filter-btn">Наборы</button>
+        <button class="filter-btn">Кейсы</button>
+        <button class="filter-btn">Валюта</button>
+    </div>
+
+    <!-- Сетка товаров -->
+    <div class="grid-container">
+        
+        <!-- Карточка 1 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/300x200/2a2a3a/b47aff?text=D_ADMIN" alt="D_ADMIN">
+                <div class="discount">-20%</div>
+            </div>
+            <div class="card-info">
+                <div class="card-title">D_ADMIN</div>
+                <div class="card-price">99 ₽</div>
+                <button class="card-btn">Подробнее</button>
+            </div>
+        </div>
+
+        <!-- Карточка 2 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/300x200/2a2a3a/b47aff?text=D_ML_ADMIN" alt="D_ML_ADMIN">
+                <div class="discount">-50%</div>
+            </div>
+            <div class="card-info">
+                <div class="card-title">D_ML_ADMIN</div>
+                <div class="card-price">149 ₽</div>
+                <button class="card-btn">Подробнее</button>
+            </div>
+        </div>
+
+        <!-- Карточка 3 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/300x200/2a2a3a/b47aff?text=CUSTOM" alt="CUSTOM">
+                <div class="discount">-50%</div>
+            </div>
+            <div class="card-info">
+                <div class="card-title">CUSTOM</div>
+                <div class="card-price">249 ₽</div>
+                <button class="card-btn">Подробнее</button>
+            </div>
+        </div>
+
+        <!-- Карточка 4 -->
+        <div class="card">
+            <div class="card-image">
+                <img src="https://via.placeholder.com/300x200/2a2a3a/b47aff?text=SPONSOR" alt="SPONSOR">
+                <div class="discount">-25%</div>
+            </div>
+            <div class="card-info">
+                <div class="card-title">SPONSOR</div>
+                <div class="card-price">399 ₽</div>
+                <button class="card-btn">Подробнее</button>
+            </div>
+        </div>
+
+    </div>
+
 </body>
 </html>
