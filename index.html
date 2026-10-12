@@ -3,10 +3,88 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Тайгерный мир гриферов — Донат и Правила</title>
+<title>Заколдованный мир гриферов — Донат и Правила</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
-body{background-color:#0f0f16;color:#fff}
+body{background-color:#0f0f16;color:#fff;position:relative;min-height:100vh}
+
+/* ─── СНЕГ И УКРАШЕНИЯ (фон) ───────────── */
+#snow-canvas{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+}
+
+/* Гирлянда под шапкой */
+.garland{
+  position:fixed;
+  top:62px;left:0;right:0;
+  height:30px;
+  pointer-events:none;
+  z-index:45;
+  display:flex;
+  justify-content:space-around;
+  align-items:flex-start;
+  padding:0 10px;
+}
+.garland span{
+  width:10px;height:10px;
+  border-radius:50%;
+  box-shadow:0 0 10px currentColor, 0 0 20px currentColor;
+  animation:blink 2s ease-in-out infinite;
+  transform:translateY(-5px);
+  position:relative;
+}
+.garland span::before{
+  content:'';
+  position:absolute;
+  top:-8px;left:50%;
+  transform:translateX(-50%);
+  width:1px;height:8px;
+  background:#3a3a4a;
+}
+.garland span:nth-child(2n){animation-delay:.3s;color:#ff4d4d;background:#ff4d4d}
+.garland span:nth-child(3n){animation-delay:.6s;color:#4dff88;background:#4dff88}
+.garland span:nth-child(4n){animation-delay:.9s;color:#4da7ff;background:#4da7ff}
+.garland span:nth-child(5n){animation-delay:1.2s;color:#ffd24d;background:#ffd24d}
+.garland span:nth-child(7n){animation-delay:1.5s;color:#ff4dff;background:#ff4dff}
+@keyframes blink{
+  0%,100%{opacity:1;transform:translateY(-5px) scale(1)}
+  50%{opacity:.4;transform:translateY(-5px) scale(.85)}
+}
+
+/* Ёлочные шарики в углах */
+.ornament{
+  position:fixed;
+  width:70px;height:70px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 30%, #ff8b96, #b30000 70%);
+  box-shadow:0 0 30px rgba(255,77,77,.5), inset -8px -8px 20px rgba(0,0,0,.5);
+  z-index:2;
+  pointer-events:none;
+  animation:swing 4s ease-in-out infinite;
+  transform-origin:top center;
+}
+.ornament::before{
+  content:'';
+  position:absolute;
+  top:-30px;left:50%;
+  transform:translateX(-50%);
+  width:2px;height:30px;
+  background:linear-gradient(180deg,transparent,#666);
+}
+.ornament.br{
+  bottom:-30px;right:-20px;
+  top:auto;
+  transform-origin:top center;
+  animation:swing 5s ease-in-out infinite;
+  width:90px;height:90px;
+}
+@keyframes swing{
+  0%,100%{transform:rotate(-6deg)}
+  50%{transform:rotate(6deg)}
+}
 
 /* ─── HEADER ───────────────────────────── */
 header{display:flex;justify-content:space-between;align-items:center;padding:15px 40px;background-color:#1a1a24;border-bottom:1px solid #2a2a3a;position:sticky;top:0;z-index:50}
@@ -41,7 +119,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .card-btn:hover{opacity:.8}
 
 /* ─── ПРАВИЛА ──────────────────────────── */
-#rules-page{display:none;padding:40px 40px 80px;max-width:1150px;margin:0 auto}
+#rules-page{display:none;padding:40px 40px 80px;max-width:1150px;margin:0 auto;position:relative;z-index:3}
 #rules-page.open{display:block;animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
@@ -76,6 +154,9 @@ summary:hover{background:#212130}
 .rules-back{display:inline-block;margin-top:26px;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;border:none;padding:11px 22px;border-radius:8px;font-weight:bold;cursor:pointer;transition:.3s}
 .rules-back:hover{opacity:.85;transform:scale(1.03)}
 
+/* ─── КОНТЕНТ ПОВЕРХ СНЕГА ─────────────── */
+#home-page, header{position:relative;z-index:3}
+
 /* ─── АДАПТИВ ──────────────────────────── */
 @media(max-width:700px){
   header{flex-wrap:wrap;gap:10px;padding:12px 18px}
@@ -87,10 +168,31 @@ summary:hover{background:#212130}
   #rules-page{padding:22px 18px 60px}
   .rule{flex-direction:column;gap:4px}
   .rule .num{min-width:auto}
+  .garland{top:auto;position:relative;margin-top:-10px}
+  .ornament{display:none}
 }
 </style>
 </head>
 <body>
+
+<!-- ═══ СНЕГ ═══ -->
+<canvas id="snow-canvas"></canvas>
+
+<!-- ═══ ГИРЛЯНДА ═══ -->
+<div class="garland" aria-hidden="true">
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+  <span></span><span></span><span></span><span></span><span></span>
+</div>
+
+<!-- ═══ ЁЛОЧНЫЕ ШАРИКИ ═══ -->
+<div class="ornament" style="top:80px;left:-25px" aria-hidden="true"></div>
+<div class="ornament br" aria-hidden="true"></div>
 
 <!-- ═══ HEADER ═══ -->
 <header>
@@ -107,11 +209,8 @@ summary:hover{background:#212130}
   </div>
 </header>
 
-<!-- ═══════════════════════════════════════ -->
 <!-- ═══ ГЛАВНАЯ / ДОНАТ ═══ -->
-<!-- ═══════════════════════════════════════ -->
 <div id="home-page">
-
   <section class="hero">
     <h1>Заколдованный мир гриферов!</h1>
     <p>Поддержи сервер и получи уникальные возможности</p>
@@ -127,7 +226,6 @@ summary:hover{background:#212130}
   </div>
 
   <div class="grid-container">
-
     <div class="card">
       <div class="card-image">
         <img src="img/admin.jpg" alt="D_ADMIN">
@@ -175,18 +273,14 @@ summary:hover{background:#212130}
         <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- ═══════════════════════════════════════ -->
 <!-- ═══ ПРАВИЛА ═══ -->
-<!-- ═══════════════════════════════════════ -->
 <div id="rules-page">
   <h1 class="rules-title">📜 Правила проекта tigerworlld</h1>
   <p class="rules-sub">Незнание правил не освобождает от ответственности.</p>
 
-  <!-- 1 -->
   <details open>
     <summary>1. Общие положения<span class="badge">5 пунктов</span></summary>
     <div class="rule"><span class="num">1.1</span><span class="txt">Данный свод правил составлен представителем проекта tigerworlld и действителен на всех игровых режимах проекта tigerworlld. Незнание правил не освобождает нарушителя от ответственности, а также может усугубить наказание.</span></div>
@@ -196,7 +290,6 @@ summary:hover{background:#212130}
     <div class="rule"><span class="num">1.5</span><span class="txt">Продажа, взломы, попытки взломов, передача аккаунтов, покупка аккаунтов в обход официального сайта, распространение данных игроков, вред серверу, а также продажи чего-либо за реальную валюту — строго запрещены.<span class="pun">отключение всех аккаунтов без разбана</span> Соучастие, содействие, совместная игра с нарушителями также попадают под это правило. Ответственность несёт владелец аккаунта.</span></div>
   </details>
 
-  <!-- 2 -->
   <details>
     <summary>2. Правила регистрации<span class="badge">2 пункта</span></summary>
     <div class="rule"><span class="num">2.1</span><span class="txt">Никнейм пользователя должен быть корректным. Некорректным считается любой ник, нарушающий закреплённые правила.<span class="pun">блокировка аккаунта</span></span></div>
@@ -208,7 +301,6 @@ summary:hover{background:#212130}
     <div class="rule"><span class="num">2.2</span><span class="txt">При покупке платных дополнительных возможностей (групп), кейсов, рилликов предоставленный системой чек необходимо сохранить.</span></div>
   </details>
 
-  <!-- 3 -->
   <details>
     <summary>3. Приобретение платных услуг<span class="badge">5 пунктов</span></summary>
     <div class="rule"><span class="num">3.1</span><span class="txt">Игра на проекте не подразумевает платы за использование ресурсов tigerworlld.</span></div>
@@ -218,12 +310,11 @@ summary:hover{background:#212130}
     <div class="rule"><span class="num">3.5</span><span class="txt">Покупка платных групп не даёт привилегии на игнорирование/нарушение данных правил.</span></div>
   </details>
 
-  <!-- 4 -->
   <details>
     <summary>4. Внутриигровое общение<span class="badge">много пунктов</span></summary>
     <div class="rule"><span class="num">4.1</span><span class="txt">Запрещено флудить, отправлять больше 2-х похожих по смыслу или одинаковых сообщений подряд (2 можно, 3 нельзя) за одну минуту.<span class="pun">мут 4 часа</span></span></div>
-    <div class="rule sub"><span class="num">4.1.1</span><span class="txt">Запрещено согласовывать с другими игроками или использовать свои твинки для отправки одного и того же сообщения в короткий промежуток времени — иными словами, обходить наказание за флуд, используя третьи аккаунты.<span class="pun">мут 4 часа каждому</span></span></div>
-    <div class="rule sub"><span class="num">4.1.2</span><span class="txt">Запрещено использовать объявления для обхода наказания за флуд (2 /bc и сообщение в глобал или наоборот).<span class="pun">бан 6 часов</span></span></div>
+    <div class="rule sub"><span class="num">4.1.1</span><span class="txt">Запрещено согласовывать с другими игроками или использовать свои твинки для отправки одного и того же сообщения в короткий промежуток времени.<span class="pun">мут 4 часа каждому</span></span></div>
+    <div class="rule sub"><span class="num">4.1.2</span><span class="txt">Запрещено использовать объявления для обхода наказания за флуд.<span class="pun">бан 6 часов</span></span></div>
     <div class="rule"><span class="num">4.2</span><span class="txt">Запрещено флудить символами по типу «!!!» или смеха (более 10 символов).<span class="pun">мут 4 часа</span></span></div>
     <div class="rule"><span class="num">4.3</span><span class="txt">Запрещено организовывать флуд опросами по типу «отправьте + в чат». Исключение — просьба приютить/продать/обменять ресурсы, математические примеры (не более 3-х за 5 минут).<span class="pun">мут 4 часа</span></span></div>
     <div class="rule sub"><span class="num">4.3.1</span><span class="txt">Если на ваше сообщение ответило 6+ человек — мут 6 часов вам, 4 часа каждому отреагировавшему.<span class="pun">6 ч / 4 ч</span></span></div>
@@ -242,7 +333,7 @@ summary:hover{background:#212130}
     <div class="rule sub"><span class="num">4.7.1</span><span class="txt">Любое упоминание Discord-контактов. Исключение: личные сообщения.<span class="pun">бан 2 дня</span></span></div>
     <div class="rule sub"><span class="num">4.7.2</span><span class="txt">Реклама сторонних проектов. Любой вид чата.<span class="pun">мут 60 дней</span></span></div>
     <div class="rule sub"><span class="num">4.7.3</span><span class="txt">Реклама в ЛС, попытка обойти наказание в глобальном чате.<span class="pun">бан 60 дней</span></span></div>
-    <div class="rule sub"><span class="num">4.7.4</span><span class="txt">Распространение вредоносных ссылок (скримеры, стиллеры, краткие ссылки).<span class="pun">бан 14 дней</span></span></div>
+    <div class="rule sub"><span class="num">4.7.4</span><span class="txt">Распространение вредоносных ссылок.<span class="pun">бан 14 дней</span></span></div>
     <div class="rule sub"><span class="num">4.7.5</span><span class="txt">Реклама каналов на YouTube, TikTok, Telegram. Исключение: статус «YouTube».<span class="pun">мут 60 дней</span></span></div>
     <div class="rule"><span class="num">4.8</span><span class="txt">Оскорбление родителей, некорректное обращение к родителям игрока.<span class="pun">мут 5 / 10 / 15 дней</span></span></div>
     <div class="rule sub"><span class="num">4.8.1</span><span class="txt">Оскорбление своих родителей.<span class="pun">мут 5 дней</span></span></div>
@@ -266,7 +357,6 @@ summary:hover{background:#212130}
     <div class="rule"><span class="num">4.18</span><span class="txt">Запрещено любое упоминание читов в положительном контексте.<span class="pun">мут 7 дней</span></span></div>
   </details>
 
-  <!-- 5 -->
   <details>
     <summary>5. Запрет читерского ПО<span class="badge">важно</span></summary>
     <div class="rule"><span class="num">5.2</span><span class="txt">Использование читерского ПО, получение преимущества над игроками.<span class="pun">бан 50 дней + снос дома + возможное отключение аккаунта</span></span></div>
@@ -277,9 +367,9 @@ summary:hover{background:#212130}
     <div class="rule sub"><span class="num">5.2.6</span><span class="txt">Удаление читов перед проверкой.<span class="pun">бан 50 дней</span></span></div>
     <div class="rule sub"><span class="num">5.2.6.1</span><span class="txt">Хранение читов.<span class="pun">бан 50 дней</span></span></div>
     <div class="rule sub"><span class="num">5.2.7</span><span class="txt">Использование Auto-копателей или лесорубов.<span class="pun">бан 5 дней</span></span></div>
-    <div class="rule sub"><span class="num">5.2.8</span><span class="txt">Боты, макросы, плагины для автоматизации процессов.<span class="pun">бан 15 дней</span> Пример: бот казино с фармом валюты.<span class="pun">бан 14 дней</span></span></div>
-    <div class="rule sub"><span class="num">5.2.9</span><span class="txt">Неадекватное поведение на проверке (фейк-папки, шутки, попытки выпросить разбан).<span class="pun">бан 50 дней</span></span></div>
-    <div class="rule sub"><span class="num">5.2.10</span><span class="txt">Использование ВМ, манипуляции с обязательными программами, доступом к локальным дискам.<span class="pun">бан 50 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.8</span><span class="txt">Боты, макросы, плагины для автоматизации процессов.<span class="pun">бан 15 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.9</span><span class="txt">Неадекватное поведение на проверке.<span class="pun">бан 50 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.10</span><span class="txt">Использование ВМ, манипуляции с обязательными программами.<span class="pun">бан 50 дней</span></span></div>
     <div class="rule sub"><span class="num">5.2.11</span><span class="txt">Макросы, запрещённые моды, кликеры (кроме фармилок).<span class="pun">бан 5 / 7 / 15 / 30 / 50 дней</span></span></div>
     <div class="rule sub"><span class="num">5.2.12</span><span class="txt">Использование .bat (батников) на чистку.<span class="pun">бан 50 дней</span></span></div>
     <div class="rule sub"><span class="num">5.2.12.1</span><span class="txt">Хранение .bat (батников) на очистку.<span class="pun">бан 20 дней</span></span></div>
@@ -318,13 +408,12 @@ summary:hover{background:#212130}
     </div>
   </details>
 
-  <!-- 6 -->
   <details>
     <summary>6. Игровые правила и прочее<span class="badge">7 пунктов</span></summary>
     <div class="rule"><span class="num">6.1</span><span class="txt">Запрещено причинение вреда проекту: заливы, лаг-машины, багоюз, дюпы.</span></div>
     <div class="rule sub"><span class="num">6.1.1</span><span class="txt">Создание заливов и багоюз.<span class="pun">бан 25 дней</span></span></div>
     <div class="rule sub"><span class="num">6.1.2</span><span class="txt">Создание лаг-машин.<span class="pun">отключение аккаунта</span></span></div>
-    <div class="rule sub"><span class="num">6.1.3</span><span class="txt">Использование недоработок клановой системы (фарм киллов, накрутка статистики).<span class="pun">бан создателя клана 25 дней + удаление клана</span></span></div>
+    <div class="rule sub"><span class="num">6.1.3</span><span class="txt">Использование недоработок клановой системы.<span class="pun">бан создателя клана 25 дней + удаление клана</span></span></div>
     <div class="rule sub"><span class="num">6.1.4</span><span class="txt">Ловушки без возможности выхода (стойки, рамки, снег, песок душ).<span class="pun">бан 25 дней + снос дома</span></span></div>
     <div class="rule sub"><span class="num">6.1.5</span><span class="txt">Использование и распространение дюпов.<span class="pun">отключение аккаунта</span></span></div>
     <div class="rule sub"><span class="num">6.1.6</span><span class="txt">Помеха работе персоналу.<span class="pun">бан 6 часов</span></span></div>
@@ -332,12 +421,11 @@ summary:hover{background:#212130}
     <div class="rule"><span class="num">6.3</span><span class="txt">Некорректный текст на табличках, регионах, книгах.<span class="pun">бан 5 / 15 / 30 дней</span></span></div>
     <div class="rule"><span class="num">6.4</span><span class="txt">Жалоба на самого себя или ложные жалобы.<span class="pun">бан 3 дня</span></span></div>
     <div class="rule sub"><span class="num">6.4.1</span><span class="txt">Жалоба, оскорбляющая высшую администрацию.<span class="pun">бан 5 дней</span></span></div>
-    <div class="rule"><span class="num">6.5</span><span class="txt">Реклама/продажа читов, магазинов, Discord-каналов, связанных с обменом ресурсов.<span class="pun">перманентная блокировка</span></span></div>
+    <div class="rule"><span class="num">6.5</span><span class="txt">Реклама/продажа читов, магазинов, Discord-каналов.<span class="pun">перманентная блокировка</span></span></div>
     <div class="rule"><span class="num">6.6</span><span class="txt">Создание кланов с нарушением правил чата.<span class="pun">удаление клана + блокировка основателя 5–30 дней</span></span></div>
     <div class="rule"><span class="num">6.7</span><span class="txt">Более трёх аккаунтов для фарма /free, /warp afk.<span class="pun">блокировка аккаунтов 30 дней</span></span></div>
   </details>
 
-  <!-- 7 -->
   <details>
     <summary>7. Модерация<span class="badge">2 пункта</span></summary>
     <div class="rule"><span class="num">7.1</span><span class="txt">Модерация не имеет права заставлять скачивать AnyDesk и похожие программы. Исключение: Главный модератор и выше.</span></div>
@@ -348,6 +436,7 @@ summary:hover{background:#212130}
 </div>
 
 <script>
+  /* ─── ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ ─── */
   function showPage(page){
     const home = document.getElementById('home-page');
     const rules = document.getElementById('rules-page');
@@ -367,6 +456,62 @@ summary:hover{background:#212130}
     }
     window.scrollTo({top:0, behavior:'smooth'});
   }
+
+  /* ─── СНЕГ ─── */
+  const canvas = document.getElementById('snow-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, flakes = [];
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const MAX_FLAKES = 120;
+
+  function createFlake(){
+    return {
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 2.5 + 1,          // радиус 1–3.5
+      speed: Math.random() * 0.8 + 0.4,    // скорость падения
+      drift: Math.random() * 0.6 - 0.3,    // горизонтальное смещение
+      opacity: Math.random() * 0.6 + 0.3,
+      swing: Math.random() * Math.PI * 2   // фаза качания
+    };
+  }
+
+  for(let i = 0; i < MAX_FLAKES; i++) flakes.push(createFlake());
+
+  function draw(){
+    ctx.clearRect(0, 0, W, H);
+
+    flakes.forEach(f => {
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${f.opacity})`;
+      ctx.shadowColor = 'rgba(180,220,255,.8)';
+      ctx.shadowBlur = 6;
+      ctx.fill();
+
+      // движение
+      f.y += f.speed;
+      f.swing += 0.02;
+      f.x += f.drift + Math.sin(f.swing) * 0.4;
+
+      // перерождение
+      if(f.y > H + 10){
+        Object.assign(f, createFlake(), {y: -10, x: Math.random() * W});
+      }
+      if(f.x > W + 10) f.x = -10;
+      if(f.x < -10) f.x = W + 10;
+    });
+
+    requestAnimationFrame(draw);
+  }
+  draw();
 </script>
 
 </body>
