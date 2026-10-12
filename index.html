@@ -1,138 +1,373 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Заколдованный мир гриферов - Донат</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #0f0f16; color: #ffffff; }
-        
-        header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background-color: #1a1a24; border-bottom: 1px solid #2a2a3a; }
-        .logo { font-weight: bold; font-size: 20px; color: #b47aff; }
-        .nav-links a { color: #a0a0b0; text-decoration: none; margin: 0 15px; font-size: 14px; transition: 0.3s; }
-        .nav-links a:hover { color: #ffffff; }
-        .auth-buttons button { background: #2a2a3a; color: #fff; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-left: 10px; }
-        
-        /* Баннер (замените img/banner.jpg на свою картинку) */
-        .hero { position: relative; height: 300px; background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.8)), url('img/banner.jpg') center/cover; display: flex; flex-direction: column; justify-content: center; padding-left: 50px; }
-        .hero h1 { font-size: 36px; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); }
-        .hero p { color: #cccccc; margin-bottom: 20px; }
-        
-        /* Кнопка "Начать играть" теперь ссылка */
-        .hero a { background: linear-gradient(90deg, #8a2be2, #b47aff); color: white; text-decoration: none; padding: 12px 25px; border-radius: 8px; font-size: 16px; font-weight: bold; width: fit-content; transition: 0.3s; display: inline-block; }
-        .hero a:hover { opacity: 0.8; transform: scale(1.05); }
-        
-        .filters { padding: 20px 40px; display: flex; gap: 10px; overflow-x: auto; }
-        .filter-btn { background: #1a1a24; color: #a0a0b0; border: 1px solid #2a2a3a; padding: 8px 20px; border-radius: 20px; cursor: pointer; white-space: nowrap; transition: 0.3s; }
-        .filter-btn.active, .filter-btn:hover { background: #8a2be2; color: white; border-color: #8a2be2; }
-        
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; padding: 20px 40px; }
-        
-        .card { background: #1a1a24; border-radius: 12px; overflow: hidden; border: 1px solid #2a2a3a; transition: 0.3s; display: flex; flex-direction: column; position: relative; }
-        .card:hover { transform: translateY(-5px); border-color: #8a2be2; box-shadow: 0 10px 20px rgba(138, 43, 226, 0.2); }
-        
-        .card-image { position: relative; height: 200px; background-color: #2a2a3a; }
-        .card-image img { width: 100%; height: 100%; object-fit: cover; }
-        .discount { position: absolute; top: 10px; right: 10px; background: #ff4d4d; color: white; padding: 4px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; }
-        
-        .card-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
-        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; }
-        .card-price { color: #b47aff; font-size: 18px; font-weight: bold; margin-bottom: 15px; }
-        
-        /* Кнопка "Подробнее" теперь тоже ссылка */
-        .card-btn { display: block; text-align: center; text-decoration: none; background: linear-gradient(90deg, #8a2be2, #b47aff); color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: auto; transition: 0.3s; }
-        .card-btn:hover { opacity: 0.8; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Тайгерный мир гриферов — Донат и Правила</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
+body{background-color:#0f0f16;color:#fff}
+
+/* ─── HEADER ───────────────────────────── */
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 40px;background-color:#1a1a24;border-bottom:1px solid #2a2a3a;position:sticky;top:0;z-index:50}
+.logo{font-weight:bold;font-size:20px;color:#b47aff;cursor:pointer}
+.nav-links a{color:#a0a0b0;text-decoration:none;margin:0 15px;font-size:14px;transition:.3s;cursor:pointer}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.auth-buttons button{background:#2a2a3a;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;margin-left:10px}
+
+/* ─── HERO ─────────────────────────────── */
+.hero{position:relative;height:300px;background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.8)),url('img/banner.jpg') center/cover;display:flex;flex-direction:column;justify-content:center;padding-left:50px}
+.hero h1{font-size:36px;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,.8)}
+.hero p{color:#ccc;margin-bottom:20px}
+.hero a{background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;text-decoration:none;padding:12px 25px;border-radius:8px;font-size:16px;font-weight:bold;width:fit-content;transition:.3s;display:inline-block}
+.hero a:hover{opacity:.8;transform:scale(1.05)}
+
+/* ─── ФИЛЬТРЫ ──────────────────────────── */
+.filters{padding:20px 40px;display:flex;gap:10px;overflow-x:auto}
+.filter-btn{background:#1a1a24;color:#a0a0b0;border:1px solid #2a2a3a;padding:8px 20px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:.3s}
+.filter-btn.active,.filter-btn:hover{background:#8a2be2;color:#fff;border-color:#8a2be2}
+
+/* ─── КАРТОЧКИ ДОНАТА ──────────────────── */
+.grid-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;padding:20px 40px 60px}
+.card{background:#1a1a24;border-radius:12px;overflow:hidden;border:1px solid #2a2a3a;transition:.3s;display:flex;flex-direction:column;position:relative}
+.card:hover{transform:translateY(-5px);border-color:#8a2be2;box-shadow:0 10px 20px rgba(138,43,226,.2)}
+.card-image{position:relative;height:200px;background-color:#2a2a3a}
+.card-image img{width:100%;height:100%;object-fit:cover}
+.discount{position:absolute;top:10px;right:10px;background:#ff4d4d;color:#fff;padding:4px 8px;border-radius:5px;font-size:12px;font-weight:bold}
+.card-info{padding:15px;display:flex;flex-direction:column;flex-grow:1}
+.card-title{font-size:16px;font-weight:bold;margin-bottom:5px;text-transform:uppercase}
+.card-price{color:#b47aff;font-size:18px;font-weight:bold;margin-bottom:15px}
+.card-btn{display:block;text-align:center;text-decoration:none;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;margin-top:auto;transition:.3s}
+.card-btn:hover{opacity:.8}
+
+/* ─── ПРАВИЛА ──────────────────────────── */
+#rules-page{display:none;padding:40px 40px 80px;max-width:1150px;margin:0 auto}
+#rules-page.open{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.rules-title{font-size:32px;font-weight:900;margin-bottom:8px;
+    background:linear-gradient(90deg,#b47aff,#8a2be2);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+.rules-sub{color:#8a8aa0;font-size:14px;margin-bottom:28px}
+
+details{background:#1a1a24;border:1px solid #2a2a3a;border-radius:12px;margin-bottom:12px;overflow:hidden;transition:.25s}
+details[open]{border-color:#8a2be2;background:#1d1b2a}
+summary{cursor:pointer;padding:17px 22px;font-weight:700;font-size:16px;list-style:none;display:flex;align-items:center;gap:14px;color:#fff;user-select:none}
+summary::-webkit-details-marker{display:none}
+summary::before{content:'';flex:none;width:8px;height:8px;border-right:2px solid #b47aff;border-bottom:2px solid #b47aff;transform:rotate(-45deg);transition:.25s;margin-left:2px}
+details[open] summary::before{transform:rotate(45deg)}
+summary:hover{background:#212130}
+.badge{font-size:12px;font-weight:700;padding:2px 10px;border-radius:20px;background:rgba(138,43,226,.18);color:#c4a0ff;border:1px solid rgba(138,43,226,.4);margin-left:auto}
+
+.rule{display:flex;gap:14px;padding:11px 22px;font-size:15px;color:#c5c5d4;border-top:1px solid #232333}
+.rule:last-child{padding-bottom:18px}
+.rule .num{color:#b47aff;font-weight:800;flex:none;min-width:52px;font-family:ui-monospace,Consolas,monospace;font-size:14px}
+.rule .txt{flex:1}
+.rule.sub{margin-left:22px;border-left:2px solid #2a2a3a;border-top:none}
+.rule.sub .num{min-width:60px;color:#9f7bff}
+
+.pun{display:inline-block;white-space:nowrap;background:rgba(255,77,77,.14);color:#ff8b96;border:1px solid rgba(255,77,77,.35);border-radius:6px;padding:1px 9px;font-size:13px;font-weight:700;margin-left:6px}
+
+.note{padding:12px 22px 8px;color:#8a8aa0;font-size:13.5px;font-style:italic;border-top:1px solid #232333}
+.mods{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px;padding:8px 22px 18px}
+.mod{background:#13131c;border:1px solid #2a2a3a;border-radius:9px;padding:9px 13px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;color:#c5c5d4}
+.mod b{color:#ff8b96;font-size:13px;font-weight:800;white-space:nowrap}
+
+.rules-back{display:inline-block;margin-top:26px;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;border:none;padding:11px 22px;border-radius:8px;font-weight:bold;cursor:pointer;transition:.3s}
+.rules-back:hover{opacity:.85;transform:scale(1.03)}
+
+/* ─── АДАПТИВ ──────────────────────────── */
+@media(max-width:700px){
+  header{flex-wrap:wrap;gap:10px;padding:12px 18px}
+  .nav-links{order:3;width:100%;text-align:center}
+  .nav-links a{margin:0 8px}
+  .hero{padding-left:22px;height:260px}
+  .hero h1{font-size:26px}
+  .filters,.grid-container{padding-left:18px;padding-right:18px}
+  #rules-page{padding:22px 18px 60px}
+  .rule{flex-direction:column;gap:4px}
+  .rule .num{min-width:auto}
+}
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="logo">🌲 Заколдованный мир</div>
-        <div class="nav-links">
-            <a href="#">Главная</a>
-            <a href="#">Правила</a>
-            <a href="#">Донат</a>
-            <a href="#">Форум</a>
-        </div>
-        <div class="auth-buttons">
-            <button>Войти</button>
-            <button style="background: #8a2be2;">0 ₽</button>
-        </div>
-    </header>
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="logo" onclick="showPage('home')">🌲 Заколдованный мир</div>
+  <div class="nav-links">
+    <a onclick="showPage('home')" id="nav-home" class="active">Главная</a>
+    <a onclick="showPage('rules')" id="nav-rules">Правила</a>
+    <a onclick="showPage('home')">Донат</a>
+    <a href="#">Форум</a>
+  </div>
+  <div class="auth-buttons">
+    <button>Войти</button>
+    <button style="background:#8a2be2;">0 ₽</button>
+  </div>
+</header>
 
-    <section class="hero">
-        <h1>Заколдованный мир гриферов!</h1>
-        <p>Поддержи сервер и получи уникальные возможности</p>
-        <!-- ЗАМЕНИТЕ ССЫЛКУ НА ВАШ ДИСКОРД ИЛИ САЙТ -->
-        <a href="https://discord.gg/Zp75HtEWD6">А узнать ip и все новости тут</a>
-    </section>
+<!-- ═══════════════════════════════════════ -->
+<!-- ═══ ГЛАВНАЯ / ДОНАТ ═══ -->
+<!-- ═══════════════════════════════════════ -->
+<div id="home-page">
 
-    <div class="filters">
-        <button class="filter-btn active">Все</button>
-        <button class="filter-btn">Привилегии</button>
-        <button class="filter-btn">Наборы</button>
-        <button class="filter-btn">Кейсы</button>
-        <button class="filter-btn">Валюта</button>
+  <section class="hero">
+    <h1>Заколдованный мир гриферов!</h1>
+    <p>Поддержи сервер и получи уникальные возможности</p>
+    <a href="https://discord.gg/Zp75HtEWD6" target="_blank">А узнать ip и все новости тут</a>
+  </section>
+
+  <div class="filters">
+    <button class="filter-btn active">Все</button>
+    <button class="filter-btn">Привилегии</button>
+    <button class="filter-btn">Наборы</button>
+    <button class="filter-btn">Кейсы</button>
+    <button class="filter-btn">Валюта</button>
+  </div>
+
+  <div class="grid-container">
+
+    <div class="card">
+      <div class="card-image">
+        <img src="img/admin.jpg" alt="D_ADMIN">
+        <div class="discount">-20%</div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">D_ADMIN</div>
+        <div class="card-price">99 ₽</div>
+        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
+      </div>
     </div>
 
-    <div class="grid-container">
-        
-        <!-- Карточка 1 -->
-        <div class="card">
-            <div class="card-image">
-                <!-- ЗАМЕНИТЕ img/admin.jpg на вашу картинку -->
-                <img src="img/admin.jpg" alt="D_ADMIN">
-                <div class="discount">-20%</div>
-            </div>
-            <div class="card-info">
-                <div class="card-title">D_ADMIN</div>
-                <div class="card-price">99 ₽</div>
-                <!-- ЗАМЕНИТЕ ССЫЛКУ НА ВАШУ СТРАНИЦУ ДОНАТОВ -->
-                <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
-            </div>
-        </div>
-
-        <!-- Карточка 2 -->
-        <div class="card">
-            <div class="card-image">
-                <img src="img/mladmin.jpg" alt="D_ML_ADMIN">
-                <div class="discount">-50%</div>
-            </div>
-            <div class="card-info">
-                <div class="card-title">D_ML_ADMIN</div>
-                <div class="card-price">149 ₽</div>
-                <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
-            </div>
-        </div>
-
-        <!-- Карточка 3 -->
-        <div class="card">
-            <div class="card-image">
-                <img src="img/custom.jpg" alt="CUSTOM">
-                <div class="discount">-50%</div>
-            </div>
-            <div class="card-info">
-                <div class="card-title">CUSTOM</div>
-                <div class="card-price">249 ₽</div>
-                <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
-            </div>
-        </div>
-
-        <!-- Карточка 4 -->
-        <div class="card">
-            <div class="card-image">
-                <img src="img/sponsor.jpg" alt="SPONSOR">
-                <div class="discount">-25%</div>
-            </div>
-            <div class="card-info">
-                <div class="card-title">SPONSOR</div>
-                <div class="card-price">399 ₽</div>
-                <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
-            </div>
-        </div>
-
+    <div class="card">
+      <div class="card-image">
+        <img src="img/mladmin.jpg" alt="D_ML_ADMIN">
+        <div class="discount">-50%</div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">D_ML_ADMIN</div>
+        <div class="card-price">149 ₽</div>
+        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
+      </div>
     </div>
+
+    <div class="card">
+      <div class="card-image">
+        <img src="img/custom.jpg" alt="CUSTOM">
+        <div class="discount">-50%</div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">CUSTOM</div>
+        <div class="card-price">249 ₽</div>
+        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-image">
+        <img src="img/sponsor.jpg" alt="SPONSOR">
+        <div class="discount">-25%</div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">SPONSOR</div>
+        <div class="card-price">399 ₽</div>
+        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- ═══ ПРАВИЛА ═══ -->
+<!-- ═══════════════════════════════════════ -->
+<div id="rules-page">
+  <h1 class="rules-title">📜 Правила проекта tigerworlld</h1>
+  <p class="rules-sub">Незнание правил не освобождает от ответственности.</p>
+
+  <!-- 1 -->
+  <details open>
+    <summary>1. Общие положения<span class="badge">5 пунктов</span></summary>
+    <div class="rule"><span class="num">1.1</span><span class="txt">Данный свод правил составлен представителем проекта tigerworlld и действителен на всех игровых режимах проекта tigerworlld. Незнание правил не освобождает нарушителя от ответственности, а также может усугубить наказание.</span></div>
+    <div class="rule"><span class="num">1.2</span><span class="txt">Правила могут быть изменены без явного оповещения основной аудитории проекта. При значительных изменениях правил в Discord-сервере проекта отображается объявление.</span></div>
+    <div class="rule"><span class="num">1.3</span><span class="txt">Решения и действия главной администрации не обсуждаются и не поддаются разжалованию. Главная администрация вправе выдавать наказания вне рамок данных правил.</span></div>
+    <div class="rule"><span class="num">1.4</span><span class="txt">Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действий игроков, использующих запрещённое ПО (читы).</span></div>
+    <div class="rule"><span class="num">1.5</span><span class="txt">Продажа, взломы, попытки взломов, передача аккаунтов, покупка аккаунтов в обход официального сайта, распространение данных игроков, вред серверу, а также продажи чего-либо за реальную валюту — строго запрещены.<span class="pun">отключение всех аккаунтов без разбана</span> Соучастие, содействие, совместная игра с нарушителями также попадают под это правило. Ответственность несёт владелец аккаунта.</span></div>
+  </details>
+
+  <!-- 2 -->
+  <details>
+    <summary>2. Правила регистрации<span class="badge">2 пункта</span></summary>
+    <div class="rule"><span class="num">2.1</span><span class="txt">Никнейм пользователя должен быть корректным. Некорректным считается любой ник, нарушающий закреплённые правила.<span class="pun">блокировка аккаунта</span></span></div>
+    <div class="rule sub"><span class="num">2.1.1</span><span class="txt">Никнейм, похожий на никнейм высшей администрации (исключение — никнеймы ютуберов проекта).</span></div>
+    <div class="rule sub"><span class="num">2.1.2</span><span class="txt">Никнейм сексуального, аморального содержания.</span></div>
+    <div class="rule sub"><span class="num">2.1.3</span><span class="txt">Никнейм, оскорбляющий никнейм другого игрока.</span></div>
+    <div class="rule sub"><span class="num">2.1.4</span><span class="txt">Никнейм, содержащий названия запрещённых ПО.</span></div>
+    <div class="rule sub"><span class="num">2.1.5</span><span class="txt">Никнейм, содержащий грубые матерные слова.</span></div>
+    <div class="rule"><span class="num">2.2</span><span class="txt">При покупке платных дополнительных возможностей (групп), кейсов, рилликов предоставленный системой чек необходимо сохранить.</span></div>
+  </details>
+
+  <!-- 3 -->
+  <details>
+    <summary>3. Приобретение платных услуг<span class="badge">5 пунктов</span></summary>
+    <div class="rule"><span class="num">3.1</span><span class="txt">Игра на проекте не подразумевает платы за использование ресурсов tigerworlld.</span></div>
+    <div class="rule"><span class="num">3.2</span><span class="txt">Игрок вправе добровольно оплатить определённую сумму проекту за внутриигровую услугу в одностороннем порядке.</span></div>
+    <div class="rule"><span class="num">3.3</span><span class="txt">При ошибке платежа либо отсутствии внутриигровой услуги после оплаты нужно обращаться в техподдержку сервера.</span></div>
+    <div class="rule"><span class="num">3.4</span><span class="txt">Возврата средств за покупки у нас нет, так как tigerworlld не является коммерческой организацией, и все покупки являются добровольными пожертвованиями на развитие сервера.</span></div>
+    <div class="rule"><span class="num">3.5</span><span class="txt">Покупка платных групп не даёт привилегии на игнорирование/нарушение данных правил.</span></div>
+  </details>
+
+  <!-- 4 -->
+  <details>
+    <summary>4. Внутриигровое общение<span class="badge">много пунктов</span></summary>
+    <div class="rule"><span class="num">4.1</span><span class="txt">Запрещено флудить, отправлять больше 2-х похожих по смыслу или одинаковых сообщений подряд (2 можно, 3 нельзя) за одну минуту.<span class="pun">мут 4 часа</span></span></div>
+    <div class="rule sub"><span class="num">4.1.1</span><span class="txt">Запрещено согласовывать с другими игроками или использовать свои твинки для отправки одного и того же сообщения в короткий промежуток времени — иными словами, обходить наказание за флуд, используя третьи аккаунты.<span class="pun">мут 4 часа каждому</span></span></div>
+    <div class="rule sub"><span class="num">4.1.2</span><span class="txt">Запрещено использовать объявления для обхода наказания за флуд (2 /bc и сообщение в глобал или наоборот).<span class="pun">бан 6 часов</span></span></div>
+    <div class="rule"><span class="num">4.2</span><span class="txt">Запрещено флудить символами по типу «!!!» или смеха (более 10 символов).<span class="pun">мут 4 часа</span></span></div>
+    <div class="rule"><span class="num">4.3</span><span class="txt">Запрещено организовывать флуд опросами по типу «отправьте + в чат». Исключение — просьба приютить/продать/обменять ресурсы, математические примеры (не более 3-х за 5 минут).<span class="pun">мут 4 часа</span></span></div>
+    <div class="rule sub"><span class="num">4.3.1</span><span class="txt">Если на ваше сообщение ответило 6+ человек — мут 6 часов вам, 4 часа каждому отреагировавшему.<span class="pun">6 ч / 4 ч</span></span></div>
+    <div class="rule"><span class="num">4.4</span><span class="txt">Неадекватное поведение, чрезмерные оскорбления и агрессия.<span class="pun">мут 3 ч / 12 ч</span></span></div>
+    <div class="rule sub"><span class="num">4.4.1</span><span class="txt">Оскорбления, унижения, угрозы участникам сервера.<span class="pun">мут 4 часа</span></span></div>
+    <div class="rule sub"><span class="num">4.4.2</span><span class="txt">Злоупотребление нецензурной лексикой.<span class="pun">мут 2 / 4 часа</span></span></div>
+    <div class="rule sub"><span class="num">4.4.3</span><span class="txt">Аморальное поведение, темы для совершеннолетних.<span class="pun">мут 3 часа</span></span></div>
+    <div class="rule sub"><span class="num">4.4.4</span><span class="txt">Призывы к суициду.<span class="pun">мут 6 часов</span></span></div>
+    <div class="rule sub"><span class="num">4.4.5</span><span class="txt">Оскорбление проекта, унижение проекта, оскорбительные названия.<span class="pun">мут 120 дней</span></span></div>
+    <div class="rule sub"><span class="num">4.4.6</span><span class="txt">Публичная критика проекта в общем чате.<span class="pun">мут 3 дня</span></span></div>
+    <div class="rule"><span class="num">4.5</span><span class="txt">Выпрашивание снятия/выдачи наказаний у администрации.<span class="pun">мут 2 часа</span></span></div>
+    <div class="rule sub"><span class="num">4.5.1</span><span class="txt">Выпрашивание ресурсов у персонала проекта.<span class="pun">мут 1 час</span></span></div>
+    <div class="rule"><span class="num">4.6</span><span class="txt">Дезинформация игроков неофициальной информацией. «Скоро вайп» — исключение.<span class="pun">мут 12 ч / 4 дня</span></span></div>
+    <div class="rule sub"><span class="num">4.6.1</span><span class="txt">Вне-игровой обман игроков (Alt+F4, /рги и т.п.).<span class="pun">мут 6 часов</span></span></div>
+    <div class="rule"><span class="num">4.7</span><span class="txt">Запрещено упоминание сторонних проектов, ресурсов, групп, соцсетей.<span class="pun">мут 1 день / обход — 3 дня</span></span></div>
+    <div class="rule sub"><span class="num">4.7.1</span><span class="txt">Любое упоминание Discord-контактов. Исключение: личные сообщения.<span class="pun">бан 2 дня</span></span></div>
+    <div class="rule sub"><span class="num">4.7.2</span><span class="txt">Реклама сторонних проектов. Любой вид чата.<span class="pun">мут 60 дней</span></span></div>
+    <div class="rule sub"><span class="num">4.7.3</span><span class="txt">Реклама в ЛС, попытка обойти наказание в глобальном чате.<span class="pun">бан 60 дней</span></span></div>
+    <div class="rule sub"><span class="num">4.7.4</span><span class="txt">Распространение вредоносных ссылок (скримеры, стиллеры, краткие ссылки).<span class="pun">бан 14 дней</span></span></div>
+    <div class="rule sub"><span class="num">4.7.5</span><span class="txt">Реклама каналов на YouTube, TikTok, Telegram. Исключение: статус «YouTube».<span class="pun">мут 60 дней</span></span></div>
+    <div class="rule"><span class="num">4.8</span><span class="txt">Оскорбление родителей, некорректное обращение к родителям игрока.<span class="pun">мут 5 / 10 / 15 дней</span></span></div>
+    <div class="rule sub"><span class="num">4.8.1</span><span class="txt">Оскорбление своих родителей.<span class="pun">мут 5 дней</span></span></div>
+    <div class="rule"><span class="num">4.9</span><span class="txt">Затрагивание политики, политическая агитация.<span class="pun">бан 3 / 7 дней или мут 2 дня</span></span></div>
+    <div class="rule"><span class="num">4.10</span><span class="txt">Выдача себя за администрацию проекта.<span class="pun">бан 3 дня</span></span></div>
+    <div class="rule sub"><span class="num">4.10.1</span><span class="txt">Угрозы баном/киком/мутом.<span class="pun">бан 12 часов</span></span></div>
+    <div class="rule"><span class="num">4.11</span><span class="txt">Оскорбление модерации и администрации.<span class="pun">бан 5 / 10 / 15 дней</span></span></div>
+    <div class="rule sub"><span class="num">4.11.1</span><span class="txt">Оскорбление родных администрации.<span class="pun">бан 20 дней</span></span></div>
+    <div class="rule sub"><span class="num">4.11.2</span><span class="txt">Шутки в сторону администрации (кроме высшей).<span class="pun">бан 8 часов</span></span></div>
+    <div class="rule sub"><span class="num">4.11.3</span><span class="txt">Неуважительное общение с администрацией.<span class="pun">мут 12 часов</span></span></div>
+    <div class="rule sub"><span class="num">4.11.4</span><span class="txt">Угроза администрации снятием.<span class="pun">мут 4 часа</span></span></div>
+    <div class="rule"><span class="num">4.12</span><span class="txt">Оскорбление ютуберов проекта.<span class="pun">мут IP 1 / 5 дней</span></span></div>
+    <div class="rule sub"><span class="num">4.12.1</span><span class="txt">Шутки в сторону ютуберов проекта.<span class="pun">мут IP 1 день</span></span></div>
+    <div class="rule sub"><span class="num">4.12.2</span><span class="txt">Неадекватное общение с ютуберами.<span class="pun">мут 6 часов</span></span></div>
+    <div class="rule"><span class="num">4.13</span><span class="txt">Пропаганда нацизма/расизма, табака, наркотиков, оружия, терроризма.<span class="pun">бан 7 дней</span></span></div>
+    <div class="rule"><span class="num">4.14</span><span class="txt">Бартер между играми.<span class="pun">бан 4 дня</span></span></div>
+    <div class="rule"><span class="num">4.15</span><span class="txt">Распространение личных данных игроков (доксинг, сватинг).<span class="pun">бан 30 дней</span></span></div>
+    <div class="rule sub"><span class="num">4.15.1</span><span class="txt">Доксинг/сватинг в сторону сотрудника сервера.<span class="pun">отключение аккаунта</span></span></div>
+    <div class="rule"><span class="num">4.16</span><span class="txt">Провокация игроков на нарушение правил.<span class="pun">бан 12 ч / 2 дн / 4 дн</span></span></div>
+    <div class="rule"><span class="num">4.17</span><span class="txt">Любое упоминание денежных операций с реальной валютой.<span class="pun">мут 2 дня</span></span></div>
+    <div class="rule"><span class="num">4.18</span><span class="txt">Запрещено любое упоминание читов в положительном контексте.<span class="pun">мут 7 дней</span></span></div>
+  </details>
+
+  <!-- 5 -->
+  <details>
+    <summary>5. Запрет читерского ПО<span class="badge">важно</span></summary>
+    <div class="rule"><span class="num">5.2</span><span class="txt">Использование читерского ПО, получение преимущества над игроками.<span class="pun">бан 50 дней + снос дома + возможное отключение аккаунта</span></span></div>
+    <div class="rule sub"><span class="num">5.2.1</span><span class="txt">Совместная игра с игроком, нарушившим п. 5.2.<span class="pun">бан 47 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.2</span><span class="txt">Признание на проверке.<span class="pun">бан 46 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.3</span><span class="txt">Признание в наличии читов (в любом чате).<span class="pun">бан 10 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.4</span><span class="txt">Обход блокировки аккаунта — вход с любого аккаунта после уже имеющейся блокировки.<span class="pun">бан 70 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.6</span><span class="txt">Удаление читов перед проверкой.<span class="pun">бан 50 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.6.1</span><span class="txt">Хранение читов.<span class="pun">бан 50 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.7</span><span class="txt">Использование Auto-копателей или лесорубов.<span class="pun">бан 5 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.8</span><span class="txt">Боты, макросы, плагины для автоматизации процессов.<span class="pun">бан 15 дней</span> Пример: бот казино с фармом валюты.<span class="pun">бан 14 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.9</span><span class="txt">Неадекватное поведение на проверке (фейк-папки, шутки, попытки выпросить разбан).<span class="pun">бан 50 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.10</span><span class="txt">Использование ВМ, манипуляции с обязательными программами, доступом к локальным дискам.<span class="pun">бан 50 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.11</span><span class="txt">Макросы, запрещённые моды, кликеры (кроме фармилок).<span class="pun">бан 5 / 7 / 15 / 30 / 50 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.12</span><span class="txt">Использование .bat (батников) на чистку.<span class="pun">бан 50 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.12.1</span><span class="txt">Хранение .bat (батников) на очистку.<span class="pun">бан 20 дней</span></span></div>
+
+    <div class="note">Список запрещённых модификаций (интерпретация чит-функций):</div>
+    <div class="mods">
+      <div class="mod"><span>AutoLeave</span><b>10 дней</b></div>
+      <div class="mod"><span>ElytraSwap</span><b>5 дней</b></div>
+      <div class="mod"><span>ArmorHotSwap</span><b>5 дней</b></div>
+      <div class="mod"><span>Slippery Mod</span><b>50 дней</b></div>
+      <div class="mod"><span>StepUp Mod</span><b>30 дней</b></div>
+      <div class="mod"><span>AFK-Fish Mod</span><b>5 дней</b></div>
+      <div class="mod"><span>InvMove</span><b>7 дней</b></div>
+      <div class="mod"><span>Inventory Totem</span><b>50 дней</b></div>
+      <div class="mod"><span>GoProne</span><b>15 дней</b></div>
+      <div class="mod"><span>CleanCut</span><b>15 дней</b></div>
+      <div class="mod"><span>Моды на хитбоксы</span><b>15 дней</b></div>
+    </div>
+
+    <div class="note">Список запрещённых модов, расцениваемых как читы:</div>
+    <div class="mods">
+      <div class="mod"><span>Aim Assistance</span><b>50 дней</b></div>
+      <div class="mod"><span>Auto Look</span><b>50 дней</b></div>
+      <div class="mod"><span>Zergatul.cheatutils</span><b>50 дней</b></div>
+      <div class="mod"><span>DiamondSim</span><b>50 дней</b></div>
+      <div class="mod"><span>X-ray Mod</span><b>50 дней</b></div>
+      <div class="mod"><span>Chest Locator</span><b>50 дней</b></div>
+      <div class="mod"><span>Entity/Player X-Ray</span><b>50 дней</b></div>
+      <div class="mod"><span>Spawner Locator</span><b>50 дней</b></div>
+      <div class="mod"><span>AutoAttack</span><b>50 дней</b></div>
+      <div class="mod"><span>InventoryProfilesNext</span><b>50 дней</b></div>
+      <div class="mod"><span>Baritone / Fabritone</span><b>50 дней</b></div>
+      <div class="mod"><span>NoClipFlyMod</span><b>50 дней</b></div>
+      <div class="mod"><span>FreeCam</span><b>50 дней</b></div>
+      <div class="mod"><span>PlayerHighlighter</span><b>50 дней</b></div>
+    </div>
+  </details>
+
+  <!-- 6 -->
+  <details>
+    <summary>6. Игровые правила и прочее<span class="badge">7 пунктов</span></summary>
+    <div class="rule"><span class="num">6.1</span><span class="txt">Запрещено причинение вреда проекту: заливы, лаг-машины, багоюз, дюпы.</span></div>
+    <div class="rule sub"><span class="num">6.1.1</span><span class="txt">Создание заливов и багоюз.<span class="pun">бан 25 дней</span></span></div>
+    <div class="rule sub"><span class="num">6.1.2</span><span class="txt">Создание лаг-машин.<span class="pun">отключение аккаунта</span></span></div>
+    <div class="rule sub"><span class="num">6.1.3</span><span class="txt">Использование недоработок клановой системы (фарм киллов, накрутка статистики).<span class="pun">бан создателя клана 25 дней + удаление клана</span></span></div>
+    <div class="rule sub"><span class="num">6.1.4</span><span class="txt">Ловушки без возможности выхода (стойки, рамки, снег, песок душ).<span class="pun">бан 25 дней + снос дома</span></span></div>
+    <div class="rule sub"><span class="num">6.1.5</span><span class="txt">Использование и распространение дюпов.<span class="pun">отключение аккаунта</span></span></div>
+    <div class="rule sub"><span class="num">6.1.6</span><span class="txt">Помеха работе персоналу.<span class="pun">бан 6 часов</span></span></div>
+    <div class="rule"><span class="num">6.2</span><span class="txt">Флуд командами (например, /pay nick 1 более 12 раз).<span class="pun">кик, далее бан 12 часов</span></span></div>
+    <div class="rule"><span class="num">6.3</span><span class="txt">Некорректный текст на табличках, регионах, книгах.<span class="pun">бан 5 / 15 / 30 дней</span></span></div>
+    <div class="rule"><span class="num">6.4</span><span class="txt">Жалоба на самого себя или ложные жалобы.<span class="pun">бан 3 дня</span></span></div>
+    <div class="rule sub"><span class="num">6.4.1</span><span class="txt">Жалоба, оскорбляющая высшую администрацию.<span class="pun">бан 5 дней</span></span></div>
+    <div class="rule"><span class="num">6.5</span><span class="txt">Реклама/продажа читов, магазинов, Discord-каналов, связанных с обменом ресурсов.<span class="pun">перманентная блокировка</span></span></div>
+    <div class="rule"><span class="num">6.6</span><span class="txt">Создание кланов с нарушением правил чата.<span class="pun">удаление клана + блокировка основателя 5–30 дней</span></span></div>
+    <div class="rule"><span class="num">6.7</span><span class="txt">Более трёх аккаунтов для фарма /free, /warp afk.<span class="pun">блокировка аккаунтов 30 дней</span></span></div>
+  </details>
+
+  <!-- 7 -->
+  <details>
+    <summary>7. Модерация<span class="badge">2 пункта</span></summary>
+    <div class="rule"><span class="num">7.1</span><span class="txt">Модерация не имеет права заставлять скачивать AnyDesk и похожие программы. Исключение: Главный модератор и выше.</span></div>
+    <div class="rule"><span class="num">7.2</span><span class="txt">Проверка проводится исключительно через компьютер. Все программы для проверки скачиваются самостоятельно в браузере: Systeminformer, Process Hacker 2, Everything, AnyDesk, LastActivityView, JournalTrace, ShellBags Analyzer &amp; Cleaner, RegScanner, Ocean, ExecutedProgramsList, Recaf.</span></div>
+  </details>
+
+  <button class="rules-back" onclick="showPage('home')">← Вернуться на главную</button>
+</div>
+
+<script>
+  function showPage(page){
+    const home = document.getElementById('home-page');
+    const rules = document.getElementById('rules-page');
+    const navHome = document.getElementById('nav-home');
+    const navRules = document.getElementById('nav-rules');
+
+    if(page === 'rules'){
+      home.style.display = 'none';
+      rules.classList.add('open');
+      navRules.classList.add('active');
+      navHome.classList.remove('active');
+    } else {
+      home.style.display = 'block';
+      rules.classList.remove('open');
+      navHome.classList.add('active');
+      navRules.classList.remove('active');
+    }
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+</script>
 
 </body>
 </html>
