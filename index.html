@@ -8,83 +8,25 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
 body{background-color:#0f0f16;color:#fff;position:relative;min-height:100vh}
 
-/* ─── СНЕГ И УКРАШЕНИЯ (фон) ───────────── */
-#snow-canvas{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  z-index:1;
-}
+/* ─── СНЕГ ─────────────────────────────── */
+#snow-canvas{position:fixed;inset:0;pointer-events:none;z-index:1}
 
-/* Гирлянда под шапкой */
-.garland{
-  position:fixed;
-  top:62px;left:0;right:0;
-  height:30px;
-  pointer-events:none;
-  z-index:45;
-  display:flex;
-  justify-content:space-around;
-  align-items:flex-start;
-  padding:0 10px;
-}
-.garland span{
-  width:10px;height:10px;
-  border-radius:50%;
-  box-shadow:0 0 10px currentColor, 0 0 20px currentColor;
-  animation:blink 2s ease-in-out infinite;
-  transform:translateY(-5px);
-  position:relative;
-}
-.garland span::before{
-  content:'';
-  position:absolute;
-  top:-8px;left:50%;
-  transform:translateX(-50%);
-  width:1px;height:8px;
-  background:#3a3a4a;
-}
+/* ─── ГИРЛЯНДА ─────────────────────────── */
+.garland{position:fixed;top:62px;left:0;right:0;height:30px;pointer-events:none;z-index:45;display:flex;justify-content:space-around;align-items:flex-start;padding:0 10px}
+.garland span{width:10px;height:10px;border-radius:50%;box-shadow:0 0 10px currentColor,0 0 20px currentColor;animation:blink 2s ease-in-out infinite;transform:translateY(-5px);position:relative}
+.garland span::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:1px;height:8px;background:#3a3a4a}
 .garland span:nth-child(2n){animation-delay:.3s;color:#ff4d4d;background:#ff4d4d}
 .garland span:nth-child(3n){animation-delay:.6s;color:#4dff88;background:#4dff88}
 .garland span:nth-child(4n){animation-delay:.9s;color:#4da7ff;background:#4da7ff}
 .garland span:nth-child(5n){animation-delay:1.2s;color:#ffd24d;background:#ffd24d}
 .garland span:nth-child(7n){animation-delay:1.5s;color:#ff4dff;background:#ff4dff}
-@keyframes blink{
-  0%,100%{opacity:1;transform:translateY(-5px) scale(1)}
-  50%{opacity:.4;transform:translateY(-5px) scale(.85)}
-}
+@keyframes blink{0%,100%{opacity:1;transform:translateY(-5px) scale(1)}50%{opacity:.4;transform:translateY(-5px) scale(.85)}}
 
-/* Ёлочные шарики в углах */
-.ornament{
-  position:fixed;
-  width:70px;height:70px;
-  border-radius:50%;
-  background:radial-gradient(circle at 30% 30%, #ff8b96, #b30000 70%);
-  box-shadow:0 0 30px rgba(255,77,77,.5), inset -8px -8px 20px rgba(0,0,0,.5);
-  z-index:2;
-  pointer-events:none;
-  animation:swing 4s ease-in-out infinite;
-  transform-origin:top center;
-}
-.ornament::before{
-  content:'';
-  position:absolute;
-  top:-30px;left:50%;
-  transform:translateX(-50%);
-  width:2px;height:30px;
-  background:linear-gradient(180deg,transparent,#666);
-}
-.ornament.br{
-  bottom:-30px;right:-20px;
-  top:auto;
-  transform-origin:top center;
-  animation:swing 5s ease-in-out infinite;
-  width:90px;height:90px;
-}
-@keyframes swing{
-  0%,100%{transform:rotate(-6deg)}
-  50%{transform:rotate(6deg)}
-}
+/* ─── ШАРИКИ ───────────────────────────── */
+.ornament{position:fixed;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ff8b96,#b30000 70%);box-shadow:0 0 30px rgba(255,77,77,.5),inset -8px -8px 20px rgba(0,0,0,.5);z-index:2;pointer-events:none;animation:swing 4s ease-in-out infinite;transform-origin:top center}
+.ornament::before{content:'';position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:2px;height:30px;background:linear-gradient(180deg,transparent,#666)}
+.ornament.br{bottom:-30px;right:-20px;top:auto;animation:swing 5s ease-in-out infinite;width:90px;height:90px}
+@keyframes swing{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
 
 /* ─── HEADER ───────────────────────────── */
 header{display:flex;justify-content:space-between;align-items:center;padding:15px 40px;background-color:#1a1a24;border-bottom:1px solid #2a2a3a;position:sticky;top:0;z-index:50}
@@ -105,7 +47,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .filter-btn{background:#1a1a24;color:#a0a0b0;border:1px solid #2a2a3a;padding:8px 20px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:.3s}
 .filter-btn.active,.filter-btn:hover{background:#8a2be2;color:#fff;border-color:#8a2be2}
 
-/* ─── КАРТОЧКИ ДОНАТА ──────────────────── */
+/* ─── КАРТОЧКИ ─────────────────────────── */
 .grid-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;padding:20px 40px 60px}
 .card{background:#1a1a24;border-radius:12px;overflow:hidden;border:1px solid #2a2a3a;transition:.3s;display:flex;flex-direction:column;position:relative}
 .card:hover{transform:translateY(-5px);border-color:#8a2be2;box-shadow:0 10px 20px rgba(138,43,226,.2)}
@@ -118,14 +60,19 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .card-btn{display:block;text-align:center;text-decoration:none;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;margin-top:auto;transition:.3s}
 .card-btn:hover{opacity:.8}
 
+/* ─── ЭМОДЗИ-КАРТИНКА ДЛЯ КЕЙСОВ ───────── */
+.card-image.emoji{display:flex;align-items:center;justify-content:center;font-size:80px;background:radial-gradient(circle at 50% 40%,#2a1f4a,#1a1428);text-shadow:0 0 30px rgba(180,122,255,.8),0 0 60px rgba(138,43,226,.5);animation:float 3s ease-in-out infinite}
+.card-image.emoji.gold{background:radial-gradient(circle at 50% 40%,#4a3a10,#1f1806);text-shadow:0 0 30px rgba(255,210,77,.9),0 0 60px rgba(255,150,0,.5)}
+.card-image.emoji.green{background:radial-gradient(circle at 50% 40%,#103a20,#061f10);text-shadow:0 0 30px rgba(77,255,136,.9),0 0 60px rgba(0,255,100,.5)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.qty{position:absolute;top:10px;left:10px;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:900;box-shadow:0 0 12px rgba(138,43,226,.6)}
+
 /* ─── ПРАВИЛА ──────────────────────────── */
 #rules-page{display:none;padding:40px 40px 80px;max-width:1150px;margin:0 auto;position:relative;z-index:3}
 #rules-page.open{display:block;animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
-.rules-title{font-size:32px;font-weight:900;margin-bottom:8px;
-    background:linear-gradient(90deg,#b47aff,#8a2be2);
-    -webkit-background-clip:text;background-clip:text;color:transparent}
+.rules-title{font-size:32px;font-weight:900;margin-bottom:8px;background:linear-gradient(90deg,#b47aff,#8a2be2);-webkit-background-clip:text;background-clip:text;color:transparent}
 .rules-sub{color:#8a8aa0;font-size:14px;margin-bottom:28px}
 
 details{background:#1a1a24;border:1px solid #2a2a3a;border-radius:12px;margin-bottom:12px;overflow:hidden;transition:.25s}
@@ -154,7 +101,6 @@ summary:hover{background:#212130}
 .rules-back{display:inline-block;margin-top:26px;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;border:none;padding:11px 22px;border-radius:8px;font-weight:bold;cursor:pointer;transition:.3s}
 .rules-back:hover{opacity:.85;transform:scale(1.03)}
 
-/* ─── КОНТЕНТ ПОВЕРХ СНЕГА ─────────────── */
 #home-page, header{position:relative;z-index:3}
 
 /* ─── АДАПТИВ ──────────────────────────── */
@@ -190,7 +136,7 @@ summary:hover{background:#212130}
   <span></span><span></span><span></span><span></span><span></span>
 </div>
 
-<!-- ═══ ЁЛОЧНЫЕ ШАРИКИ ═══ -->
+<!-- ═══ ШАРИКИ ═══ -->
 <div class="ornament" style="top:80px;left:-25px" aria-hidden="true"></div>
 <div class="ornament br" aria-hidden="true"></div>
 
@@ -218,15 +164,17 @@ summary:hover{background:#212130}
   </section>
 
   <div class="filters">
-    <button class="filter-btn active">Все</button>
-    <button class="filter-btn">Привилегии</button>
-    <button class="filter-btn">Наборы</button>
-    <button class="filter-btn">Кейсы</button>
-    <button class="filter-btn">Валюта</button>
+    <button class="filter-btn active" data-filter="all">Все</button>
+    <button class="filter-btn" data-filter="priv">Привилегии</button>
+    <button class="filter-btn" data-filter="sets">Наборы</button>
+    <button class="filter-btn" data-filter="cases">Кейсы</button>
+    <button class="filter-btn" data-filter="currency">Валюта</button>
   </div>
 
   <div class="grid-container">
-    <div class="card">
+
+    <!-- ═══ ПРИВИЛЕГИИ ═══ -->
+    <div class="card" data-category="priv">
       <div class="card-image">
         <img src="img/admin.jpg" alt="D_ADMIN">
         <div class="discount">-20%</div>
@@ -238,7 +186,7 @@ summary:hover{background:#212130}
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" data-category="priv">
       <div class="card-image">
         <img src="img/mladmin.jpg" alt="D_ML_ADMIN">
         <div class="discount">-50%</div>
@@ -250,7 +198,7 @@ summary:hover{background:#212130}
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" data-category="priv">
       <div class="card-image">
         <img src="img/custom.jpg" alt="CUSTOM">
         <div class="discount">-50%</div>
@@ -262,7 +210,7 @@ summary:hover{background:#212130}
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" data-category="priv">
       <div class="card-image">
         <img src="img/sponsor.jpg" alt="SPONSOR">
         <div class="discount">-25%</div>
@@ -273,6 +221,56 @@ summary:hover{background:#212130}
         <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
       </div>
     </div>
+
+    <!-- ═══ КЕЙСЫ ═══ -->
+    <div class="card" data-category="cases">
+      <div class="card-image emoji gold">
+        🎁
+        <div class="qty">×1</div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">Супер донат кейс</div>
+        <div class="card-price">99 ₽</div>
+        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Купить</a>
+      </div>
+    </div>
+
+    <div class="card" data-category="cases">
+      <div class="card-image emoji gold">
+        🎁
+        <div class="qty">×5</div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">Супер донат кейс</div>
+        <div class="card-price">250 ₽</div>
+        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Купить</a>
+      </div>
+    </div>
+
+    <div class="card" data-category="cases">
+      <div class="card-image emoji green">
+        📦
+        <div class="qty">×1</div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">Кейс с риликами</div>
+        <div class="card-price">30 ₽</div>
+        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Купить</a>
+      </div>
+    </div>
+
+    <div class="card" data-category="cases">
+      <div class="card-image emoji green">
+        📦
+        <div class="qty">×10</div>
+      </div>
+      <div class="card-info">
+        <div class="card-title">Кейс с риликами</div>
+        <div class="card-price">150 ₽</div>
+        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Купить</a>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -457,6 +455,20 @@ summary:hover{background:#212130}
     window.scrollTo({top:0, behavior:'smooth'});
   }
 
+  /* ─── ФИЛЬТРЫ ─── */
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const cat = btn.dataset.filter;
+      document.querySelectorAll('.grid-container .card').forEach(card => {
+        const show = (cat === 'all' || card.dataset.category === cat);
+        card.style.display = show ? '' : 'none';
+      });
+    });
+  });
+
   /* ─── СНЕГ ─── */
   const canvas = document.getElementById('snow-canvas');
   const ctx = canvas.getContext('2d');
@@ -475,11 +487,11 @@ summary:hover{background:#212130}
     return {
       x: Math.random() * W,
       y: Math.random() * H,
-      r: Math.random() * 2.5 + 1,          // радиус 1–3.5
-      speed: Math.random() * 0.8 + 0.4,    // скорость падения
-      drift: Math.random() * 0.6 - 0.3,    // горизонтальное смещение
+      r: Math.random() * 2.5 + 1,
+      speed: Math.random() * 0.8 + 0.4,
+      drift: Math.random() * 0.6 - 0.3,
       opacity: Math.random() * 0.6 + 0.3,
-      swing: Math.random() * Math.PI * 2   // фаза качания
+      swing: Math.random() * Math.PI * 2
     };
   }
 
@@ -496,12 +508,10 @@ summary:hover{background:#212130}
       ctx.shadowBlur = 6;
       ctx.fill();
 
-      // движение
       f.y += f.speed;
       f.swing += 0.02;
       f.x += f.drift + Math.sin(f.swing) * 0.4;
 
-      // перерождение
       if(f.y > H + 10){
         Object.assign(f, createFlake(), {y: -10, x: Math.random() * W});
       }
