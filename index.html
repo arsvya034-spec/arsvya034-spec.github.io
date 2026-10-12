@@ -55,8 +55,46 @@ body{background-color:#0f0f16;color:#fff;position:relative;min-height:100vh;over
 .ornament.br{bottom:-30px;right:-20px;top:auto;animation:swing 5s ease-in-out infinite;width:90px;height:90px}
 @keyframes swing{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
 
-header{display:flex;justify-content:space-between;align-items:center;padding:15px 40px;background-color:rgba(26,26,36,.85);backdrop-filter:blur(12px);border-bottom:1px solid #2a2a3a;position:sticky;top:0;z-index:50}
+/* ═══ IP В ШАПКЕ ═══ */
+header{display:flex;justify-content:space-between;align-items:center;padding:15px 40px;background-color:rgba(26,26,36,.85);backdrop-filter:blur(12px);border-bottom:1px solid #2a2a3a;position:sticky;top:0;z-index:50;flex-wrap:wrap;gap:10px}
+.header-left{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .logo{font-weight:bold;font-size:20px;color:#b47aff;cursor:pointer}
+.ip-badge{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:linear-gradient(135deg,rgba(77,255,136,.15),rgba(77,167,255,.12));
+  border:1px solid rgba(77,255,136,.5);
+  padding:6px 14px;
+  border-radius:20px;
+  font-size:13px;
+  font-weight:800;
+  color:#4dff88;
+  font-family:ui-monospace,Consolas,monospace;
+  cursor:pointer;
+  transition:.25s;
+  white-space:nowrap;
+  box-shadow:0 0 16px rgba(77,255,136,.25);
+}
+.ip-badge:hover{
+  background:linear-gradient(135deg,rgba(77,255,136,.3),rgba(77,167,255,.25));
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(77,255,136,.5);
+}
+.ip-badge:active{transform:scale(.96)}
+.ip-badge .dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#4dff88;
+  box-shadow:0 0 10px #4dff88;
+  animation:ipPulse 1.5s ease-in-out infinite;
+}
+@keyframes ipPulse{
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:.5;transform:scale(1.3)}
+}
+.ip-badge .label{color:#8a8aa0;font-weight:600}
+.ip-badge .copied{color:#fff}
+
 .nav-links a{color:#a0a0b0;text-decoration:none;margin:0 15px;font-size:14px;transition:.3s;cursor:pointer}
 .nav-links a:hover,.nav-links a.active{color:#fff}
 .auth-buttons button{background:#2a2a3a;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;margin-left:10px}
@@ -243,6 +281,26 @@ summary:hover{background:#212130}
 
 #home-page,header{position:relative;z-index:3}
 
+/* ═══ ПАРЯЩИЕ ЭМОДЗИ ═══ */
+.floating-emoji{
+  position:fixed;
+  z-index:2;
+  pointer-events:none;
+  font-size:38px;
+  opacity:.75;
+  filter:drop-shadow(0 0 12px rgba(180,122,255,.7));
+  user-select:none;
+  animation:floatUp linear infinite;
+  bottom:-60px;
+}
+@keyframes floatUp{
+  0%{transform:translateY(0) rotate(0deg) scale(1);opacity:0}
+  10%{opacity:.75}
+  50%{transform:translateY(-50vh) rotate(180deg) scale(1.15)}
+  90%{opacity:.6}
+  100%{transform:translateY(-100vh) rotate(360deg) scale(.8);opacity:0}
+}
+
 @media(max-width:900px){
   .kit-content{grid-template-columns:1fr}
   .kit-photo{min-height:260px}
@@ -251,6 +309,8 @@ summary:hover{background:#212130}
 }
 @media(max-width:700px){
   header{flex-wrap:wrap;gap:10px;padding:12px 18px}
+  .header-left{flex-direction:column;align-items:flex-start;gap:8px;width:100%}
+  .ip-badge{font-size:11px;padding:5px 10px}
   .nav-links{order:3;width:100%;text-align:center}
   .nav-links a{margin:0 8px}
   .hero{padding:0 22px;height:260px}
@@ -299,7 +359,14 @@ summary:hover{background:#212130}
 <div class="ornament br" aria-hidden="true"></div>
 
 <header>
-  <div class="logo" onclick="showPage('home')">🌲 Заколдованный мир</div>
+  <div class="header-left">
+    <div class="logo" onclick="showPage('home')">🌲 Заколдованный мир</div>
+    <div class="ip-badge" id="ipBadge" title="Нажми, чтобы скопировать">
+      <span class="dot"></span>
+      <span class="label">IP:</span>
+      <span class="copied" id="ipText">tigerworld.gigacube.host</span>
+    </div>
+  </div>
   <div class="nav-links">
     <a onclick="showPage('home')" id="nav-home" class="active">Главная</a>
     <a onclick="showPage('rules')" id="nav-rules">Правила</a>
@@ -339,7 +406,7 @@ summary:hover{background:#212130}
       <div class="card-info">
         <div class="card-title">D_ADMIN</div>
         <div class="card-price">99 ₽</div>
-        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
+        <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="card-btn">Подробнее</a>
       </div>
     </div>
 
@@ -348,7 +415,7 @@ summary:hover{background:#212130}
       <div class="card-info">
         <div class="card-title">D_ML_ADMIN</div>
         <div class="card-price">149 ₽</div>
-        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
+        <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="card-btn">Подробнее</a>
       </div>
     </div>
 
@@ -357,7 +424,7 @@ summary:hover{background:#212130}
       <div class="card-info">
         <div class="card-title">CUSTOM</div>
         <div class="card-price">249 ₽</div>
-        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
+        <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="card-btn">Подробнее</a>
       </div>
     </div>
 
@@ -366,7 +433,7 @@ summary:hover{background:#212130}
       <div class="card-info">
         <div class="card-title">SPONSOR</div>
         <div class="card-price">399 ₽</div>
-        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Подробнее</a>
+        <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="card-btn">Подробнее</a>
       </div>
     </div>
 
@@ -375,7 +442,7 @@ summary:hover{background:#212130}
       <div class="card-info">
         <div class="card-title">Супер донат кейс</div>
         <div class="card-price">99 ₽</div>
-        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Купить</a>
+        <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="card-btn">Купить</a>
       </div>
     </div>
 
@@ -384,7 +451,7 @@ summary:hover{background:#212130}
       <div class="card-info">
         <div class="card-title">Супер донат кейс</div>
         <div class="card-price">250 ₽</div>
-        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Купить</a>
+        <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="card-btn">Купить</a>
       </div>
     </div>
 
@@ -393,7 +460,7 @@ summary:hover{background:#212130}
       <div class="card-info">
         <div class="card-title">Кейс с риликами</div>
         <div class="card-price">30 ₽</div>
-        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Купить</a>
+        <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="card-btn">Купить</a>
       </div>
     </div>
 
@@ -402,7 +469,7 @@ summary:hover{background:#212130}
       <div class="card-info">
         <div class="card-title">Кейс с риликами</div>
         <div class="card-price">150 ₽</div>
-        <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="card-btn">Купить</a>
+        <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="card-btn">Купить</a>
       </div>
     </div>
 
@@ -440,7 +507,7 @@ summary:hover{background:#212130}
         <div class="total-price" id="rillik-total">500 ₽</div>
       </div>
 
-      <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="buy-btn" id="rillik-buy">💳 Купить риллики</a>
+      <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="buy-btn" id="rillik-buy">💳 Купить риллики</a>
     </div>
   </div>
 
@@ -583,6 +650,7 @@ summary:hover{background:#212130}
 </div>
 
 <script>
+/* ═══ ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ ═══ */
 function showPage(page){
   const home = document.getElementById('home-page');
   const rules = document.getElementById('rules-page');
@@ -603,6 +671,7 @@ function showPage(page){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
+/* ═══ ФИЛЬТРЫ ═══ */
 const grid = document.querySelector('.grid-container');
 const rillikPanel = document.getElementById('rillik-panel');
 const kitPanel = document.getElementById('kit-panel');
@@ -632,6 +701,7 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
+/* ═══ КИТЫ ═══ */
 const KITS = {
   pegas: {
     name: 'Pegas', emoji: '🐉',
@@ -786,7 +856,7 @@ function showKit(key){
       <p class="kit-sub">${kit.sub}</p>
       <div class="kit-price-tag">💰 Цена: <b>${kit.price} ₽</b></div>
       <div class="kit-items">${itemsHtml}</div>
-      <a href="https://www.donationalerts.com/r/ваш_ник?amount=${kit.price}&comment=Кит+${kit.name}" target="_blank" class="kit-buy">
+      <a href="https://www.donationalerts.com/r/siuser?amount=${kit.price}&comment=Кит+${kit.name}" target="_blank" class="kit-buy">
         💳 Купить кит ${kit.name} за ${kit.price} ₽
       </a>
     </div>
@@ -797,6 +867,7 @@ document.querySelectorAll('.kit-tab').forEach(tab => {
   tab.addEventListener('click', () => showKit(tab.dataset.kit));
 });
 
+/* ═══ КАЛЬКУЛЯТОР РИЛЛИКОВ ═══ */
 const PRICE_PER_RILLIK = 0.5;
 const MIN_R = 1;
 const MAX_R = 100000;
@@ -826,7 +897,7 @@ function updateUI(rilliks, fromSlider){
   slider.style.setProperty('--p', percent + '%');
 
   const amount = (rilliks * PRICE_PER_RILLIK).toFixed(2);
-  buyBtn.href = `https://www.donationalerts.com/r/ваш_ник?amount=${amount}&comment=${rilliks}+рилликов`;
+  buyBtn.href = `https://www.donationalerts.com/r/siuser?amount=${amount}&comment=${rilliks}+рилликов`;
   buyBtn.textContent = `💳 Купить за ${formatPrice(rilliks)}`;
 }
 
@@ -844,6 +915,7 @@ document.querySelectorAll('.presets button').forEach(btn => {
 });
 updateUI(1000, false);
 
+/* ═══ СНЕГ ═══ */
 const canvas = document.getElementById('snow-canvas');
 const ctx = canvas.getContext('2d');
 let W, H;
@@ -892,6 +964,7 @@ function scheduleStar(){
 }
 scheduleStar();
 
+/* ═══ САЛЮТ ═══ */
 const fireworks = [];
 const FW_COLORS = ['#b47aff','#4dff88','#4da7ff','#ffd24d','#ff4d4d','#ffffff'];
 
@@ -1006,6 +1079,58 @@ function draw(){
   requestAnimationFrame(draw);
 }
 draw();
+
+/* ═══ КОПИРОВАНИЕ IP ═══ */
+const ipBadge = document.getElementById('ipBadge');
+const ipText = document.getElementById('ipText');
+const SERVER_IP = 'tigerworld.gigacube.host';
+
+ipBadge.addEventListener('click', async () => {
+  const original = ipText.textContent;
+  try {
+    await navigator.clipboard.writeText(SERVER_IP);
+    ipText.textContent = '✅ Скопировано!';
+    ipBadge.style.borderColor = '#4dff88';
+    setTimeout(() => {
+      ipText.textContent = original;
+    }, 1500);
+  } catch(e) {
+    const ta = document.createElement('textarea');
+    ta.value = SERVER_IP;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    ipText.textContent = '✅ Скопировано!';
+    setTimeout(() => {
+      ipText.textContent = original;
+    }, 1500);
+  }
+});
+
+/* ═══ ПАРЯЩИЕ ЭМОДЗИ ═══ */
+const FLOAT_EMOJIS = ['❄️','🎁','⭐','🎄','✨','🎅','🔔','🦌','⛄','🍬','💎','🐯'];
+const EMOJI_COUNT = 14;
+
+function spawnFloatEmoji(){
+  const el = document.createElement('div');
+  el.className = 'floating-emoji';
+  el.textContent = FLOAT_EMOJIS[Math.floor(Math.random() * FLOAT_EMOJIS.length)];
+  el.style.left = Math.random() * 95 + '%';
+  el.style.fontSize = (28 + Math.random() * 28) + 'px';
+  el.style.animationDuration = (12 + Math.random() * 10) + 's';
+  el.style.animationDelay = Math.random() * 6 + 's';
+  el.style.opacity = 0.4 + Math.random() * 0.4;
+
+  document.body.appendChild(el);
+
+  setTimeout(() => el.remove(), 25000);
+}
+
+for(let i = 0; i < EMOJI_COUNT; i++){
+  setTimeout(spawnFloatEmoji, i * 700);
+}
+setInterval(spawnFloatEmoji, 2000);
 </script>
 
 </body>
