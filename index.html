@@ -8,74 +8,37 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}
 body{background-color:#0f0f16;color:#fff;position:relative;min-height:100vh;overflow-x:hidden}
 
-/* ═══ СНЕГ (canvas) ═══ */
 #snow-canvas{position:fixed;inset:0;pointer-events:none;z-index:1}
 
-/* ═══ СЕВЕРНОЕ СИЯНИЕ ═══ */
-#aurora{
-  position:fixed;top:0;left:0;right:0;height:55vh;
-  pointer-events:none;z-index:0;opacity:.55;filter:blur(24px);
+#aurora{position:fixed;top:0;left:0;right:0;height:55vh;pointer-events:none;z-index:0;opacity:.55;filter:blur(24px);
   background:
     radial-gradient(ellipse 70% 90% at 30% 0%, rgba(77,255,136,.4), transparent 60%),
     radial-gradient(ellipse 60% 80% at 65% 5%, rgba(180,122,255,.45), transparent 60%),
     radial-gradient(ellipse 50% 70% at 85% 0%, rgba(77,167,255,.35), transparent 60%);
-  animation:auroraShift 14s ease-in-out infinite alternate;
-}
-@keyframes auroraShift{
-  0%{transform:translateX(-20px) scaleY(1);opacity:.35}
-  50%{transform:translateX(30px) scaleY(1.15);opacity:.7}
-  100%{transform:translateX(-10px) scaleY(1);opacity:.5}
-}
+  animation:auroraShift 14s ease-in-out infinite alternate}
+@keyframes auroraShift{0%{transform:translateX(-20px) scaleY(1);opacity:.35}50%{transform:translateX(30px) scaleY(1.15);opacity:.7}100%{transform:translateX(-10px) scaleY(1);opacity:.5}}
 
-/* ═══ МОРОЗ ПО УГЛАМ ═══ */
-.frost{
-  position:fixed;inset:0;pointer-events:none;z-index:2;
+.frost{position:fixed;inset:0;pointer-events:none;z-index:2;
   background:
     radial-gradient(circle at 0% 0%, rgba(180,220,255,.18), transparent 22%),
     radial-gradient(circle at 100% 0%, rgba(180,220,255,.18), transparent 22%),
     radial-gradient(circle at 0% 100%, rgba(180,220,255,.14), transparent 26%),
-    radial-gradient(circle at 100% 100%, rgba(180,220,255,.14), transparent 26%);
-}
+    radial-gradient(circle at 100% 100%, rgba(180,220,255,.14), transparent 26%)}
 
-/* ═══ СУГРОБЫ ═══ */
-.snow-pile{
-  position:fixed;bottom:0;left:0;right:0;height:70px;
-  pointer-events:none;z-index:2;
-  background:radial-gradient(ellipse 100% 100% at 50% 100%, rgba(255,255,255,.22), transparent 70%);
-}
-.snow-pile::before,.snow-pile::after{
-  content:'';position:absolute;bottom:0;
-  background:radial-gradient(ellipse at bottom, rgba(255,255,255,.3), transparent 70%);
-  border-radius:50% 50% 0 0;
-}
+.snow-pile{position:fixed;bottom:0;left:0;right:0;height:70px;pointer-events:none;z-index:2;
+  background:radial-gradient(ellipse 100% 100% at 50% 100%, rgba(255,255,255,.22), transparent 70%)}
+.snow-pile::before,.snow-pile::after{content:'';position:absolute;bottom:0;background:radial-gradient(ellipse at bottom, rgba(255,255,255,.3), transparent 70%);border-radius:50% 50% 0 0}
 .snow-pile::before{left:4%;width:320px;height:46px}
 .snow-pile::after{right:7%;width:260px;height:36px}
 
-/* ═══ ЁЛКА ═══ */
-.xmas-tree{
-  position:fixed;bottom:6px;left:22px;
-  font-size:86px;line-height:1;
-  z-index:3;pointer-events:none;
+.xmas-tree{position:fixed;bottom:6px;left:22px;font-size:86px;line-height:1;z-index:3;pointer-events:none;
   filter:drop-shadow(0 0 22px rgba(77,255,136,.55)) drop-shadow(0 0 40px rgba(138,43,226,.4));
-  animation:treeSway 5s ease-in-out infinite;
-  transform-origin:bottom center;
-}
-@keyframes treeSway{
-  0%,100%{transform:rotate(-2deg) scale(1)}
-  50%{transform:rotate(2deg) scale(1.03)}
-}
-.xmas-star{
-  position:fixed;bottom:78px;left:50px;
-  font-size:22px;z-index:4;pointer-events:none;
-  animation:starPulse 1.8s ease-in-out infinite;
-  filter:drop-shadow(0 0 12px rgba(255,210,77,1));
-}
-@keyframes starPulse{
-  0%,100%{transform:scale(1);opacity:.85}
-  50%{transform:scale(1.35);opacity:1}
-}
+  animation:treeSway 5s ease-in-out infinite;transform-origin:bottom center}
+@keyframes treeSway{0%,100%{transform:rotate(-2deg) scale(1)}50%{transform:rotate(2deg) scale(1.03)}}
+.xmas-star{position:fixed;bottom:78px;left:50px;font-size:22px;z-index:4;pointer-events:none;
+  animation:starPulse 1.8s ease-in-out infinite;filter:drop-shadow(0 0 12px rgba(255,210,77,1))}
+@keyframes starPulse{0%,100%{transform:scale(1);opacity:.85}50%{transform:scale(1.35);opacity:1}}
 
-/* ═══ ГИРЛЯНДА ═══ */
 .garland{position:fixed;top:62px;left:0;right:0;height:30px;pointer-events:none;z-index:45;display:flex;justify-content:space-around;align-items:flex-start;padding:0 10px}
 .garland span{width:10px;height:10px;border-radius:50%;box-shadow:0 0 10px currentColor,0 0 20px currentColor;animation:blink 2s ease-in-out infinite,garlandGlow 4s ease-in-out infinite;transform:translateY(-5px);position:relative}
 .garland span::before{content:'';position:absolute;top:-8px;left:50%;transform:translateX(-50%);width:1px;height:8px;background:#3a3a4a}
@@ -85,37 +48,29 @@ body{background-color:#0f0f16;color:#fff;position:relative;min-height:100vh;over
 .garland span:nth-child(5n){animation-delay:1.2s;color:#ffd24d;background:#ffd24d}
 .garland span:nth-child(7n){animation-delay:1.5s;color:#ff4dff;background:#ff4dff}
 @keyframes blink{0%,100%{opacity:1;transform:translateY(-5px) scale(1)}50%{opacity:.4;transform:translateY(-5px) scale(.85)}}
-@keyframes garlandGlow{
-  0%,100%{filter:brightness(1) drop-shadow(0 0 6px currentColor)}
-  50%{filter:brightness(1.5) drop-shadow(0 0 18px currentColor)}
-}
+@keyframes garlandGlow{0%,100%{filter:brightness(1) drop-shadow(0 0 6px currentColor)}50%{filter:brightness(1.5) drop-shadow(0 0 18px currentColor)}}
 
-/* ═══ ШАРИКИ ═══ */
 .ornament{position:fixed;width:70px;height:70px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#ff8b96,#b30000 70%);box-shadow:0 0 30px rgba(255,77,77,.5),inset -8px -8px 20px rgba(0,0,0,.5);z-index:2;pointer-events:none;animation:swing 4s ease-in-out infinite;transform-origin:top center}
 .ornament::before{content:'';position:absolute;top:-30px;left:50%;transform:translateX(-50%);width:2px;height:30px;background:linear-gradient(180deg,transparent,#666)}
 .ornament.br{bottom:-30px;right:-20px;top:auto;animation:swing 5s ease-in-out infinite;width:90px;height:90px}
 @keyframes swing{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
 
-/* ═══ HEADER ═══ */
 header{display:flex;justify-content:space-between;align-items:center;padding:15px 40px;background-color:rgba(26,26,36,.85);backdrop-filter:blur(12px);border-bottom:1px solid #2a2a3a;position:sticky;top:0;z-index:50}
 .logo{font-weight:bold;font-size:20px;color:#b47aff;cursor:pointer}
 .nav-links a{color:#a0a0b0;text-decoration:none;margin:0 15px;font-size:14px;transition:.3s;cursor:pointer}
 .nav-links a:hover,.nav-links a.active{color:#fff}
 .auth-buttons button{background:#2a2a3a;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;margin-left:10px}
 
-/* ═══ HERO ═══ */
 .hero{position:relative;height:300px;background:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.8)),url('img/banner.jpg') center/cover;display:flex;flex-direction:column;justify-content:center;padding-left:50px}
 .hero h1{font-size:36px;margin-bottom:10px;text-shadow:2px 2px 4px rgba(0,0,0,.8)}
 .hero p{color:#ccc;margin-bottom:20px}
 .hero a{background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;text-decoration:none;padding:12px 25px;border-radius:8px;font-size:16px;font-weight:bold;width:fit-content;transition:.3s;display:inline-block}
 .hero a:hover{opacity:.8;transform:scale(1.05)}
 
-/* ═══ ФИЛЬТРЫ ═══ */
 .filters{padding:20px 40px;display:flex;gap:10px;overflow-x:auto}
 .filter-btn{background:#1a1a24;color:#a0a0b0;border:1px solid #2a2a3a;padding:8px 20px;border-radius:20px;cursor:pointer;white-space:nowrap;transition:.3s}
 .filter-btn.active,.filter-btn:hover{background:#8a2be2;color:#fff;border-color:#8a2be2}
 
-/* ═══ КАРТОЧКИ ═══ */
 .grid-container{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:20px;padding:20px 40px 60px}
 .card{background:#1a1a24;border-radius:12px;overflow:hidden;border:1px solid #2a2a3a;transition:.3s;display:flex;flex-direction:column;position:relative}
 .card:hover{transform:translateY(-5px);border-color:#8a2be2;box-shadow:0 10px 20px rgba(138,43,226,.2)}
@@ -128,14 +83,12 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .card-btn{display:block;text-align:center;text-decoration:none;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;margin-top:auto;transition:.3s}
 .card-btn:hover{opacity:.8}
 
-/* ═══ КЕЙСЫ ═══ */
 .card-image.emoji{display:flex;align-items:center;justify-content:center;font-size:80px;background:radial-gradient(circle at 50% 40%,#2a1f4a,#1a1428);text-shadow:0 0 30px rgba(180,122,255,.8),0 0 60px rgba(138,43,226,.5);animation:float 3s ease-in-out infinite}
 .card-image.emoji.gold{background:radial-gradient(circle at 50% 40%,#4a3a10,#1f1806);text-shadow:0 0 30px rgba(255,210,77,.9),0 0 60px rgba(255,150,0,.5)}
 .card-image.emoji.green{background:radial-gradient(circle at 50% 40%,#103a20,#061f10);text-shadow:0 0 30px rgba(77,255,136,.9),0 0 60px rgba(0,255,100,.5)}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .qty{position:absolute;top:10px;left:10px;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:900;box-shadow:0 0 12px rgba(138,43,226,.6)}
 
-/* ═══ РИЛЛИКИ ═══ */
 #rillik-panel{display:none;padding:20px 40px 60px;max-width:720px;margin:0 auto}
 #rillik-panel.open{display:block;animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
@@ -168,7 +121,6 @@ input[type="range"]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;b
 .buy-btn{display:block;width:100%;text-align:center;text-decoration:none;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;padding:16px;border-radius:12px;font-size:17px;font-weight:900;transition:.25s;letter-spacing:.5px;box-shadow:0 10px 30px -8px rgba(138,43,226,.8)}
 .buy-btn:hover{transform:translateY(-2px)}
 
-/* ═══ КИТЫ ═══ */
 #kit-panel{display:none;padding:20px 40px 60px;max-width:1150px;margin:0 auto}
 #kit-panel.open{display:block;animation:fade .35s ease}
 
@@ -202,7 +154,6 @@ input[type="range"]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;b
 .kit-buy{margin-top:22px;display:block;text-align:center;text-decoration:none;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;padding:14px;border-radius:10px;font-weight:800;transition:.25s}
 .kit-buy:hover{transform:translateY(-2px);filter:brightness(1.1)}
 
-/* ═══ ПРАВИЛА ═══ */
 #rules-page{display:none;padding:40px 40px 80px;max-width:1150px;margin:0 auto;position:relative;z-index:3}
 #rules-page.open{display:block;animation:fade .35s ease}
 .rules-title{font-size:32px;font-weight:900;margin-bottom:8px;background:linear-gradient(90deg,#b47aff,#8a2be2);-webkit-background-clip:text;background-clip:text;color:transparent}
@@ -264,7 +215,6 @@ summary:hover{background:#212130}
 </head>
 <body>
 
-<!-- ═══ ЗИМНИЕ ЭФФЕКТЫ ═══ -->
 <div id="aurora" aria-hidden="true"></div>
 <canvas id="snow-canvas"></canvas>
 <div class="frost" aria-hidden="true"></div>
@@ -310,7 +260,6 @@ summary:hover{background:#212130}
   <div class="filters">
     <button class="filter-btn active" data-filter="all">Все</button>
     <button class="filter-btn" data-filter="priv">Привилегии</button>
-    <button class="filter-btn" data-filter="sets">Наборы</button>
     <button class="filter-btn" data-filter="kits">🎒 Киты</button>
     <button class="filter-btn" data-filter="cases">Кейсы</button>
     <button class="filter-btn" data-filter="rilliks">💎 Риллики</button>
@@ -392,7 +341,6 @@ summary:hover{background:#212130}
 
   </div>
 
-  <!-- ═══ РИЛЛИКИ ═══ -->
   <div id="rillik-panel">
     <div class="rillik-card">
       <div class="rillik-title">💎 Покупка рилликов</div>
@@ -429,7 +377,6 @@ summary:hover{background:#212130}
     </div>
   </div>
 
-  <!-- ═══ КИТЫ ═══ -->
   <div id="kit-panel">
     <div class="kit-tabs">
       <button class="kit-tab active" data-kit="pegas">🐉 Pegas</button>
@@ -442,7 +389,6 @@ summary:hover{background:#212130}
   </div>
 </div>
 
-<!-- ═══ ПРАВИЛА ═══ -->
 <div id="rules-page">
   <h1 class="rules-title">📜 Правила проекта tigerworlld</h1>
   <p class="rules-sub">Незнание правил не освобождает от ответственности.</p>
@@ -570,9 +516,6 @@ summary:hover{background:#212130}
 </div>
 
 <script>
-/* ═══════════════════════════════════════ */
-/* ═══ ПЕРЕКЛЮЧЕНИЕ СТРАНИЦ ═══ */
-/* ═══════════════════════════════════════ */
 function showPage(page){
   const home = document.getElementById('home-page');
   const rules = document.getElementById('rules-page');
@@ -593,7 +536,6 @@ function showPage(page){
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-/* ═══ ФИЛЬТРЫ ═══ */
 const grid = document.querySelector('.grid-container');
 const rillikPanel = document.getElementById('rillik-panel');
 const kitPanel = document.getElementById('kit-panel');
@@ -623,7 +565,6 @@ document.querySelectorAll('.filter-btn').forEach(btn => {
   });
 });
 
-/* ═══ ДАННЫЕ КИТОВ ═══ */
 const KITS = {
   pegas: {
     name: 'Pegas', emoji: '🐉',
@@ -789,7 +730,6 @@ document.querySelectorAll('.kit-tab').forEach(tab => {
   tab.addEventListener('click', () => showKit(tab.dataset.kit));
 });
 
-/* ═══ КАЛЬКУЛЯТОР РИЛЛИКОВ ═══ */
 const PRICE_PER_RILLIK = 0.5;
 const MIN_R = 1;
 const MAX_R = 100000;
@@ -837,9 +777,6 @@ document.querySelectorAll('.presets button').forEach(btn => {
 });
 updateUI(1000, false);
 
-/* ═══════════════════════════════════════ */
-/* ═══ ЗИМНИЕ АНИМАЦИИ (canvas) ═══ */
-/* ═══════════════════════════════════════ */
 const canvas = document.getElementById('snow-canvas');
 const ctx = canvas.getContext('2d');
 let W, H;
@@ -848,7 +785,6 @@ function resize(){ W = canvas.width = window.innerWidth; H = canvas.height = win
 resize();
 window.addEventListener('resize', resize);
 
-/* ─── СНЕЖИНКИ (кружки + звёзды) ─── */
 const flakes = [];
 const MAX_FLAKES = 150;
 
@@ -869,7 +805,6 @@ function createFlake(){
 }
 for(let i = 0; i < MAX_FLAKES; i++) flakes.push(createFlake());
 
-/* ─── ПАДАЮЩИЕ ЗВЁЗДЫ ─── */
 const shootingStars = [];
 function spawnShootingStar(){
   shootingStars.push({
@@ -890,7 +825,6 @@ function scheduleStar(){
 }
 scheduleStar();
 
-/* ─── САЛЮТ ПРИ КЛИКЕ (везде на странице) ─── */
 const fireworks = [];
 const FW_COLORS = ['#b47aff','#4dff88','#4da7ff','#ffd24d','#ff4d4d','#ffffff'];
 
@@ -911,7 +845,6 @@ document.addEventListener('click', (e) => {
   }
 });
 
-/* ─── УТИЛИТЫ ─── */
 function hexToRgba(hex, alpha){
   if(hex === '#ffffff' || hex === '#fff') return `rgba(255,255,255,${alpha})`;
   const r = parseInt(hex.slice(1,3), 16);
@@ -932,11 +865,9 @@ function drawStarShape(x, y, r, rotation){
   ctx.fill();
 }
 
-/* ─── ОТРИСОВКА ─── */
 function draw(){
   ctx.clearRect(0, 0, W, H);
 
-  /* Снежинки */
   flakes.forEach(f => {
     ctx.save();
     ctx.fillStyle = `rgba(255,255,255,${f.opacity})`;
@@ -962,7 +893,6 @@ function draw(){
     if(f.x < -10) f.x = W + 10;
   });
 
-  /* Падающие звёзды */
   for(let i = shootingStars.length - 1; i >= 0; i--){
     const s = shootingStars[i];
     const grad = ctx.createLinearGradient(s.x, s.y, s.x - s.len, s.y - s.len * 0.5);
@@ -987,7 +917,6 @@ function draw(){
     if(s.life <= 0 || s.x > W + 150 || s.y > H + 150) shootingStars.splice(i, 1);
   }
 
-  /* Салют */
   for(let i = fireworks.length - 1; i >= 0; i--){
     const p = fireworks[i];
     ctx.beginPath();
