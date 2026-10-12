@@ -61,7 +61,7 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .nav-links a:hover,.nav-links a.active{color:#fff}
 .auth-buttons button{background:#2a2a3a;color:#fff;border:none;padding:8px 15px;border-radius:5px;cursor:pointer;margin-left:10px}
 
-/* ═══ HERO С КАРТИНКОЙ ═══ */
+/* ═══ HERO С ТИГРОМ ═══ */
 .hero{
   position:relative;
   height:300px;
@@ -86,38 +86,39 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 
 .hero-img{
   position:relative;
-  height:110%;
-  max-width:40%;
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:2;
-  animation:heroFloat 6s ease-in-out infinite;
+  padding-right:20px;
 }
-.hero-img img{
-  max-height:340px;
-  max-width:100%;
-  object-fit:contain;
+.hero-emoji{
+  font-size:200px;
+  line-height:1;
   filter:
-    drop-shadow(0 10px 30px rgba(138,43,226,.7))
-    drop-shadow(0 0 60px rgba(180,122,255,.5));
+    drop-shadow(0 0 30px rgba(255,180,40,.9))
+    drop-shadow(0 0 60px rgba(255,140,0,.7))
+    drop-shadow(0 0 100px rgba(180,122,255,.6));
+  user-select:none;
+  animation:emojiFloat 4s ease-in-out infinite;
+  transform-origin:center;
 }
-@keyframes heroFloat{
-  0%,100%{transform:translateY(0) rotate(-1deg)}
-  50%{transform:translateY(-12px) rotate(1deg)}
+@keyframes emojiFloat{
+  0%,100%{transform:translateY(0) rotate(-4deg) scale(1)}
+  50%{transform:translateY(-15px) rotate(4deg) scale(1.06)}
 }
 .hero-img::before{
   content:'';
   position:absolute;
-  inset:-20%;
-  background:radial-gradient(circle, rgba(180,122,255,.4), transparent 60%);
-  filter:blur(30px);
+  inset:-30%;
+  background:radial-gradient(circle, rgba(255,180,40,.45), rgba(180,122,255,.3) 40%, transparent 70%);
+  filter:blur(40px);
   z-index:-1;
-  animation:pulseGlow 4s ease-in-out infinite;
+  animation:pulseGlow 3.5s ease-in-out infinite;
 }
 @keyframes pulseGlow{
   0%,100%{opacity:.5;transform:scale(1)}
-  50%{opacity:.9;transform:scale(1.15)}
+  50%{opacity:1;transform:scale(1.2)}
 }
 
 /* ═══ ФИЛЬТРЫ ═══ */
@@ -254,6 +255,7 @@ summary:hover{background:#212130}
   .nav-links a{margin:0 8px}
   .hero{padding:0 22px;height:260px}
   .hero h1{font-size:26px}
+  .hero-emoji{font-size:120px}
   .filters,.grid-container{padding-left:18px;padding-right:18px}
   #rules-page{padding:22px 18px 60px}
   .rule{flex-direction:column;gap:4px}
@@ -318,7 +320,7 @@ summary:hover{background:#212130}
       <a href="https://discord.gg/jEJvF9577" target="_blank" rel="noopener">А узнать ip и все новости тут</a>
     </div>
     <div class="hero-img">
-      <img src="img/hero.png" alt="Персонаж">
+      <div class="hero-emoji">🐯</div>
     </div>
   </section>
 
