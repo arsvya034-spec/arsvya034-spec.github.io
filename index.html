@@ -60,17 +60,116 @@ header{display:flex;justify-content:space-between;align-items:center;padding:15p
 .card-btn{display:block;text-align:center;text-decoration:none;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;border:none;padding:10px;border-radius:6px;cursor:pointer;font-weight:bold;width:100%;margin-top:auto;transition:.3s}
 .card-btn:hover{opacity:.8}
 
-/* ─── ЭМОДЗИ-КАРТИНКА ДЛЯ КЕЙСОВ ───────── */
+/* ─── КЕЙСЫ ────────────────────────────── */
 .card-image.emoji{display:flex;align-items:center;justify-content:center;font-size:80px;background:radial-gradient(circle at 50% 40%,#2a1f4a,#1a1428);text-shadow:0 0 30px rgba(180,122,255,.8),0 0 60px rgba(138,43,226,.5);animation:float 3s ease-in-out infinite}
 .card-image.emoji.gold{background:radial-gradient(circle at 50% 40%,#4a3a10,#1f1806);text-shadow:0 0 30px rgba(255,210,77,.9),0 0 60px rgba(255,150,0,.5)}
 .card-image.emoji.green{background:radial-gradient(circle at 50% 40%,#103a20,#061f10);text-shadow:0 0 30px rgba(77,255,136,.9),0 0 60px rgba(0,255,100,.5)}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .qty{position:absolute;top:10px;left:10px;background:linear-gradient(90deg,#8a2be2,#b47aff);color:#fff;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:900;box-shadow:0 0 12px rgba(138,43,226,.6)}
 
+/* ─── ПАНЕЛЬ РИЛЛИКОВ ──────────────────── */
+#rillik-panel{display:none;padding:20px 40px 60px;max-width:720px;margin:0 auto}
+#rillik-panel.open{display:block;animation:fade .35s ease}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.rillik-card{
+  background:linear-gradient(160deg,#1e1a2e,#15141d);
+  border:1px solid #3a2f5e;border-radius:20px;
+  padding:36px 34px 30px;
+  box-shadow:0 20px 60px -20px rgba(138,43,226,.5),inset 0 0 0 1px rgba(180,122,255,.1);
+  position:relative;overflow:hidden;
+}
+.rillik-card::before{
+  content:'';position:absolute;top:-50%;left:-20%;width:200%;height:200%;
+  background:radial-gradient(circle,rgba(138,43,226,.15),transparent 40%);
+  pointer-events:none;
+}
+.rillik-title{font-size:26px;font-weight:900;margin-bottom:6px;background:linear-gradient(90deg,#b47aff,#8a2be2,#b47aff);-webkit-background-clip:text;background-clip:text;color:transparent;position:relative}
+.rillik-sub{color:#9a94b8;font-size:14px;margin-bottom:26px;position:relative}
+.rillik-sub b{color:#b47aff}
+
+.slider-row{position:relative;margin-bottom:8px}
+.slider-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;position:relative}
+.slider-label{color:#9a94b8;font-size:13px;text-transform:uppercase;letter-spacing:1px;font-weight:700}
+
+.rillik-amount{
+  display:flex;align-items:baseline;gap:8px;justify-content:center;
+  margin:8px 0 22px;position:relative;
+}
+.rillik-amount input{
+  background:transparent;border:none;outline:none;
+  color:#fff;font-size:52px;font-weight:900;
+  text-align:center;width:100%;max-width:340px;
+  font-family:inherit;
+  border-bottom:2px dashed rgba(180,122,255,.3);
+  padding:0 6px 4px;
+  transition:border-color .2s;
+}
+.rillik-amount input:focus{border-bottom-color:#b47aff}
+.rillik-amount .unit{color:#b47aff;font-size:20px;font-weight:800;white-space:nowrap}
+
+/* Range */
+input[type="range"]{
+  -webkit-appearance:none;appearance:none;
+  width:100%;height:10px;border-radius:6px;outline:none;cursor:pointer;
+  background:linear-gradient(90deg,#8a2be2 0%,#b47aff var(--p,0%),#2a2a3a var(--p,0%),#2a2a3a 100%);
+  position:relative;z-index:2;
+}
+input[type="range"]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:26px;height:26px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fff,#b47aff 60%,#8a2be2);
+  box-shadow:0 0 14px rgba(138,43,226,.9),0 0 28px rgba(138,43,226,.5);
+  border:2px solid #fff;cursor:grab;transition:transform .15s;
+}
+input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+input[type="range"]::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.2)}
+input[type="range"]::-moz-range-thumb{
+  width:26px;height:26px;border-radius:50%;
+  background:radial-gradient(circle at 30% 30%,#fff,#b47aff 60%,#8a2be2);
+  box-shadow:0 0 14px rgba(138,43,226,.9);
+  border:2px solid #fff;cursor:grab;
+}
+
+.slider-marks{display:flex;justify-content:space-between;color:#6a6488;font-size:12px;margin-top:8px;font-weight:600}
+
+/* Пресеты */
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 24px;position:relative}
+.presets button{
+  background:#221e30;color:#c4b8e8;border:1px solid #3a3058;
+  padding:7px 14px;border-radius:20px;font-size:13px;font-weight:700;
+  cursor:pointer;transition:.2s;font-family:inherit;
+}
+.presets button:hover{background:#2d2743;border-color:#b47aff;color:#fff;transform:translateY(-1px)}
+
+/* Итого */
+.total-row{
+  display:flex;justify-content:space-between;align-items:center;gap:20px;
+  padding:20px 24px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(138,43,226,.15),rgba(180,122,255,.08));
+  border:1px solid rgba(180,122,255,.3);
+  margin-bottom:18px;position:relative;flex-wrap:wrap;
+}
+.total-label{color:#9a94b8;font-size:14px;font-weight:600;text-transform:uppercase;letter-spacing:1px}
+.total-price{
+  font-size:34px;font-weight:900;
+  background:linear-gradient(90deg,#b47aff,#fff,#b47aff);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  text-shadow:0 0 30px rgba(180,122,255,.5);
+}
+
+.buy-btn{
+  display:block;width:100%;text-align:center;text-decoration:none;
+  background:linear-gradient(90deg,#8a2be2,#b47aff);
+  color:#fff;padding:16px;border-radius:12px;font-size:17px;font-weight:900;
+  transition:.25s;letter-spacing:.5px;
+  box-shadow:0 10px 30px -8px rgba(138,43,226,.8);
+  position:relative;
+}
+.buy-btn:hover{transform:translateY(-2px);box-shadow:0 14px 36px -8px rgba(138,43,226,1)}
+
 /* ─── ПРАВИЛА ──────────────────────────── */
 #rules-page{display:none;padding:40px 40px 80px;max-width:1150px;margin:0 auto;position:relative;z-index:3}
 #rules-page.open{display:block;animation:fade .35s ease}
-@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 
 .rules-title{font-size:32px;font-weight:900;margin-bottom:8px;background:linear-gradient(90deg,#b47aff,#8a2be2);-webkit-background-clip:text;background-clip:text;color:transparent}
 .rules-sub{color:#8a8aa0;font-size:14px;margin-bottom:28px}
@@ -116,6 +215,11 @@ summary:hover{background:#212130}
   .rule .num{min-width:auto}
   .garland{top:auto;position:relative;margin-top:-10px}
   .ornament{display:none}
+  .rillik-card{padding:24px 20px 22px}
+  .rillik-amount input{font-size:38px;max-width:200px}
+  .rillik-amount .unit{font-size:16px}
+  .total-price{font-size:26px}
+  #rillik-panel{padding:10px 18px 60px}
 }
 </style>
 </head>
@@ -168,7 +272,7 @@ summary:hover{background:#212130}
     <button class="filter-btn" data-filter="priv">Привилегии</button>
     <button class="filter-btn" data-filter="sets">Наборы</button>
     <button class="filter-btn" data-filter="cases">Кейсы</button>
-    <button class="filter-btn" data-filter="currency">Валюта</button>
+    <button class="filter-btn" data-filter="rilliks">Риллики</button>
   </div>
 
   <div class="grid-container">
@@ -272,6 +376,49 @@ summary:hover{background:#212130}
     </div>
 
   </div>
+
+  <!-- ═══ ПАНЕЛЬ РИЛЛИКОВ ═══ -->
+  <div id="rillik-panel">
+    <div class="rillik-card">
+      <div class="rillik-title">💎 Покупка рилликов</div>
+      <div class="rillik-sub">Курс: <b>1 рилик = 0.50 ₽</b> • Мин. 1 • Макс. 100 000</div>
+
+      <div class="rillik-amount">
+        <input type="number" id="rillik-input" min="1" max="100000" value="1000" />
+        <span class="unit">рилликов</span>
+      </div>
+
+      <div class="slider-row">
+        <input type="range" id="rillik-slider" min="0" max="1000" value="333" step="1" />
+        <div class="slider-marks">
+          <span>1</span>
+          <span>100</span>
+          <span>1 000</span>
+          <span>10 000</span>
+          <span>100 000</span>
+        </div>
+      </div>
+
+      <div class="presets">
+        <button data-val="100">100</button>
+        <button data-val="500">500</button>
+        <button data-val="1000">1 000</button>
+        <button data-val="5000">5 000</button>
+        <button data-val="10000">10 000</button>
+        <button data-val="50000">50 000</button>
+        <button data-val="100000">100 000</button>
+      </div>
+
+      <div class="total-row">
+        <div class="total-label">Итого к оплате</div>
+        <div class="total-price" id="rillik-total">500 ₽</div>
+      </div>
+
+      <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="buy-btn" id="rillik-buy">
+        💳 Купить риллики
+      </a>
+    </div>
+  </div>
 </div>
 
 <!-- ═══ ПРАВИЛА ═══ -->
@@ -311,21 +458,21 @@ summary:hover{background:#212130}
   <details>
     <summary>4. Внутриигровое общение<span class="badge">много пунктов</span></summary>
     <div class="rule"><span class="num">4.1</span><span class="txt">Запрещено флудить, отправлять больше 2-х похожих по смыслу или одинаковых сообщений подряд (2 можно, 3 нельзя) за одну минуту.<span class="pun">мут 4 часа</span></span></div>
-    <div class="rule sub"><span class="num">4.1.1</span><span class="txt">Запрещено согласовывать с другими игроками или использовать свои твинки для отправки одного и того же сообщения в короткий промежуток времени.<span class="pun">мут 4 часа каждому</span></span></div>
+    <div class="rule sub"><span class="num">4.1.1</span><span class="txt">Запрещено согласовывать с другими игроками или использовать свои твинки для отправки одного и того же сообщения.<span class="pun">мут 4 часа каждому</span></span></div>
     <div class="rule sub"><span class="num">4.1.2</span><span class="txt">Запрещено использовать объявления для обхода наказания за флуд.<span class="pun">бан 6 часов</span></span></div>
     <div class="rule"><span class="num">4.2</span><span class="txt">Запрещено флудить символами по типу «!!!» или смеха (более 10 символов).<span class="pun">мут 4 часа</span></span></div>
-    <div class="rule"><span class="num">4.3</span><span class="txt">Запрещено организовывать флуд опросами по типу «отправьте + в чат». Исключение — просьба приютить/продать/обменять ресурсы, математические примеры (не более 3-х за 5 минут).<span class="pun">мут 4 часа</span></span></div>
+    <div class="rule"><span class="num">4.3</span><span class="txt">Запрещено организовывать флуд опросами по типу «отправьте + в чат».<span class="pun">мут 4 часа</span></span></div>
     <div class="rule sub"><span class="num">4.3.1</span><span class="txt">Если на ваше сообщение ответило 6+ человек — мут 6 часов вам, 4 часа каждому отреагировавшему.<span class="pun">6 ч / 4 ч</span></span></div>
     <div class="rule"><span class="num">4.4</span><span class="txt">Неадекватное поведение, чрезмерные оскорбления и агрессия.<span class="pun">мут 3 ч / 12 ч</span></span></div>
     <div class="rule sub"><span class="num">4.4.1</span><span class="txt">Оскорбления, унижения, угрозы участникам сервера.<span class="pun">мут 4 часа</span></span></div>
     <div class="rule sub"><span class="num">4.4.2</span><span class="txt">Злоупотребление нецензурной лексикой.<span class="pun">мут 2 / 4 часа</span></span></div>
     <div class="rule sub"><span class="num">4.4.3</span><span class="txt">Аморальное поведение, темы для совершеннолетних.<span class="pun">мут 3 часа</span></span></div>
     <div class="rule sub"><span class="num">4.4.4</span><span class="txt">Призывы к суициду.<span class="pun">мут 6 часов</span></span></div>
-    <div class="rule sub"><span class="num">4.4.5</span><span class="txt">Оскорбление проекта, унижение проекта, оскорбительные названия.<span class="pun">мут 120 дней</span></span></div>
+    <div class="rule sub"><span class="num">4.4.5</span><span class="txt">Оскорбление проекта, унижение проекта.<span class="pun">мут 120 дней</span></span></div>
     <div class="rule sub"><span class="num">4.4.6</span><span class="txt">Публичная критика проекта в общем чате.<span class="pun">мут 3 дня</span></span></div>
     <div class="rule"><span class="num">4.5</span><span class="txt">Выпрашивание снятия/выдачи наказаний у администрации.<span class="pun">мут 2 часа</span></span></div>
     <div class="rule sub"><span class="num">4.5.1</span><span class="txt">Выпрашивание ресурсов у персонала проекта.<span class="pun">мут 1 час</span></span></div>
-    <div class="rule"><span class="num">4.6</span><span class="txt">Дезинформация игроков неофициальной информацией. «Скоро вайп» — исключение.<span class="pun">мут 12 ч / 4 дня</span></span></div>
+    <div class="rule"><span class="num">4.6</span><span class="txt">Дезинформация игроков неофициальной информацией.<span class="pun">мут 12 ч / 4 дня</span></span></div>
     <div class="rule sub"><span class="num">4.6.1</span><span class="txt">Вне-игровой обман игроков (Alt+F4, /рги и т.п.).<span class="pun">мут 6 часов</span></span></div>
     <div class="rule"><span class="num">4.7</span><span class="txt">Запрещено упоминание сторонних проектов, ресурсов, групп, соцсетей.<span class="pun">мут 1 день / обход — 3 дня</span></span></div>
     <div class="rule sub"><span class="num">4.7.1</span><span class="txt">Любое упоминание Discord-контактов. Исключение: личные сообщения.<span class="pun">бан 2 дня</span></span></div>
@@ -357,20 +504,20 @@ summary:hover{background:#212130}
 
   <details>
     <summary>5. Запрет читерского ПО<span class="badge">важно</span></summary>
-    <div class="rule"><span class="num">5.2</span><span class="txt">Использование читерского ПО, получение преимущества над игроками.<span class="pun">бан 50 дней + снос дома + возможное отключение аккаунта</span></span></div>
+    <div class="rule"><span class="num">5.2</span><span class="txt">Использование читерского ПО.<span class="pun">бан 50 дней + снос дома</span></span></div>
     <div class="rule sub"><span class="num">5.2.1</span><span class="txt">Совместная игра с игроком, нарушившим п. 5.2.<span class="pun">бан 47 дней</span></span></div>
     <div class="rule sub"><span class="num">5.2.2</span><span class="txt">Признание на проверке.<span class="pun">бан 46 дней</span></span></div>
-    <div class="rule sub"><span class="num">5.2.3</span><span class="txt">Признание в наличии читов (в любом чате).<span class="pun">бан 10 дней</span></span></div>
-    <div class="rule sub"><span class="num">5.2.4</span><span class="txt">Обход блокировки аккаунта — вход с любого аккаунта после уже имеющейся блокировки.<span class="pun">бан 70 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.3</span><span class="txt">Признание в наличии читов.<span class="pun">бан 10 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.4</span><span class="txt">Обход блокировки аккаунта.<span class="pun">бан 70 дней</span></span></div>
     <div class="rule sub"><span class="num">5.2.6</span><span class="txt">Удаление читов перед проверкой.<span class="pun">бан 50 дней</span></span></div>
     <div class="rule sub"><span class="num">5.2.6.1</span><span class="txt">Хранение читов.<span class="pun">бан 50 дней</span></span></div>
-    <div class="rule sub"><span class="num">5.2.7</span><span class="txt">Использование Auto-копателей или лесорубов.<span class="pun">бан 5 дней</span></span></div>
-    <div class="rule sub"><span class="num">5.2.8</span><span class="txt">Боты, макросы, плагины для автоматизации процессов.<span class="pun">бан 15 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.7</span><span class="txt">Auto-копатели или лесорубы.<span class="pun">бан 5 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.8</span><span class="txt">Боты, макросы, плагины для автоматизации.<span class="pun">бан 15 дней</span></span></div>
     <div class="rule sub"><span class="num">5.2.9</span><span class="txt">Неадекватное поведение на проверке.<span class="pun">бан 50 дней</span></span></div>
-    <div class="rule sub"><span class="num">5.2.10</span><span class="txt">Использование ВМ, манипуляции с обязательными программами.<span class="pun">бан 50 дней</span></span></div>
-    <div class="rule sub"><span class="num">5.2.11</span><span class="txt">Макросы, запрещённые моды, кликеры (кроме фармилок).<span class="pun">бан 5 / 7 / 15 / 30 / 50 дней</span></span></div>
-    <div class="rule sub"><span class="num">5.2.12</span><span class="txt">Использование .bat (батников) на чистку.<span class="pun">бан 50 дней</span></span></div>
-    <div class="rule sub"><span class="num">5.2.12.1</span><span class="txt">Хранение .bat (батников) на очистку.<span class="pun">бан 20 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.10</span><span class="txt">Использование ВМ, манипуляции с программами.<span class="pun">бан 50 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.11</span><span class="txt">Макросы, запрещённые моды, кликеры.<span class="pun">бан 5 / 7 / 15 / 30 / 50 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.12</span><span class="txt">Использование .bat на чистку.<span class="pun">бан 50 дней</span></span></div>
+    <div class="rule sub"><span class="num">5.2.12.1</span><span class="txt">Хранение .bat на очистку.<span class="pun">бан 20 дней</span></span></div>
 
     <div class="note">Список запрещённых модификаций (интерпретация чит-функций):</div>
     <div class="mods">
@@ -411,8 +558,8 @@ summary:hover{background:#212130}
     <div class="rule"><span class="num">6.1</span><span class="txt">Запрещено причинение вреда проекту: заливы, лаг-машины, багоюз, дюпы.</span></div>
     <div class="rule sub"><span class="num">6.1.1</span><span class="txt">Создание заливов и багоюз.<span class="pun">бан 25 дней</span></span></div>
     <div class="rule sub"><span class="num">6.1.2</span><span class="txt">Создание лаг-машин.<span class="pun">отключение аккаунта</span></span></div>
-    <div class="rule sub"><span class="num">6.1.3</span><span class="txt">Использование недоработок клановой системы.<span class="pun">бан создателя клана 25 дней + удаление клана</span></span></div>
-    <div class="rule sub"><span class="num">6.1.4</span><span class="txt">Ловушки без возможности выхода (стойки, рамки, снег, песок душ).<span class="pun">бан 25 дней + снос дома</span></span></div>
+    <div class="rule sub"><span class="num">6.1.3</span><span class="txt">Использование недоработок клановой системы.<span class="pun">бан создателя 25 дней + удаление клана</span></span></div>
+    <div class="rule sub"><span class="num">6.1.4</span><span class="txt">Ловушки без выхода.<span class="pun">бан 25 дней + снос дома</span></span></div>
     <div class="rule sub"><span class="num">6.1.5</span><span class="txt">Использование и распространение дюпов.<span class="pun">отключение аккаунта</span></span></div>
     <div class="rule sub"><span class="num">6.1.6</span><span class="txt">Помеха работе персоналу.<span class="pun">бан 6 часов</span></span></div>
     <div class="rule"><span class="num">6.2</span><span class="txt">Флуд командами (например, /pay nick 1 более 12 раз).<span class="pun">кик, далее бан 12 часов</span></span></div>
@@ -420,7 +567,7 @@ summary:hover{background:#212130}
     <div class="rule"><span class="num">6.4</span><span class="txt">Жалоба на самого себя или ложные жалобы.<span class="pun">бан 3 дня</span></span></div>
     <div class="rule sub"><span class="num">6.4.1</span><span class="txt">Жалоба, оскорбляющая высшую администрацию.<span class="pun">бан 5 дней</span></span></div>
     <div class="rule"><span class="num">6.5</span><span class="txt">Реклама/продажа читов, магазинов, Discord-каналов.<span class="pun">перманентная блокировка</span></span></div>
-    <div class="rule"><span class="num">6.6</span><span class="txt">Создание кланов с нарушением правил чата.<span class="pun">удаление клана + блокировка основателя 5–30 дней</span></span></div>
+    <div class="rule"><span class="num">6.6</span><span class="txt">Создание кланов с нарушением правил чата.<span class="pun">удаление клана + блокировка основателя</span></span></div>
     <div class="rule"><span class="num">6.7</span><span class="txt">Более трёх аккаунтов для фарма /free, /warp afk.<span class="pun">блокировка аккаунтов 30 дней</span></span></div>
   </details>
 
@@ -456,18 +603,107 @@ summary:hover{background:#212130}
   }
 
   /* ─── ФИЛЬТРЫ ─── */
+  const grid = document.querySelector('.grid-container');
+  const rillikPanel = document.getElementById('rillik-panel');
+
   document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
       const cat = btn.dataset.filter;
-      document.querySelectorAll('.grid-container .card').forEach(card => {
-        const show = (cat === 'all' || card.dataset.category === cat);
-        card.style.display = show ? '' : 'none';
-      });
+
+      if(cat === 'rilliks'){
+        grid.style.display = 'none';
+        rillikPanel.classList.add('open');
+      } else {
+        grid.style.display = '';
+        rillikPanel.classList.remove('open');
+
+        document.querySelectorAll('.grid-container .card').forEach(card => {
+          const show = (cat === 'all' || card.dataset.category === cat);
+          card.style.display = show ? '' : 'none';
+        });
+      }
     });
   });
+
+  /* ─── КАЛЬКУЛЯТОР РИЛЛИКОВ ─── */
+  const PRICE_PER_RILLIK = 0.5;   // 1 рилик = 0.50 ₽
+  const MIN_R = 1;
+  const MAX_R = 100000;
+  const SLIDER_MAX = 1000;
+
+  const slider = document.getElementById('rillik-slider');
+  const input = document.getElementById('rillik-input');
+  const totalEl = document.getElementById('rillik-total');
+  const buyBtn = document.getElementById('rillik-buy');
+
+  // Экспоненциальная шкала: slider 0..1000 -> rilliks 1..100000
+  function sliderToRilliks(v){
+    const r = Math.round(Math.pow(MAX_R, v / SLIDER_MAX));
+    return Math.min(MAX_R, Math.max(MIN_R, r));
+  }
+  function rilliksToSlider(r){
+    return Math.round(SLIDER_MAX * Math.log(r) / Math.log(MAX_R));
+  }
+
+  function formatNumber(n){
+    return n.toLocaleString('ru-RU').replace(/,/g,' ');
+  }
+  function formatPrice(r){
+    const total = r * PRICE_PER_RILLIK;
+    if(total >= 1000){
+      return formatNumber(Math.round(total)) + ' ₽';
+    }
+    return total.toFixed(2).replace('.', ',') + ' ₽';
+  }
+
+  function updateUI(rilliks, fromSlider){
+    rilliks = Math.min(MAX_R, Math.max(MIN_R, Math.round(rilliks)));
+
+    if(!fromSlider){
+      slider.value = rilliksToSlider(rilliks);
+    }
+    input.value = rilliks;
+    totalEl.textContent = formatPrice(rilliks);
+
+    // заливка трека
+    const percent = (slider.value / SLIDER_MAX) * 100;
+    slider.style.setProperty('--p', percent + '%');
+
+    // обновляем ссылку с суммой
+    const amount = (rilliks * PRICE_PER_RILLIK).toFixed(2);
+    buyBtn.href = `https://www.donationalerts.com/r/ваш_ник?amount=${amount}&comment=${rilliks}+рилликов`;
+    buyBtn.textContent = `💳 Купить за ${formatPrice(rilliks)}`;
+  }
+
+  slider.addEventListener('input', () => {
+    const r = sliderToRilliks(+slider.value);
+    updateUI(r, true);
+  });
+
+  input.addEventListener('input', () => {
+    let v = parseInt(input.value.replace(/\D/g,'')) || MIN_R;
+    v = Math.min(MAX_R, Math.max(MIN_R, v));
+    updateUI(v, false);
+  });
+
+  input.addEventListener('blur', () => {
+    let v = parseInt(input.value.replace(/\D/g,'')) || MIN_R;
+    v = Math.min(MAX_R, Math.max(MIN_R, v));
+    updateUI(v, false);
+  });
+
+  document.querySelectorAll('.presets button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const v = parseInt(btn.dataset.val);
+      updateUI(v, false);
+    });
+  });
+
+  // начальное значение
+  updateUI(1000, false);
 
   /* ─── СНЕГ ─── */
   const canvas = document.getElementById('snow-canvas');
@@ -494,12 +730,10 @@ summary:hover{background:#212130}
       swing: Math.random() * Math.PI * 2
     };
   }
-
   for(let i = 0; i < MAX_FLAKES; i++) flakes.push(createFlake());
 
   function draw(){
     ctx.clearRect(0, 0, W, H);
-
     flakes.forEach(f => {
       ctx.beginPath();
       ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2);
@@ -518,7 +752,6 @@ summary:hover{background:#212130}
       if(f.x > W + 10) f.x = -10;
       if(f.x < -10) f.x = W + 10;
     });
-
     requestAnimationFrame(draw);
   }
   draw();
