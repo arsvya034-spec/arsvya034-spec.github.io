@@ -21,7 +21,6 @@
         @keyframes float-blob-1 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(100px,50px) scale(1.1)} 66%{transform:translate(50px,100px) scale(0.95)} }
         @keyframes float-blob-2 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(-80px,-60px) scale(1.15)} 66%{transform:translate(-40px,-100px) scale(0.9)} }
 
-        /* ЧАСТИЦЫ */
         .particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
         .particle { position: absolute; background: linear-gradient(135deg, #ff7e5f, #feb47b); border-radius: 50%; opacity: 0.4; animation: particle-float linear infinite; }
         @keyframes particle-float { 0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; } 10% { opacity: 0.6; } 90% { opacity: 0.6; } 100% { transform: translateY(-100px) scale(1) rotate(720deg); opacity: 0; } }
@@ -36,7 +35,6 @@
 
         header, .page, footer, .modal-overlay { position: relative; z-index: 1; }
 
-        /* ШАПКА */
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background-color: rgba(255,255,255,0.85); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(224,224,224,0.5); box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; transition: all 0.3s ease; }
         header:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); background-color: rgba(255,255,255,0.95); }
         .logo { font-weight: bold; font-size: 18px; color: #000; display: flex; align-items: center; gap: 10px; transition: transform 0.3s ease; }
@@ -62,12 +60,10 @@
         .btn-black::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: rgba(255,255,255,0.3); border-radius: 50%; transform: translate(-50%,-50%); transition: width 0.6s ease, height 0.6s ease; }
         .btn-black:hover::before { width: 300px; height: 300px; }
 
-        /* СТРАНИЦЫ */
         .page { display: none; opacity: 0; }
         .page.active { display: block; animation: page-fade-in 0.6s ease forwards; }
         @keyframes page-fade-in { from{opacity:0;transform:translateY(15px)} to{opacity:1;transform:translateY(0)} }
 
-        /* БАННЕР */
         .hero { position: relative; height: 440px; background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff7e5f, #e100ff, #ff7e5f); background-size: 400% 400%; animation: orange-gradient 15s ease infinite; display: flex; flex-direction: column; justify-content: center; padding-left: 60px; color: white; overflow: hidden; }
         @keyframes orange-gradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
         .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%); animation: shine 5s infinite; }
@@ -86,28 +82,22 @@
         .ip-block-hero button { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; transition: all 0.3s ease; }
         .ip-block-hero button:hover { background: rgba(255,255,255,0.3); transform: scale(1.1); }
 
-        /* НОВОЕ: Онлайн-счётчик */
         .online-counter { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.3); padding: 10px 20px; border-radius: 8px; display: flex; align-items: center; gap: 10px; backdrop-filter: blur(5px); transition: all 0.3s ease; }
         .online-counter:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .online-counter .status-dot { width: 10px; height: 10px; background: #00e676; border-radius: 50%; box-shadow: 0 0 10px #00e676; animation: dot-pulse 2s ease-in-out infinite; }
+        .online-counter.offline .status-dot { background: #e74c3c; box-shadow: 0 0 10px #e74c3c; animation: none; }
         @keyframes dot-pulse { 0%,100%{transform:scale(1); box-shadow:0 0 10px #00e676} 50%{transform:scale(1.3); box-shadow:0 0 20px #00e676, 0 0 30px #00e676} }
         .online-counter span { font-size: 15px; font-weight: bold; color: #fff; }
         .online-counter .num { color: #00e676; font-size: 17px; }
+        .online-counter.offline .num { color: #e74c3c; }
 
-        /* НОВОЕ: Таймер обратного отсчёта */
         .countdown-block { background: rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.3); padding: 10px 20px; border-radius: 8px; display: flex; align-items: center; gap: 15px; backdrop-filter: blur(5px); }
         .countdown-block .label { font-size: 13px; color: #fff; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
         .timer { display: flex; gap: 8px; }
-        .timer-item { display: flex; flex-direction: column; align-items: center; min-width: 40px; background: rgba(255,255,255,0.15); padding: 4px 8px; border-radius: 6px; animation: timer-pulse 2s ease-in-out infinite; }
-        .timer-item:nth-child(1) { animation-delay: 0s; }
-        .timer-item:nth-child(2) { animation-delay: 0.2s; }
-        .timer-item:nth-child(3) { animation-delay: 0.4s; }
-        .timer-item:nth-child(4) { animation-delay: 0.6s; }
-        @keyframes timer-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+        .timer-item { display: flex; flex-direction: column; align-items: center; min-width: 40px; background: rgba(255,255,255,0.15); padding: 4px 8px; border-radius: 6px; }
         .timer-item .num { font-size: 18px; font-weight: 800; color: #fff; line-height: 1; }
         .timer-item .unit { font-size: 9px; color: #ffd6c9; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
 
-        /* НОВОЕ: Прогресс-бар сбора */
         .goal-section { padding: 30px 40px 0 40px; }
         .goal-card { background: rgba(255,255,255,0.9); backdrop-filter: blur(15px); border-radius: 15px; padding: 25px 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.6); animation: page-fade-in 0.8s ease; }
         .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-wrap: wrap; gap: 10px; }
@@ -123,7 +113,6 @@
         .goal-percent { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #fff; font-size: 11px; font-weight: bold; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); z-index: 2; }
         .goal-footer { margin-top: 12px; font-size: 13px; color: #888; text-align: center; }
 
-        /* МАГАЗИН */
         .shop-section { padding: 30px 40px 40px 40px; }
         .shop-title { font-size: 24px; font-weight: bold; margin-bottom: 20px; color: #000; position: relative; display: inline-block; }
         .shop-title::after { content: ''; display: block; width: 60px; height: 3px; background: linear-gradient(90deg, #ff7e5f, #feb47b); margin-top: 8px; border-radius: 2px; animation: grow-width 1.5s ease 0.3s backwards, line-glow 2s ease-in-out 1s infinite; }
@@ -148,7 +137,6 @@
 
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; }
 
-        /* КАРТОЧКИ ПРИВИЛЕГИЙ */
         .priv-card { background: #13131a; border-radius: 12px; overflow: hidden; transition: all 0.5s cubic-bezier(0.175,0.885,0.32,1.275); display: flex; flex-direction: column; border: 1px solid #23232e; box-shadow: 0 4px 20px rgba(0,0,0,0.15); animation: card-appear 0.7s ease backwards; position: relative; }
         .priv-card:nth-child(1) { animation-delay: 0.1s; }
         .priv-card:nth-child(2) { animation-delay: 0.2s; }
@@ -189,7 +177,6 @@
         .bg-dracula { background: linear-gradient(135deg, #870000, #190a05, #870000); background-size: 200% 200%; animation: bg-shift 5s ease infinite; }
         @keyframes bg-shift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
 
-        /* ОБЫЧНЫЕ КАРТОЧКИ */
         .card { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.6); transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.08); animation: card-appear 0.7s ease backwards; }
         .card:hover { transform: translateY(-10px) scale(1.02); box-shadow: 0 25px 50px rgba(255,126,95,0.4); border-color: #ff7e5f; background: rgba(255,255,255,1); }
         .card:hover .card-btn { background: linear-gradient(135deg, #ff7e5f, #feb47b); }
@@ -208,7 +195,6 @@
         @keyframes rotate-slow { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
         .discount { position: absolute; top: 10px; right: 10px; background: #e74c3c; color: white; padding: 4px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; z-index: 3; animation: discount-pulse 2s ease-in-out infinite; }
 
-        /* РИЛЛИКИ */
         .rilli-input-container { padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; background: linear-gradient(135deg, #f8f9fa, #eef2f7); border-bottom: 1px solid #eee; position: relative; overflow: hidden; }
         .rilli-input-container::before { content: ''; position: absolute; inset: 0; background: linear-gradient(45deg, transparent 40%, rgba(255,126,95,0.1) 50%, transparent 60%); animation: shine 4s infinite; }
         .rilli-icon { font-size: 40px; margin-bottom: 15px; animation: coin-spin 3s ease-in-out infinite; }
@@ -224,7 +210,6 @@
         .rilli-input:focus { border-color: #ff7e5f; box-shadow: 0 0 0 4px rgba(255,126,95,0.3); transform: scale(1.03); }
         .rilli-unit { font-size: 14px; color: #666; font-weight: bold; }
 
-        /* ПРАВИЛА */
         .rules-container { max-width: 1000px; margin: 40px auto; padding: 40px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.6); animation: page-fade-in 0.6s ease; }
         .rules-container h1 { text-align: center; margin-bottom: 30px; color: #000; font-size: 28px; }
         .rule-section { margin-bottom: 30px; animation: rule-appear 0.6s ease backwards; }
@@ -248,7 +233,6 @@
         .back-btn { display: inline-block; background: #000; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: all 0.3s ease; }
         .back-btn:hover { background: #333; transform: translateX(-8px) scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.3); }
 
-        /* ПОДВАЛ */
         footer { background-color: rgba(255,255,255,0.9); backdrop-filter: blur(10px); padding: 30px 40px; margin-top: 50px; border-top: 1px solid rgba(224,224,224,0.5); }
         .footer-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
         .footer-left { display: flex; flex-direction: column; gap: 5px; }
@@ -259,7 +243,6 @@
         .footer-right a:hover { color: #ff7e5f; transform: rotate(20deg) scale(1.4); }
         .footer-bottom { text-align: center; margin-top: 30px; color: #aaa; font-size: 12px; border-top: 1px solid #f0f0f0; padding-top: 20px; }
 
-        /* МОДАЛЬНОЕ ОКНО */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(8px); }
         .modal-overlay.show { display: flex; opacity: 1; }
         .modal-content { background: #fff; border-radius: 10px; padding: 30px; width: 90%; max-width: 500px; position: relative; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); transform: scale(0.7) translateY(30px) rotateX(-20deg); transition: transform 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
@@ -273,14 +256,10 @@
         .modal-content .buy-btn { display: block; text-decoration: none; background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff7e5f); background-size: 200% 200%; color: white; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 16px; transition: all 0.3s ease; animation: btn-gradient 3s ease infinite; }
         .modal-content .buy-btn:hover { transform: translateY(-3px) scale(1.03); box-shadow: 0 15px 35px rgba(255,126,95,0.5); }
 
-        /* НОВОЕ: Кнопка "Наверх" */
         .scroll-top { position: fixed; bottom: 30px; right: 30px; width: 55px; height: 55px; border-radius: 50%; background: linear-gradient(135deg, #ff7e5f, #feb47b); color: white; border: none; font-size: 24px; cursor: pointer; box-shadow: 0 10px 25px rgba(255,126,95,0.5); z-index: 500; opacity: 0; visibility: hidden; transform: translateY(30px) scale(0.5); transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); display: flex; align-items: center; justify-content: center; }
         .scroll-top.show { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
         .scroll-top:hover { transform: translateY(-5px) scale(1.1) rotate(-360deg); box-shadow: 0 15px 35px rgba(255,126,95,0.8); }
-        .scroll-top::before { content: ''; position: absolute; inset: -3px; border-radius: 50%; background: linear-gradient(135deg, #ff7e5f, #feb47b); opacity: 0; animation: ring-pulse 2s ease-in-out infinite; z-index: -1; }
-        @keyframes ring-pulse { 0%{opacity:0.6; transform:scale(1)} 100%{opacity:0; transform:scale(1.5)} }
 
-        /* АДАПТИВНОСТЬ */
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-wrap: wrap; gap: 15px; }
             .hero { padding-left: 25px; height: auto; padding-top: 40px; padding-bottom: 40px; }
@@ -330,36 +309,35 @@
             <h1>Поистине лучший сервер TigerWorld!</h1>
             <p>Поддержи проект и получи уникальные возможности</p>
             
-            <!-- НОВОЕ: строка с IP, онлайн и таймером -->
             <div class="hero-row">
                 <div class="ip-block-hero">
                     <span>IP: play.tiger-world.ru</span>
                     <button onclick="copyIP()">Копировать</button>
                 </div>
-                <div class="online-counter">
+                <div class="online-counter" id="onlineBlock">
                     <div class="status-dot"></div>
-                    <span>Онлайн: <span class="num" id="onlineCount">247</span></span>
+                    <span>Онлайн: <span class="num" id="onlineCount">...</span></span>
                 </div>
                 <div class="countdown-block">
                     <span class="label">🔥 До конца акции:</span>
                     <div class="timer">
-                        <div class="timer-item"><span class="num" id="days">07</span><span class="unit">дн</span></div>
-                        <div class="timer-item"><span class="num" id="hours">12</span><span class="unit">ч</span></div>
-                        <div class="timer-item"><span class="num" id="minutes">34</span><span class="unit">м</span></div>
-                        <div class="timer-item"><span class="num" id="seconds">56</span><span class="unit">с</span></div>
+                        <div class="timer-item"><span class="num" id="days">--</span><span class="unit">дн</span></div>
+                        <div class="timer-item"><span class="num" id="hours">--</span><span class="unit">ч</span></div>
+                        <div class="timer-item"><span class="num" id="minutes">--</span><span class="unit">м</span></div>
+                        <div class="timer-item"><span class="num" id="seconds">--</span><span class="unit">с</span></div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- НОВОЕ: Прогресс-бар сбора -->
+        <!-- ПРОГРЕСС-БАР СБОРА -->
         <section class="goal-section">
             <div class="goal-card">
                 <div class="goal-header">
                     <div class="goal-title"><span class="emoji">🎯</span> Сбор на улучшение сервера</div>
                     <div class="goal-amount">
-                        <span class="current" id="goalCurrent">34 500 ₽</span>
-                        <span class="total"> / 50 000 ₽</span>
+                        <span class="current" id="goalCurrent">0 ₽</span>
+                        <span class="total" id="goalTotal"> / 50 000 ₽</span>
                     </div>
                 </div>
                 <div class="goal-bar">
@@ -382,7 +360,6 @@
                 <button class="filter-btn" onclick="filterSection('kits', this)">⚔️ Киты</button>
             </div>
 
-            <!-- ПРИВИЛЕГИИ -->
             <div id="section-privileges" class="section-block active">
                 <div class="section-header">
                     <span class="icon">👑</span>
@@ -479,7 +456,6 @@
                 </div>
             </div>
 
-            <!-- РИЛЛИКИ -->
             <div id="section-rilli" class="section-block active">
                 <div class="section-header">
                     <span class="icon">💰</span>
@@ -507,7 +483,6 @@
                 </div>
             </div>
 
-            <!-- КЕЙСЫ -->
             <div id="section-cases" class="section-block active">
                 <div class="section-header">
                     <span class="icon">🎁</span>
@@ -551,7 +526,6 @@
                 </div>
             </div>
 
-            <!-- КИТЫ -->
             <div id="section-kits" class="section-block active">
                 <div class="section-header">
                     <span class="icon">⚔️</span>
@@ -705,7 +679,6 @@
         </div>
     </footer>
 
-    <!-- НОВОЕ: Кнопка "Наверх" -->
     <button class="scroll-top" id="scrollTopBtn" onclick="scrollToTop()" title="Наверх">↑</button>
 
     <div id="modal" class="modal-overlay">
@@ -719,6 +692,23 @@
     </div>
 
     <script>
+        /* ============================================================
+           ⚙️ НАСТРОЙКИ — МЕНЯЙ ТОЛЬКО ЭТОТ БЛОК!
+           ============================================================ */
+        const CONFIG = {
+            // IP сервера (тот же, что в шапке баннера)
+            serverIP: 'play.tiger-world.ru',
+
+            // Дата окончания акции (ГОД, МЕСЯЦ-1, ДЕНЬ, ЧАС, МИНУТА)
+            // Месяц считается с 0! То есть: 0 = январь, 11 = декабрь.
+            saleEndDate: new Date(2026, 11, 31, 23, 59, 59),
+
+            // Прогресс-бар сбора
+            goalCollected: 34500,  // Сколько уже собрано (в рублях)
+            goalTotal: 50000,      // Общая цель (в рублях)
+        };
+        /* ============================================================ */
+
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
             document.getElementById('page-' + pageId).classList.add('active');
@@ -746,7 +736,7 @@
         }
 
         function copyIP() {
-            navigator.clipboard.writeText('play.tiger-world.ru').then(() => {
+            navigator.clipboard.writeText(CONFIG.serverIP).then(() => {
                 showNotification('✅ IP сервера скопирован!');
             }).catch(() => showNotification('❌ Не удалось скопировать IP'));
         }
@@ -809,15 +799,10 @@
             if (e.key === 'Escape') closeModal();
         });
 
-        /* ============ НОВОЕ: ТАЙМЕР ОБРАТНОГО ОТСЧЁТА ============ */
-        // Устанавливаем дату окончания акции: 7 дней от текущего момента
-        const targetDate = new Date();
-        targetDate.setDate(targetDate.getDate() + 7);
-        targetDate.setHours(23, 59, 59, 0);
-
+        /* ============ ТАЙМЕР (реальная дата из CONFIG) ============ */
         function updateTimer() {
             const now = new Date().getTime();
-            const distance = targetDate.getTime() - now;
+            const distance = CONFIG.saleEndDate.getTime() - now;
             if (distance < 0) {
                 document.getElementById('days').innerText = '00';
                 document.getElementById('hours').innerText = '00';
@@ -837,51 +822,51 @@
         updateTimer();
         setInterval(updateTimer, 1000);
 
-        /* ============ НОВОЕ: ЖИВОЙ СЧЁТЧИК ОНЛАЙНА ============ */
-        let onlineNum = 247;
-        function updateOnline() {
-            // Плавное изменение в пределах ±15
-            const change = Math.floor(Math.random() * 21) - 10;
-            onlineNum = Math.max(180, Math.min(320, onlineNum + change));
-            const el = document.getElementById('onlineCount');
-            el.innerText = onlineNum;
-            // Анимация пульсации
-            el.style.transform = 'scale(1.2)';
-            el.style.color = '#fff';
-            setTimeout(() => {
-                el.style.transform = 'scale(1)';
-                el.style.color = '#00e676';
-            }, 300);
-        }
-        setInterval(updateOnline, 3500);
-
-        /* ============ НОВОЕ: ПРОГРЕСС-БАР СБОРА ============ */
-        const goalCurrent = 34500;
-        const goalTotal = 50000;
-        const percent = Math.round((goalCurrent / goalTotal) * 100);
-        setTimeout(() => {
-            document.getElementById('goalProgress').style.width = percent + '%';
-            // Анимация счётчика процента
-            let currentPercent = 0;
-            const percentInterval = setInterval(() => {
-                if (currentPercent >= percent) {
-                    clearInterval(percentInterval);
-                    document.getElementById('goalPercent').innerText = percent + '%';
+        /* ============ РЕАЛЬНЫЙ ОНЛАЙН через публичный API mcsrvstat.us ============ */
+        async function updateOnline() {
+            const block = document.getElementById('onlineBlock');
+            const num = document.getElementById('onlineCount');
+            try {
+                const res = await fetch('https://api.mcsrvstat.us/3/' + CONFIG.serverIP);
+                const data = await res.json();
+                if (data && data.online && data.players && typeof data.players.online === 'number') {
+                    num.innerText = data.players.online;
+                    block.classList.remove('offline');
                 } else {
-                    currentPercent++;
-                    document.getElementById('goalPercent').innerText = currentPercent + '%';
+                    num.innerText = '0';
+                    block.classList.add('offline');
+                }
+            } catch (e) {
+                num.innerText = '—';
+                block.classList.add('offline');
+            }
+        }
+        updateOnline();
+        setInterval(updateOnline, 60000); // обновляем раз в минуту
+
+        /* ============ ПРОГРЕСС-БАР СБОРА (реальные числа из CONFIG) ============ */
+        const goalPercent = Math.min(100, Math.round((CONFIG.goalCollected / CONFIG.goalTotal) * 100));
+        document.getElementById('goalCurrent').innerText = CONFIG.goalCollected.toLocaleString('ru-RU') + ' ₽';
+        document.getElementById('goalTotal').innerText = ' / ' + CONFIG.goalTotal.toLocaleString('ru-RU') + ' ₽';
+        setTimeout(() => {
+            document.getElementById('goalProgress').style.width = goalPercent + '%';
+            let p = 0;
+            const int = setInterval(() => {
+                if (p >= goalPercent) {
+                    clearInterval(int);
+                    document.getElementById('goalPercent').innerText = goalPercent + '%';
+                } else {
+                    p++;
+                    document.getElementById('goalPercent').innerText = p + '%';
                 }
             }, 20);
         }, 500);
 
-        /* ============ НОВОЕ: КНОПКА "НАВЕРХ" ============ */
+        /* ============ КНОПКА "НАВЕРХ" ============ */
         const scrollTopBtn = document.getElementById('scrollTopBtn');
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
-                scrollTopBtn.classList.add('show');
-            } else {
-                scrollTopBtn.classList.remove('show');
-            }
+            if (window.scrollY > 500) scrollTopBtn.classList.add('show');
+            else scrollTopBtn.classList.remove('show');
         });
 
         function scrollToTop() {
