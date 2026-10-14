@@ -3,1578 +3,1944 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TigerWorld - Магазин и Правила</title>
+    <title>TigerWorld — Магазин и Правила</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        html { scroll-behavior: smooth; }
-        
-        /* ================== СВЕРХ-ЖИВОЙ ФОН ================== */
-        body {
-            color: #333; overflow-x: hidden; position: relative; min-height: 100vh;
-            background: linear-gradient(-45deg, #eef2f7, #e0e7ff, #f0e6ff, #dbeafe, #ffe6e0, #ffd6e8, #eef2f7);
-            background-size: 800% 800%; animation: gradient-shift 30s ease infinite;
-            cursor: none;
+        /* ================== ПЕРЕМЕННЫЕ ================== */
+        :root {
+            --primary: #ff7e5f;
+            --primary-light: #feb47b;
+            --primary-dark: #e85d3d;
+            --accent: #e100ff;
+            --bg: #f5f7fb;
+            --surface: #ffffff;
+            --surface-2: #f8fafc;
+            --text: #0f172a;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+            --shadow-xl: 0 24px 60px rgba(0,0,0,0.16);
+            --shadow-glow: 0 12px 40px rgba(255,126,95,0.35);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-full: 999px;
+            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        @keyframes gradient-shift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
-        
-        /* Кастомный курсор */
-        .cursor-dot {
-            position: fixed; width: 8px; height: 8px; 
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
-            border-radius: 50%; pointer-events: none; z-index: 99999;
-            transform: translate(-50%, -50%);
-            box-shadow: 0 0 15px #ff7e5f, 0 0 30px #ff7e5f;
-            transition: width 0.2s, height 0.2s;
-        }
-        .cursor-ring {
-            position: fixed; width: 40px; height: 40px;
-            border: 2px solid rgba(255,126,95,0.6);
-            border-radius: 50%; pointer-events: none; z-index: 99998;
-            transform: translate(-50%, -50%);
-            transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
-        }
-        .cursor-ring.hover { width: 60px; height: 60px; border-color: rgba(255,126,95,1); background: rgba(255,126,95,0.1); }
-        
-        /* Свечение за курсором */
-        .cursor-glow {
-            position: fixed; width: 300px; height: 300px;
-            background: radial-gradient(circle, rgba(255,126,95,0.15), transparent 70%);
-            border-radius: 50%; pointer-events: none; z-index: 1;
-            transform: translate(-50%, -50%);
-            transition: transform 0.4s ease-out;
-        }
-        
-        /* Плавающие пятна */
-        body::before, body::after { content: ''; position: fixed; border-radius: 50%; filter: blur(120px); opacity: 0.6; z-index: 0; pointer-events: none; }
-        body::before { width: 700px; height: 700px; background: radial-gradient(circle, rgba(255,126,95,0.7), transparent 70%); top: -250px; left: -250px; animation: float-blob-1 25s ease-in-out infinite; }
-        body::after { width: 800px; height: 800px; background: radial-gradient(circle, rgba(138,43,226,0.5), transparent 70%); bottom: -300px; right: -300px; animation: float-blob-2 30s ease-in-out infinite; }
-        @keyframes float-blob-1 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(200px,100px) scale(1.2)} 66%{transform:translate(100px,200px) scale(0.85)} }
-        @keyframes float-blob-2 { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(-150px,-120px) scale(1.25)} 66%{transform:translate(-80px,-200px) scale(0.8)} }
-        
-        /* Сетка */
-        .bg-grid {
-            position: fixed; inset: 0; z-index: 0; pointer-events: none;
-            background-image: 
-                linear-gradient(rgba(255,126,95,0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,126,95,0.06) 1px, transparent 1px);
-            background-size: 60px 60px;
-            mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
-            -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
-            animation: grid-move 25s linear infinite;
-        }
-        @keyframes grid-move { 0%{background-position:0 0} 100%{background-position:60px 60px} }
-        
-        /* Звёздное небо */
-        .stars { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-        .star { position: absolute; background: #fff; border-radius: 50%; opacity: 0.8; animation: star-twinkle 3s ease-in-out infinite; box-shadow: 0 0 6px rgba(255,126,95,0.8); }
-        @keyframes star-twinkle { 0%,100%{opacity:0.3; transform:scale(0.8)} 50%{opacity:1; transform:scale(1.3)} }
-        
-        /* Частицы */
-        .particles { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
-        .particle { position: absolute; background: linear-gradient(135deg, #ff7e5f, #feb47b); border-radius: 50%; opacity: 0.6; animation: particle-float linear infinite; box-shadow: 0 0 15px rgba(255,126,95,0.8); }
-        @keyframes particle-float { 
-            0% { transform: translateY(100vh) scale(0) rotate(0deg); opacity: 0; } 
-            10% { opacity: 0.8; } 
-            90% { opacity: 0.8; } 
-            100% { transform: translateY(-100px) scale(1) rotate(1080deg); opacity: 0; } 
-        }
-        .particle:nth-child(1) { left: 3%; width: 10px; height: 10px; animation-duration: 15s; }
-        .particle:nth-child(2) { left: 12%; width: 6px; height: 6px; animation-duration: 20s; animation-delay: 2s; }
-        .particle:nth-child(3) { left: 22%; width: 14px; height: 14px; animation-duration: 18s; animation-delay: 4s; }
-        .particle:nth-child(4) { left: 35%; width: 7px; height: 7px; animation-duration: 22s; animation-delay: 1s; }
-        .particle:nth-child(5) { left: 48%; width: 12px; height: 12px; animation-duration: 16s; animation-delay: 3s; }
-        .particle:nth-child(6) { left: 60%; width: 8px; height: 8px; animation-duration: 24s; animation-delay: 5s; }
-        .particle:nth-child(7) { left: 72%; width: 11px; height: 11px; animation-duration: 19s; animation-delay: 2.5s; }
-        .particle:nth-child(8) { left: 84%; width: 9px; height: 9px; animation-duration: 21s; animation-delay: 6s; }
-        .particle:nth-child(9) { left: 92%; width: 13px; height: 13px; animation-duration: 26s; animation-delay: 7s; }
-        .particle:nth-child(10) { left: 8%; width: 5px; height: 5px; animation-duration: 28s; animation-delay: 8s; }
-        .particle:nth-child(11) { left: 42%; width: 6px; height: 6px; animation-duration: 23s; animation-delay: 9s; }
-        .particle:nth-child(12) { left: 68%; width: 4px; height: 4px; animation-duration: 30s; animation-delay: 10s; }
-        .particle:nth-child(13) { left: 28%; width: 7px; height: 7px; animation-duration: 25s; animation-delay: 11s; }
-        .particle:nth-child(14) { left: 78%; width: 10px; height: 10px; animation-duration: 17s; animation-delay: 12s; }
-        .particle:nth-child(15) { left: 55%; width: 5px; height: 5px; animation-duration: 29s; animation-delay: 13s; }
 
-        header, .page, footer, .modal-overlay { position: relative; z-index: 2; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, sans-serif;
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            background: var(--bg);
+            position: relative;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ================== ФОН ================== */
+        .bg-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+            background: 
+                radial-gradient(ellipse 800px 600px at 10% 0%, rgba(255,126,95,0.15), transparent 50%),
+                radial-gradient(ellipse 600px 800px at 90% 100%, rgba(138,43,226,0.12), transparent 50%),
+                radial-gradient(ellipse 500px 500px at 50% 50%, rgba(74,144,226,0.06), transparent 60%);
+        }
+        
+        .bg-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(15,23,42,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(15,23,42,0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+            -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
+        }
+
+        .bg-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.5;
+        }
+        .bg-blob-1 { width: 500px; height: 500px; background: rgba(255,126,95,0.4); top: -150px; left: -150px; animation: float-1 20s ease-in-out infinite; }
+        .bg-blob-2 { width: 600px; height: 600px; background: rgba(138,43,226,0.35); bottom: -200px; right: -200px; animation: float-2 25s ease-in-out infinite; }
+        
+        @keyframes float-1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(80px,60px)} }
+        @keyframes float-2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-60px,-80px)} }
+
+        .particles { position: absolute; inset: 0; overflow: hidden; }
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: var(--primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: particle-rise linear infinite;
+            box-shadow: 0 0 8px var(--primary);
+        }
+        @keyframes particle-rise {
+            from { transform: translateY(100vh) scale(0); opacity: 0; }
+            20%,80% { opacity: 0.6; }
+            to { transform: translateY(-50px) scale(1); opacity: 0; }
+        }
+        .particle:nth-child(1) { left: 5%; animation-duration: 18s; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 18%; animation-duration: 22s; animation-delay: 3s; }
+        .particle:nth-child(3) { left: 32%; animation-duration: 20s; animation-delay: 6s; }
+        .particle:nth-child(4) { left: 47%; animation-duration: 25s; animation-delay: 1s; }
+        .particle:nth-child(5) { left: 63%; animation-duration: 19s; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 78%; animation-duration: 23s; animation-delay: 7s; }
+        .particle:nth-child(7) { left: 90%; animation-duration: 21s; animation-delay: 2s; }
+
+        /* ================== ОБЁРТКА ================== */
+        .page-wrapper {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
         /* ================== ШАПКА ================== */
-        header { 
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px 40px; 
-            background-color: rgba(255,255,255,0.85); 
-            backdrop-filter: blur(25px); 
-            border-bottom: 1px solid rgba(224,224,224,0.5); 
-            box-shadow: 0 2px 20px rgba(0,0,0,0.05); 
-            position: sticky; top: 0; z-index: 100; 
-            transition: all 0.5s ease; 
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.75);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid rgba(226,232,240,0.6);
+            transition: var(--transition);
         }
-        header:hover { box-shadow: 0 6px 40px rgba(255,126,95,0.25); background-color: rgba(255,255,255,0.98); }
-        header::after {
-            content: ''; position: absolute; bottom: 0; left: 0; height: 2px; width: 0%;
-            background: linear-gradient(90deg, #ff7e5f, #feb47b, #e100ff, #ff7e5f);
-            background-size: 200% 100%;
-            animation: header-line 4s ease-in-out infinite, header-line-grow 2s ease forwards;
+        .navbar.scrolled {
+            background: rgba(255,255,255,0.95);
+            box-shadow: var(--shadow-md);
         }
-        @keyframes header-line-grow { to { width: 100%; } }
-        @keyframes header-line { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 32px;
+        }
         
-        .logo { font-weight: bold; font-size: 18px; color: #000; display: flex; align-items: center; gap: 10px; transition: transform 0.3s ease; cursor: pointer; }
-        .logo:hover { transform: scale(1.08) rotate(-2deg); }
-        .logo span { display: inline-block; animation: tree-sway 2.5s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(255,126,95,0.6)); }
-        @keyframes tree-sway { 0%,100%{transform:rotate(-8deg) scale(1)} 50%{transform:rotate(8deg) scale(1.15)} }
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.3px;
+            transition: var(--transition);
+        }
+        .brand:hover { transform: scale(1.03); }
+        .brand-icon {
+            font-size: 24px;
+            filter: drop-shadow(0 4px 8px rgba(255,126,95,0.4));
+            display: inline-block;
+            animation: sway 3s ease-in-out infinite;
+        }
+        @keyframes sway { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
 
-        .nav-links { display: flex; align-items: center; }
-        .nav-links a { 
-            color: #666; text-decoration: none; margin: 0 15px; font-size: 14px; 
-            transition: all 0.3s ease; cursor: pointer; position: relative; padding: 5px 0; 
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            list-style: none;
         }
-        .nav-links a::after { 
-            content: ''; position: absolute; bottom: 0; left: 50%; width: 0; height: 2px; 
-            background: linear-gradient(90deg, #ff7e5f, #feb47b); 
-            transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); transform: translateX(-50%); 
+        .nav-link {
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
         }
-        .nav-links a:hover { color: #000; transform: translateY(-3px) scale(1.05); }
-        .nav-links a:hover::after { width: 100%; box-shadow: 0 0 15px rgba(255,126,95,0.9); }
-        .nav-links a.active { color: #000; font-weight: bold; }
-        .nav-links a.active::after { width: 100%; }
+        .nav-link:hover {
+            color: var(--text);
+            background: rgba(255,126,95,0.08);
+        }
+        .nav-link.active {
+            color: var(--primary-dark);
+            background: rgba(255,126,95,0.12);
+        }
 
-        .header-right { display: flex; align-items: center; gap: 20px; }
-        .social-icons a { color: #666; font-size: 18px; text-decoration: none; transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); display: inline-block; }
-        .social-icons a:hover { color: #ff7e5f; transform: rotate(20deg) scale(1.5); filter: drop-shadow(0 0 10px rgba(255,126,95,0.8)); }
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .icon-btn {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            font-size: 18px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .icon-btn:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            background: rgba(255,126,95,0.06);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,126,95,0.2);
+        }
 
-        .btn-black { 
-            position: relative; overflow: hidden; 
-            background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff7e5f); 
-            background-size: 200% 200%; 
-            color: #fff; border: none; padding: 12px 24px; border-radius: 10px; 
-            font-weight: bold; cursor: pointer; transition: all 0.4s ease; 
-            text-decoration: none; font-size: 14px; 
-            animation: btn-gradient 3s ease infinite;
-            box-shadow: 0 4px 20px rgba(255,126,95,0.4);
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 22px;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            text-decoration: none;
+            transition: var(--transition);
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
         }
-        @keyframes btn-gradient { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
-        .btn-black:hover { transform: translateY(-4px) scale(1.08); box-shadow: 0 20px 40px rgba(255,126,95,0.7); }
-        .btn-black::before { 
-            content: ''; position: absolute; top: 50%; left: 50%; 
-            width: 0; height: 0; background: rgba(255,255,255,0.4); 
-            border-radius: 50%; transform: translate(-50%,-50%); 
-            transition: width 0.7s ease, height 0.7s ease; 
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 14px rgba(255,126,95,0.35);
         }
-        .btn-black:hover::before { width: 400px; height: 400px; }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255,126,95,0.5);
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%,-50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .btn-primary:hover::before { width: 300px; height: 300px; }
 
         /* ================== СТРАНИЦЫ ================== */
-        .page { display: none; opacity: 0; }
-        .page.active { display: block; animation: page-fade-in 0.8s cubic-bezier(0.175,0.885,0.32,1.275) forwards; }
-        @keyframes page-fade-in { from{opacity:0;transform:translateY(40px) scale(0.96)} to{opacity:1;transform:translateY(0) scale(1)} }
+        .page { display: none; flex: 1; }
+        .page.active { display: block; animation: fadeUp 0.5s ease; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-        /* ================== БАННЕР ================== */
-        .hero { 
-            position: relative; height: 480px; 
-            background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff7e5f, #e100ff, #ff7e5f, #feb47b); 
-            background-size: 500% 500%; 
-            animation: orange-gradient 18s ease infinite; 
-            display: flex; flex-direction: column; justify-content: center; 
-            padding-left: 60px; color: white; overflow: hidden; 
+        /* ================== HERO ================== */
+        .hero {
+            position: relative;
+            padding: 60px 40px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
         }
-        @keyframes orange-gradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
-        .hero::before { 
-            content: ''; position: absolute; inset: 0; 
-            background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%); 
-            animation: shine 4s infinite; 
+        .hero-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            border-radius: var(--radius-xl);
+            padding: 60px 70px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-xl);
+            color: white;
         }
-        @keyframes shine { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+        .hero-content::before {
+            content: '';
+            position: absolute;
+            top: -50%; right: -20%;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(255,126,95,0.5), transparent 60%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float-1 15s ease-in-out infinite;
+        }
+        .hero-content::after {
+            content: '';
+            position: absolute;
+            bottom: -40%; left: 30%;
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(138,43,226,0.4), transparent 60%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float-2 20s ease-in-out infinite;
+        }
+        .hero-inner { position: relative; z-index: 1; }
         
-        /* Плавающие пузыри */
-        .bubbles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-        .bubble { 
-            position: absolute; bottom: -100px; 
-            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.4), rgba(255,255,255,0.05));
-            border-radius: 50%; border: 1px solid rgba(255,255,255,0.2);
-            animation: bubble-rise linear infinite;
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(255,126,95,0.15);
+            border: 1px solid rgba(255,126,95,0.3);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--primary-light);
+            margin-bottom: 24px;
+            backdrop-filter: blur(10px);
         }
-        @keyframes bubble-rise {
-            0% { transform: translateY(0) scale(0.5); opacity: 0; }
-            20% { opacity: 1; }
-            100% { transform: translateY(-600px) scale(1.2); opacity: 0; }
+        .hero-badge .dot {
+            width: 6px; height: 6px;
+            background: #00e676;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00e676;
+            animation: pulse 2s ease-in-out infinite;
         }
-        .bubble:nth-child(1) { left: 10%; width: 60px; height: 60px; animation-duration: 12s; animation-delay: 0s; }
-        .bubble:nth-child(2) { left: 25%; width: 40px; height: 40px; animation-duration: 15s; animation-delay: 2s; }
-        .bubble:nth-child(3) { left: 40%; width: 80px; height: 80px; animation-duration: 18s; animation-delay: 1s; }
-        .bubble:nth-child(4) { left: 55%; width: 50px; height: 50px; animation-duration: 14s; animation-delay: 4s; }
-        .bubble:nth-child(5) { left: 70%; width: 70px; height: 70px; animation-duration: 16s; animation-delay: 3s; }
-        .bubble:nth-child(6) { left: 85%; width: 45px; height: 45px; animation-duration: 20s; animation-delay: 5s; }
-        .bubble:nth-child(7) { left: 50%; width: 30px; height: 30px; animation-duration: 22s; animation-delay: 6s; }
-        .bubble:nth-child(8) { left: 15%; width: 55px; height: 55px; animation-duration: 17s; animation-delay: 7s; }
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5); box-shadow: 0 0 20px #00e676} }
 
-        .hero h1 { 
-            font-size: 54px; font-weight: 800; margin-bottom: 15px; 
-            text-shadow: 2px 2px 30px rgba(0,0,0,0.3); line-height: 1.2; 
-            animation: slide-in-left 0.9s ease 0.2s backwards, text-glow 3s ease-in-out 1s infinite; 
+        .hero-title {
+            font-size: 52px;
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 0%, #ffd6c9 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        @keyframes text-glow { 0%,100%{text-shadow: 2px 2px 30px rgba(0,0,0,0.3)} 50%{text-shadow: 2px 2px 40px rgba(255,255,255,1), 2px 2px 30px rgba(0,0,0,0.3)} }
-        .hero p { 
-            color: #fff; font-size: 18px; margin-bottom: 25px; 
-            text-shadow: 1px 1px 8px rgba(0,0,0,0.4); 
-            animation: slide-in-left 0.9s ease 0.4s backwards; 
+        .hero-subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 36px;
+            max-width: 600px;
         }
-        @keyframes slide-in-left { from{opacity:0;transform:translateX(-60px)} to{opacity:1;transform:translateX(0)} }
 
-        .hero-row { display: flex; gap: 15px; flex-wrap: wrap; animation: slide-in-left 0.9s ease 0.6s backwards; }
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+        .action-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 20px;
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .action-card:hover {
+            background: rgba(255,255,255,0.14);
+            border-color: rgba(255,255,255,0.3);
+            transform: translateY(-3px);
+        }
+        .action-card .icon { font-size: 18px; }
+        .action-card .text { display: flex; flex-direction: column; }
+        .action-card .label { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px; }
+        .action-card .value { font-size: 14px; font-weight: 700; color: #fff; font-family: 'JetBrains Mono', monospace; }
+        
+        .action-card button {
+            padding: 6px 12px;
+            background: rgba(255,126,95,0.8);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .action-card button:hover { background: var(--primary); }
 
-        .ip-block-hero { 
-            background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.3); 
-            padding: 12px 22px; border-radius: 12px; display: flex; align-items: center; gap: 15px; 
-            backdrop-filter: blur(10px); transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        /* Таймер */
+        .timer-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 20px;
+            background: rgba(255,126,95,0.1);
+            border: 1px solid rgba(255,126,95,0.25);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+            width: fit-content;
         }
-        .ip-block-hero:hover { transform: scale(1.08) translateY(-5px); box-shadow: 0 20px 40px rgba(255,255,255,0.35); border-color: rgba(255,255,255,0.8); }
-        .ip-block-hero span { font-size: 15px; font-weight: bold; color: #fff; letter-spacing: 1px; }
-        .ip-block-hero button { 
-            background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); 
-            padding: 6px 16px; border-radius: 8px; cursor: pointer; font-size: 12px; 
-            transition: all 0.3s ease; 
+        .timer-label {
+            font-size: 12px;
+            color: rgba(255,255,255,0.7);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
         }
-        .ip-block-hero button:hover { background: rgba(255,255,255,0.3); transform: scale(1.15); }
+        .timer-digits { display: flex; gap: 8px; }
+        .timer-digit {
+            min-width: 44px;
+            padding: 6px 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .timer-digit .num {
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            font-family: 'JetBrains Mono', monospace;
+            line-height: 1;
+        }
+        .timer-digit .unit {
+            font-size: 9px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
 
-        .online-counter { 
-            background: rgba(0,0,0,0.45); border: 1px solid rgba(255,255,255,0.3); 
-            padding: 12px 22px; border-radius: 12px; display: flex; align-items: center; gap: 10px; 
-            backdrop-filter: blur(10px); transition: all 0.4s ease; 
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+        /* Онлайн */
+        .online-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 18px;
+            background: rgba(0,230,118,0.1);
+            border: 1px solid rgba(0,230,118,0.3);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+            font-size: 14px;
+            font-weight: 600;
+            color: #fff;
         }
-        .online-counter:hover { transform: scale(1.08) translateY(-5px); box-shadow: 0 20px 40px rgba(0,230,118,0.4); }
-        .online-counter .status-dot { 
-            width: 12px; height: 12px; background: #00e676; border-radius: 50%; 
-            box-shadow: 0 0 15px #00e676, 0 0 30px #00e676; 
-            animation: dot-pulse 2s ease-in-out infinite; 
+        .online-pill .status-dot {
+            width: 8px; height: 8px;
+            background: #00e676;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #00e676;
+            animation: pulse 2s ease-in-out infinite;
         }
-        .online-counter.offline .status-dot { background: #e74c3c; box-shadow: 0 0 15px #e74c3c; animation: none; }
-        @keyframes dot-pulse { 0%,100%{transform:scale(1); box-shadow:0 0 15px #00e676} 50%{transform:scale(1.5); box-shadow:0 0 30px #00e676, 0 0 50px #00e676} }
-        .online-counter span { font-size: 15px; font-weight: bold; color: #fff; }
-        .online-counter .num { color: #00e676; font-size: 18px; text-shadow: 0 0 10px #00e676; }
-        .online-counter.offline .num { color: #e74c3c; text-shadow: 0 0 10px #e74c3c; }
+        .online-pill.offline { background: rgba(231,76,60,0.1); border-color: rgba(231,76,60,0.3); }
+        .online-pill.offline .status-dot { background: #e74c3c; box-shadow: 0 0 12px #e74c3c; animation: none; }
+        .online-pill .num { color: #00e676; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+        .online-pill.offline .num { color: #e74c3c; }
 
-        .countdown-block { 
-            background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.3); 
-            padding: 12px 22px; border-radius: 12px; display: flex; align-items: center; gap: 15px; 
-            backdrop-filter: blur(10px); box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-            transition: all 0.4s ease;
+        /* ================== ПРОГРЕСС ================== */
+        .progress-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 40px;
+            width: 100%;
         }
-        .countdown-block:hover { transform: scale(1.08) translateY(-5px); }
-        .countdown-block .label { font-size: 13px; color: #fff; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; }
-        .timer { display: flex; gap: 8px; }
-        .timer-item { 
-            display: flex; flex-direction: column; align-items: center; min-width: 48px; 
-            background: linear-gradient(135deg, rgba(255,126,95,0.5), rgba(254,180,123,0.5)); 
-            padding: 5px 10px; border-radius: 8px; 
-            animation: timer-pulse 2s ease-in-out infinite; 
-            border: 1px solid rgba(255,255,255,0.3);
-            box-shadow: 0 4px 15px rgba(255,126,95,0.3);
+        .progress-card {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 28px 32px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            transition: var(--transition);
         }
-        .timer-item:nth-child(1) { animation-delay: 0s; }
-        .timer-item:nth-child(2) { animation-delay: 0.2s; }
-        .timer-item:nth-child(3) { animation-delay: 0.4s; }
-        .timer-item:nth-child(4) { animation-delay: 0.6s; }
-        @keyframes timer-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1); box-shadow: 0 8px 25px rgba(255,126,95,0.6)} }
-        .timer-item .num { font-size: 20px; font-weight: 800; color: #fff; line-height: 1; }
-        .timer-item .unit { font-size: 9px; color: #ffd6c9; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
-
-        /* ================== ПРОГРЕСС-БАР ================== */
-        .goal-section { padding: 30px 40px 0 40px; }
-        .goal-card { 
-            background: rgba(255,255,255,0.92); backdrop-filter: blur(25px); 
-            border-radius: 24px; padding: 32px 38px; 
-            box-shadow: 0 20px 60px rgba(0,0,0,0.12); 
-            border: 1px solid rgba(255,255,255,0.8); 
-            animation: page-fade-in 1s ease; 
-            transition: all 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
-            position: relative; overflow: hidden;
+        .progress-card:hover {
+            box-shadow: var(--shadow-xl);
+            transform: translateY(-3px);
         }
-        .goal-card::before {
-            content: ''; position: absolute; top: -50%; left: -50%; 
-            width: 200%; height: 200%; 
-            background: conic-gradient(from 0deg, transparent, rgba(255,126,95,0.1), transparent, rgba(255,126,95,0.1), transparent);
-            animation: rotate-slow 12s linear infinite;
-            pointer-events: none;
+        .progress-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 12px;
         }
-        .goal-card:hover { transform: translateY(-8px) scale(1.01); box-shadow: 0 35px 80px rgba(255,126,95,0.3); }
-        .goal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 10px; position: relative; z-index: 1; }
-        .goal-title { font-size: 22px; font-weight: 800; color: #000; display: flex; align-items: center; gap: 12px; }
-        .goal-title .emoji { font-size: 30px; animation: bounce-icon 2s ease-in-out infinite; }
-        @keyframes bounce-icon { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-10px) rotate(10deg)} }
-        .goal-amount { font-size: 16px; color: #666; font-weight: 600; position: relative; z-index: 1; }
-        .goal-amount .current { color: #ff7e5f; font-weight: 800; font-size: 22px; }
-        .goal-amount .total { color: #999; }
-        .goal-bar { 
-            height: 24px; background: #f0f0f0; border-radius: 14px; overflow: hidden; 
-            position: relative; box-shadow: inset 0 3px 10px rgba(0,0,0,0.1); 
-            z-index: 1;
+        .progress-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--text);
         }
-        .goal-progress { 
-            height: 100%; 
-            background: linear-gradient(90deg, #ff7e5f, #feb47b, #ff7e5f, #e100ff, #ff7e5f); 
-            background-size: 400% 400%; 
-            border-radius: 14px; width: 0%; 
-            transition: width 2.5s cubic-bezier(0.175,0.885,0.32,1.275); 
-            animation: btn-gradient 4s ease infinite; 
-            position: relative; overflow: hidden; 
-            box-shadow: 0 0 25px rgba(255,126,95,0.8), inset 0 0 15px rgba(255,255,255,0.4);
+        .progress-title .icon { font-size: 24px; }
+        .progress-numbers {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
         }
-        .goal-progress::after { 
-            content: ''; position: absolute; inset: 0; 
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent); 
-            animation: shine 2s infinite; 
+        .progress-numbers .current { color: var(--primary); font-weight: 800; font-size: 18px; }
+        .progress-bar {
+            height: 14px;
+            background: var(--surface-2);
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
         }
-        .goal-percent { 
-            position: absolute; right: 12px; top: 50%; transform: translateY(-50%); 
-            color: #fff; font-size: 13px; font-weight: bold; 
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.5); z-index: 2; 
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--primary));
+            background-size: 200% 100%;
+            border-radius: var(--radius-full);
+            width: 0;
+            transition: width 1.6s var(--transition-bounce);
+            animation: shimmer 3s linear infinite;
+            box-shadow: 0 0 15px rgba(255,126,95,0.6);
+            position: relative;
         }
-        .goal-footer { margin-top: 18px; font-size: 14px; color: #888; text-align: center; position: relative; z-index: 1; }
+        @keyframes shimmer { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            animation: gloss 2s infinite;
+        }
+        @keyframes gloss { 0%{transform:translateX(-100%)} 100%{transform:translateX(100%)} }
+        .progress-percent {
+            position: absolute;
+            right: 12px; top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+            z-index: 2;
+        }
+        .progress-foot {
+            margin-top: 14px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+        }
 
         /* ================== МАГАЗИН ================== */
-        .shop-section { padding: 30px 40px 40px 40px; }
-        .shop-title { 
-            font-size: 30px; font-weight: bold; margin-bottom: 28px; color: #000; 
-            position: relative; display: inline-block; 
+        .shop {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px 40px 60px;
+            width: 100%;
         }
-        .shop-title::after { 
-            content: ''; display: block; width: 100px; height: 5px; 
-            background: linear-gradient(90deg, #ff7e5f, #feb47b, #e100ff); 
-            background-size: 200% 100%;
-            margin-top: 12px; border-radius: 4px; 
-            animation: grow-width 1.8s ease 0.3s backwards, line-glow 2s ease-in-out 1s infinite, btn-gradient 4s ease infinite; 
+        .shop-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        @keyframes grow-width { from{width:0} to{width:100px} }
-        @keyframes line-glow { 0%,100%{box-shadow:0 0 12px rgba(255,126,95,0.6)} 50%{box-shadow:0 0 30px rgba(255,126,95,1), 0 0 50px rgba(225,0,255,0.6)} }
+        .shop-heading h2 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+        .shop-heading p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
 
-        .filters-bar { display: flex; gap: 12px; margin-bottom: 40px; flex-wrap: wrap; }
-        .filter-btn { 
-            background: #fff; color: #666; border: 2px solid #e0e0e0; 
-            padding: 14px 28px; border-radius: 30px; cursor: pointer; 
-            font-weight: bold; font-size: 14px; 
-            transition: all 0.5s cubic-bezier(0.175,0.885,0.32,1.275); 
-            position: relative; overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        /* Фильтры */
+        .filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 6px;
+            background: var(--surface);
+            border-radius: var(--radius-full);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--border);
         }
-        .filter-btn::before {
-            content: ''; position: absolute; inset: 0;
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
-            opacity: 0; transition: opacity 0.3s ease;
-            z-index: -1;
+        .filter {
+            padding: 9px 18px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            color: var(--text-secondary);
+            background: transparent;
+            border: none;
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
         }
-        .filter-btn:hover { 
-            border-color: #ff7e5f; color: #ff7e5f; 
-            transform: translateY(-5px) scale(1.08); 
-            box-shadow: 0 15px 35px rgba(255,126,95,0.4); 
+        .filter:hover {
+            color: var(--text);
+            background: var(--surface-2);
         }
-        .filter-btn.active { 
-            background: linear-gradient(135deg, #ff7e5f, #feb47b); 
-            color: white; border-color: transparent; 
-            box-shadow: 0 10px 30px rgba(255,126,95,0.6); 
-            animation: filter-pulse 2s ease-in-out infinite; 
-            transform: scale(1.05);
+        .filter.active {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 12px rgba(255,126,95,0.35);
         }
-        @keyframes filter-pulse { 0%,100%{box-shadow:0 10px 30px rgba(255,126,95,0.6)} 50%{box-shadow:0 10px 45px rgba(255,126,95,1), 0 0 60px rgba(225,0,255,0.5)} }
 
-        .section-block { display: none; margin-bottom: 70px; }
-        .section-block.active { display: block; animation: section-appear 0.8s cubic-bezier(0.175,0.885,0.32,1.275); }
-        @keyframes section-appear { from{opacity:0;transform:translateY(50px) scale(0.96)} to{opacity:1;transform:translateY(0) scale(1)} }
+        /* ================== СЕКЦИИ ================== */
+        .section { display: none; margin-bottom: 56px; }
+        .section.active { display: block; animation: fadeUp 0.5s ease; }
 
-        .section-header { 
-            display: flex; align-items: center; gap: 15px; 
-            margin-bottom: 28px; padding-bottom: 18px; 
-            border-bottom: 2px solid #f0f0f0; 
+        .section-head {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        .section-head .icon {
+            width: 44px; height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(255,126,95,0.15), rgba(254,180,123,0.15));
+            border-radius: var(--radius-md);
+            font-size: 22px;
+        }
+        .section-head h3 {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+        }
+        .section-head .count {
+            padding: 4px 12px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-full);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+        }
+
+        /* ================== КАРТОЧКА ТОВАРА ================== */
+        .item {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
             position: relative;
         }
-        .section-header::after {
-            content: ''; position: absolute; bottom: -2px; left: 0;
-            width: 80px; height: 3px;
-            background: linear-gradient(90deg, #ff7e5f, #feb47b);
-            border-radius: 2px;
-            animation: line-glow 2s ease-in-out infinite;
+        .item:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-xl);
+            border-color: transparent;
         }
-        .section-header .icon { font-size: 36px; animation: bounce-icon 2s ease-in-out infinite; filter: drop-shadow(0 5px 15px rgba(255,126,95,0.5)); }
-        .section-header h3 { font-size: 26px; color: #000; font-weight: 800; }
-        .section-header .count { 
-            background: linear-gradient(135deg, #ff7e5f, #feb47b); 
-            color: white; font-size: 13px; padding: 5px 14px; 
-            border-radius: 20px; font-weight: bold; 
-            animation: count-pulse 2s ease-in-out infinite; 
-            box-shadow: 0 6px 15px rgba(255,126,95,0.5);
-        }
-        @keyframes count-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2); box-shadow: 0 8px 25px rgba(255,126,95,0.9)} }
+        .item:hover .item-image .icon { transform: scale(1.15) rotate(-6deg); }
+        .item:hover .item-btn { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
+        .item:hover .item-btn::before { width: 300px; height: 300px; }
 
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 28px; }
+        .item-image {
+            position: relative;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .item-image .icon {
+            font-size: 90px;
+            filter: drop-shadow(0 12px 24px rgba(0,0,0,0.3));
+            z-index: 2;
+            transition: transform var(--transition-bounce);
+        }
+        .item-image .shine {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.3), transparent 60%);
+            z-index: 1;
+        }
+
+        .item-badge {
+            position: absolute;
+            top: 12px;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            z-index: 3;
+            letter-spacing: 0.3px;
+            text-transform: uppercase;
+            backdrop-filter: blur(10px);
+        }
+        .item-badge.discount {
+            left: 12px;
+            background: linear-gradient(135deg, #00c853, #00e676);
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,200,83,0.4);
+        }
+        .item-badge.promo {
+            right: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            box-shadow: 0 4px 12px rgba(255,126,95,0.4);
+        }
+
+        .item-body {
+            padding: 18px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .item-title {
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: -0.2px;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            color: var(--text);
+        }
+        .item-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        .item-prices {
+            display: flex;
+            align-items: baseline;
+            gap: 10px;
+            margin-bottom: 16px;
+        }
+        .price-old {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            font-weight: 500;
+        }
+        .price-new {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+        }
+        .item-btn {
+            position: relative;
+            overflow: hidden;
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: var(--text);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 700;
+            font-family: inherit;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: auto;
+        }
+        .item-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,0.25);
+            border-radius: 50%;
+            transform: translate(-50%,-50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        .item-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); }
 
         /* ================== ПРИВИЛЕГИИ ================== */
-        .priv-card { 
-            background: #13131a; border-radius: 20px; overflow: hidden; 
-            transition: all 0.7s cubic-bezier(0.175,0.885,0.32,1.275); 
-            display: flex; flex-direction: column; 
-            border: 1px solid #23232e; 
-            box-shadow: 0 10px 40px rgba(0,0,0,0.25); 
-            animation: card-appear 0.9s ease backwards; 
-            position: relative; 
-            transform-style: preserve-3d;
+        .priv .item-image { height: 190px; }
+        .priv .item-image .shine {
+            background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.4), transparent 60%);
         }
-        .priv-card::after {
-            content: ''; position: absolute; inset: -2px;
-            background: linear-gradient(45deg, #ff7e5f, #feb47b, #e100ff, #ff7e5f);
-            background-size: 400% 400%;
-            border-radius: 20px;
-            z-index: -1;
-            opacity: 0;
-            animation: btn-gradient 4s ease infinite;
-            transition: opacity 0.5s ease;
-            filter: blur(15px);
-        }
-        .priv-card:hover::after { opacity: 1; }
-        .priv-card:nth-child(1) { animation-delay: 0.1s; }
-        .priv-card:nth-child(2) { animation-delay: 0.2s; }
-        .priv-card:nth-child(3) { animation-delay: 0.3s; }
-        .priv-card:nth-child(4) { animation-delay: 0.4s; }
-        .priv-card:nth-child(5) { animation-delay: 0.5s; }
-        .priv-card:hover { 
-            transform: translateY(-18px) scale(1.05) rotateX(8deg); 
-            box-shadow: 0 45px 90px rgba(255,126,95,0.7); 
-            border-color: #ff7e5f; 
-        }
-        @keyframes card-appear { from{opacity:0;transform:translateY(80px) scale(0.8) rotateX(-20deg)} to{opacity:1;transform:translateY(0) scale(1) rotateX(0)} }
 
-        .priv-banner { 
-            position: relative; height: 210px; 
-            display: flex; align-items: center; justify-content: center; 
-            overflow: hidden; 
-        }
-        .priv-banner::before { 
-            content: ''; position: absolute; inset: 0; 
-            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4), transparent 60%); 
-            z-index: 1; 
-            animation: banner-shine 3s ease-in-out infinite; 
-        }
-        @keyframes banner-shine { 0%,100%{opacity:0.5} 50%{opacity:1} }
-        .priv-banner .emoji-icon { 
-            font-size: 110px; 
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6)); 
-            z-index: 2; 
-            transition: transform 0.8s cubic-bezier(0.175,0.885,0.32,1.275); 
-            animation: icon-float 3s ease-in-out infinite; 
-        }
-        @keyframes icon-float { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-15px) rotate(8deg)} }
-        .priv-card:hover .priv-banner .emoji-icon { transform: scale(1.5) rotate(-18deg); }
-
-        .priv-discount { 
-            position: absolute; top: 14px; left: 14px; 
-            background: linear-gradient(135deg, #00c853, #00e676); 
-            color: white; padding: 6px 14px; border-radius: 10px; 
-            font-size: 14px; font-weight: bold; z-index: 3; 
-            box-shadow: 0 8px 20px rgba(0,200,83,0.5); 
-            animation: discount-pulse 2s ease-in-out infinite; 
-        }
-        @keyframes discount-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.18) rotate(-6deg); box-shadow: 0 12px 30px rgba(0,200,83,0.9)} }
-        .priv-promo { 
-            position: absolute; top: 14px; right: 14px; 
-            background: linear-gradient(135deg, #ff7e5f, #feb47b); 
-            color: white; padding: 6px 14px; border-radius: 10px; 
-            font-size: 11px; font-weight: bold; text-transform: uppercase; 
-            letter-spacing: 0.5px; z-index: 3; 
-            box-shadow: 0 8px 20px rgba(255,126,95,0.5); 
-            animation: promo-pulse 2s ease-in-out infinite; 
-        }
-        @keyframes promo-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.18) rotate(6deg); box-shadow: 0 12px 30px rgba(255,126,95,0.9)} }
-
-        .priv-body { padding: 22px; color: #fff; display: flex; flex-direction: column; flex-grow: 1; }
-        .priv-title { font-size: 17px; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .priv-title .accent { 
-            color: #ff7e5f; 
-            text-shadow: 0 0 15px rgba(255,126,95,0.8);
-            animation: accent-glow 2s ease-in-out infinite;
-        }
-        @keyframes accent-glow { 0%,100%{text-shadow:0 0 15px rgba(255,126,95,0.6)} 50%{text-shadow:0 0 25px rgba(255,126,95,1), 0 0 40px rgba(255,126,95,0.8)} }
-        .priv-subtitle { font-size: 12px; color: #888; margin-bottom: 20px; }
-        .priv-price-row { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; flex-wrap: wrap; }
-        .priv-old-price { color: #666; text-decoration: line-through; font-size: 14px; font-weight: 500; }
-        .priv-new-price { 
-            color: #fff; font-size: 26px; font-weight: 800; 
-            background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff7e5f); 
-            background-size: 200% 200%; 
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
-            background-clip: text; 
-            animation: btn-gradient 3s ease infinite; 
-            filter: drop-shadow(0 0 15px rgba(255,126,95,0.6));
-        }
-        .priv-buy-btn { 
-            position: relative; overflow: hidden; display: block; width: 100%; 
-            padding: 16px; 
-            background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff7e5f); 
-            background-size: 200% 200%; 
-            color: white; border: none; border-radius: 12px; 
-            font-weight: bold; cursor: pointer; font-size: 16px; 
-            margin-top: auto; transition: all 0.4s ease; 
-            box-shadow: 0 8px 25px rgba(255,126,95,0.6); 
-            animation: btn-gradient 3s ease infinite; 
-        }
-        .priv-buy-btn:hover { 
-            transform: translateY(-5px) scale(1.05); 
-            box-shadow: 0 25px 50px rgba(255,126,95,1), 0 0 60px rgba(255,126,95,0.6); 
-            filter: brightness(1.2); 
-        }
-        .priv-buy-btn::before { 
-            content: ''; position: absolute; top: 50%; left: 50%; 
-            width: 0; height: 0; background: rgba(255,255,255,0.5); 
-            border-radius: 50%; transform: translate(-50%,-50%); 
-            transition: width 0.8s ease, height 0.8s ease; 
-        }
-        .priv-buy-btn:hover::before { width: 600px; height: 600px; }
-
-        .bg-tiger   { background: linear-gradient(135deg, #ff6a00, #ee0979, #ff6a00); background-size: 200% 200%; animation: bg-shift 5s ease infinite; }
-        .bg-rabbit  { background: linear-gradient(135deg, #f7797d, #fbd786, #f7797d); background-size: 200% 200%; animation: bg-shift 5s ease infinite; }
-        .bg-god     { background: linear-gradient(135deg, #f5d020, #f53803, #f5d020); background-size: 200% 200%; animation: bg-shift 5s ease infinite; }
-        .bg-pegas   { background: linear-gradient(135deg, #7f00ff, #e100ff, #7f00ff); background-size: 200% 200%; animation: bg-shift 5s ease infinite; }
-        .bg-dracula { background: linear-gradient(135deg, #870000, #190a05, #870000); background-size: 200% 200%; animation: bg-shift 5s ease infinite; }
-        @keyframes bg-shift { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
-
-        /* ================== ОБЫЧНЫЕ КАРТОЧКИ ================== */
-        .card { 
-            background: rgba(255,255,255,0.94); backdrop-filter: blur(20px); 
-            border-radius: 20px; overflow: hidden; 
-            border: 1px solid rgba(255,255,255,0.8); 
-            transition: all 0.6s cubic-bezier(0.175,0.885,0.32,1.275); 
-            display: flex; flex-direction: column; 
-            box-shadow: 0 10px 35px rgba(0,0,0,0.12); 
-            animation: card-appear 0.9s ease backwards; 
-            position: relative;
-        }
-        .card::after {
-            content: ''; position: absolute; inset: -2px;
-            background: linear-gradient(45deg, #ff7e5f, #feb47b, #e100ff, #ff7e5f);
-            background-size: 400% 400%;
-            border-radius: 20px;
-            z-index: -1;
-            opacity: 0;
-            animation: btn-gradient 4s ease infinite;
-            transition: opacity 0.5s ease;
-            filter: blur(12px);
-        }
-        .card:hover::after { opacity: 0.8; }
-        .card:hover { 
-            transform: translateY(-15px) scale(1.04) rotateX(5deg); 
-            box-shadow: 0 40px 80px rgba(255,126,95,0.5); 
-            border-color: #ff7e5f; 
-            background: rgba(255,255,255,1); 
-        }
-        .card:hover .card-btn { background: linear-gradient(135deg, #ff7e5f, #feb47b); }
-        .card-info { padding: 20px; display: flex; flex-direction: column; flex-grow: 1; }
-        .card-title { font-size: 18px; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; color: #000; }
-        .card-price { color: #ff7e5f; font-size: 22px; font-weight: bold; margin-bottom: 20px; text-shadow: 0 0 15px rgba(255,126,95,0.4); }
-        .card-btn { 
-            position: relative; overflow: hidden; display: block; text-align: center; 
-            background: #000; color: white; border: none; padding: 14px; 
-            border-radius: 10px; cursor: pointer; font-weight: bold; 
-            width: 100%; margin-top: auto; transition: all 0.4s ease; 
-            font-size: 15px; 
-        }
-        .card-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .card-btn::before { 
-            content: ''; position: absolute; top: 50%; left: 50%; 
-            width: 0; height: 0; background: rgba(255,255,255,0.4); 
-            border-radius: 50%; transform: translate(-50%,-50%); 
-            transition: width 0.8s ease, height 0.8s ease; 
-        }
-        .card-btn:hover::before { width: 600px; height: 600px; }
-        .card-image { 
-            position: relative; height: 200px; 
-            display: flex; align-items: center; justify-content: center; 
-            overflow: hidden; 
-        }
-        .card-image .emoji-icon { 
-            font-size: 100px; 
-            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.5)); 
-            z-index: 2; 
-            transition: transform 0.8s cubic-bezier(0.175,0.885,0.32,1.275); 
-            animation: icon-float 3s ease-in-out infinite; 
-        }
-        .card:hover .card-image .emoji-icon { transform: scale(1.5) rotate(15deg); }
-        .card-image::before { 
-            content: ''; position: absolute; inset: 0; 
-            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.25), transparent 60%); 
-            z-index: 1; 
-        }
-        .card-image::after { 
-            content: ''; position: absolute; top: -50%; left: -50%; 
-            width: 200%; height: 200%; 
-            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.3), transparent); 
-            animation: rotate-slow 5s linear infinite; 
-            z-index: 0; 
-        }
-        @keyframes rotate-slow { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
-        .discount { 
-            position: absolute; top: 14px; right: 14px; 
-            background: linear-gradient(135deg, #e74c3c, #ff6b6b); 
-            color: white; padding: 6px 12px; border-radius: 8px; 
-            font-size: 14px; font-weight: bold; z-index: 3; 
-            animation: discount-pulse 2s ease-in-out infinite; 
-            box-shadow: 0 6px 15px rgba(231,76,60,0.6);
-        }
+        .bg-tiger { background: linear-gradient(135deg, #ff6a00, #ee0979); }
+        .bg-rabbit { background: linear-gradient(135deg, #f7797d, #fbd786); }
+        .bg-god { background: linear-gradient(135deg, #f5d020, #f53803); }
+        .bg-pegas { background: linear-gradient(135deg, #7f00ff, #e100ff); }
+        .bg-dracula { background: linear-gradient(135deg, #870000, #190a05); }
 
         /* ================== РИЛЛИКИ ================== */
-        .rilli-input-container { 
-            padding: 28px; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; height: 100%; 
-            background: linear-gradient(135deg, #f8f9fa, #eef2f7); 
-            border-bottom: 1px solid #eee; 
-            position: relative; overflow: hidden; 
+        .rilli-card { grid-column: span 1; }
+        .rilli-body {
+            padding: 24px;
+            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            border-bottom: 1px solid var(--border);
         }
-        .rilli-input-container::before { 
-            content: ''; position: absolute; inset: 0; 
-            background: linear-gradient(45deg, transparent 40%, rgba(255,126,95,0.15) 50%, transparent 60%); 
-            animation: shine 3s infinite; 
+        .rilli-icon-wrap {
+            width: 64px; height: 64px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
+            font-size: 32px;
+            box-shadow: 0 8px 24px rgba(255,126,95,0.4);
+            animation: spin 4s linear infinite;
         }
-        .rilli-icon { font-size: 50px; margin-bottom: 20px; animation: coin-spin 3s ease-in-out infinite; filter: drop-shadow(0 0 20px rgba(255,126,95,0.6)); }
-        @keyframes coin-spin { 0%,100%{transform:rotateY(0deg) scale(1)} 50%{transform:rotateY(180deg) scale(1.25)} }
-        .rilli-label { font-size: 14px; color: #666; margin-bottom: 14px; text-align: center; }
-        .rilli-slider { 
-            width: 100%; margin: 14px 0 25px 0; 
-            -webkit-appearance: none; appearance: none; 
-            height: 12px; border-radius: 8px; 
-            background: linear-gradient(90deg, #ff7e5f, #feb47b, #ff7e5f);
-            background-size: 200% 100%;
-            animation: btn-gradient 3s ease infinite;
-            outline: none; transition: all 0.3s ease; 
-            box-shadow: 0 4px 15px rgba(255,126,95,0.3);
+        @keyframes spin { 0%{transform:rotateY(0)} 100%{transform:rotateY(360deg)} }
+
+        .rilli-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 12px;
+            font-weight: 600;
         }
-        .rilli-slider:hover { box-shadow: 0 0 30px rgba(255,126,95,0.8); }
-        .rilli-slider::-webkit-slider-thumb { 
-            -webkit-appearance: none; appearance: none; 
-            width: 30px; height: 30px; border-radius: 50%; 
-            background: #fff; 
-            cursor: pointer; 
-            box-shadow: 0 0 0 4px #ff7e5f, 0 8px 25px rgba(255,126,95,0.8); 
-            transition: transform 0.3s; 
+        .range {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            border-radius: var(--radius-full);
+            outline: none;
+            margin-bottom: 20px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
-        .rilli-slider::-webkit-slider-thumb:hover { transform: scale(1.5); box-shadow: 0 0 0 6px #ff7e5f, 0 0 40px rgba(255,126,95,1); }
-        .rilli-slider::-moz-range-thumb { 
-            width: 30px; height: 30px; border-radius: 50%; 
-            background: #fff; 
-            cursor: pointer; border: 4px solid #ff7e5f; 
-            box-shadow: 0 8px 25px rgba(255,126,95,0.8);
+        .range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px; height: 24px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 0 4px var(--primary), 0 4px 12px rgba(255,126,95,0.5);
+            transition: var(--transition);
         }
-        .rilli-inputs-row { display: flex; gap: 14px; align-items: center; width: 100%; margin-bottom: 20px; }
-        .rilli-input { 
-            flex-grow: 1; padding: 14px; 
-            background: rgba(255,255,255,0.95); 
-            border: 2px solid #e0e0e0; border-radius: 10px; 
-            color: #000; font-size: 18px; text-align: center; 
-            outline: none; transition: all 0.4s ease; 
-            font-weight: bold;
+        .range::-webkit-slider-thumb:hover { transform: scale(1.15); }
+        .range::-moz-range-thumb {
+            width: 24px; height: 24px;
+            background: white;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 4px solid var(--primary);
+            box-shadow: 0 4px 12px rgba(255,126,95,0.5);
         }
-        .rilli-input:focus { 
-            border-color: #ff7e5f; 
-            box-shadow: 0 0 0 5px rgba(255,126,95,0.3), 0 0 30px rgba(255,126,95,0.5); 
-            transform: scale(1.05); 
+
+        .input-wrap {
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
+            margin-bottom: 16px;
         }
-        .rilli-unit { font-size: 15px; color: #666; font-weight: bold; }
+        .input {
+            flex: 1;
+            padding: 12px 14px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text);
+            outline: none;
+            transition: var(--transition);
+        }
+        .input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255,126,95,0.15);
+        }
+        .input-suffix {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            background: var(--surface-2);
+            border: 2px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .rilli-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 18px;
+            background: var(--surface);
+            border-radius: var(--radius-md);
+            border: 1px dashed var(--border);
+            margin-bottom: 16px;
+        }
+        .rilli-total-label { font-size: 13px; color: var(--text-secondary); font-weight: 600; }
+        .rilli-total-value {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            transition: var(--transition);
+        }
 
         /* ================== ПРАВИЛА ================== */
-        .rules-container { 
-            max-width: 1000px; margin: 40px auto; padding: 50px; 
-            background: rgba(255,255,255,0.96); backdrop-filter: blur(25px); 
-            border-radius: 20px; 
-            box-shadow: 0 25px 70px rgba(0,0,0,0.15); 
-            border: 1px solid rgba(255,255,255,0.8); 
-            animation: page-fade-in 0.8s ease; 
-            position: relative; overflow: hidden;
+        .rules-wrap {
+            max-width: 900px;
+            margin: 40px auto 60px;
+            padding: 0 40px;
+            width: 100%;
         }
-        .rules-container::before {
-            content: ''; position: absolute; top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(255,126,95,0.08), transparent, rgba(225,0,255,0.08), transparent);
-            animation: rotate-slow 15s linear infinite;
-            pointer-events: none;
+        .rules-header {
+            text-align: center;
+            margin-bottom: 32px;
         }
-        .rules-container > * { position: relative; z-index: 1; }
-        .rules-container h1 { text-align: center; margin-bottom: 40px; color: #000; font-size: 36px; }
-        .rule-section { margin-bottom: 40px; animation: rule-appear 0.8s ease backwards; }
-        .rule-section:nth-child(2) { animation-delay: 0.1s; }
-        .rule-section:nth-child(3) { animation-delay: 0.15s; }
-        .rule-section:nth-child(4) { animation-delay: 0.2s; }
-        .rule-section:nth-child(5) { animation-delay: 0.25s; }
-        .rule-section:nth-child(6) { animation-delay: 0.3s; }
-        .rule-section:nth-child(7) { animation-delay: 0.35s; }
-        .rule-section:nth-child(8) { animation-delay: 0.4s; }
-        @keyframes rule-appear { from{opacity:0;transform:translateX(-50px)} to{opacity:1;transform:translateX(0)} }
-        .rule-section h2 { 
-            color: #ff7e5f; margin-bottom: 20px; font-size: 24px; 
-            border-bottom: 2px solid #f0f0f0; padding-bottom: 14px; 
-            position: relative; 
+        .rules-header h1 {
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -0.8px;
+            margin-bottom: 8px;
         }
-        .rule-section h2::before { 
-            content: ''; position: absolute; bottom: -2px; left: 0; 
-            width: 70px; height: 3px; 
-            background: linear-gradient(90deg, #ff7e5f, #feb47b); 
-            border-radius: 2px; 
-            animation: line-glow 2s ease-in-out infinite; 
+        .rules-header p {
+            color: var(--text-secondary);
+            font-size: 15px;
         }
-        .rule-section p { margin-bottom: 14px; color: #444; font-size: 16px; transition: all 0.3s ease; }
-        .rule-section p:hover { color: #000; transform: translateX(10px); }
-        .rule-section ul { margin-left: 25px; margin-bottom: 20px; color: #444; }
-        .rule-section li { margin-bottom: 10px; transition: all 0.3s ease; }
-        .rule-section li:hover { transform: translateX(15px); color: #000; }
-        .rule-num { color: #ff7e5f; font-weight: bold; }
-        .punishment { color: #e74c3c; font-weight: bold; }
-        .back-btn { 
-            display: inline-block; background: #000; color: #fff; 
-            padding: 14px 28px; border-radius: 10px; text-decoration: none; 
-            font-weight: bold; margin-bottom: 30px; transition: all 0.4s ease; 
+
+        .rule-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: 28px 32px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
         }
-        .back-btn:hover { 
-            background: #333; transform: translateX(-12px) scale(1.08); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4); 
+        .rule-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: rgba(255,126,95,0.3);
+        }
+        .rule-card h2 {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 18px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .rule-card h2::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(180deg, var(--primary), var(--primary-light));
+            border-radius: 2px;
+        }
+        .rule-card p {
+            font-size: 14.5px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 10px;
+        }
+        .rule-card p:last-child { margin-bottom: 0; }
+        .rule-card ul {
+            margin-left: 20px;
+            margin-bottom: 12px;
+            color: var(--text-secondary);
+        }
+        .rule-card li {
+            font-size: 14.5px;
+            line-height: 1.7;
+            margin-bottom: 6px;
+        }
+        .rule-num {
+            display: inline-block;
+            padding: 1px 8px;
+            background: rgba(255,126,95,0.1);
+            color: var(--primary-dark);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+            margin-right: 4px;
+        }
+        .punishment {
+            display: inline-block;
+            padding: 1px 8px;
+            background: rgba(231,76,60,0.1);
+            color: #c0392b;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .back-link:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            transform: translateX(-4px);
         }
 
         /* ================== ПОДВАЛ ================== */
-        footer { 
-            background-color: rgba(255,255,255,0.94); backdrop-filter: blur(25px); 
-            padding: 45px; margin-top: 70px; 
-            border-top: 1px solid rgba(224,224,224,0.5); 
-            position: relative;
+        .footer {
+            margin-top: auto;
+            padding: 32px 40px;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
         }
-        footer::before {
-            content: ''; position: absolute; top: 0; left: 0;
-            width: 100%; height: 3px;
-            background: linear-gradient(90deg, #ff7e5f, #feb47b, #e100ff, #ff7e5f);
-            background-size: 400% 100%;
-            animation: btn-gradient 4s ease infinite;
+        .footer-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
         }
-        .footer-content { 
-            display: flex; justify-content: space-between; align-items: center; 
-            max-width: 1200px; margin: 0 auto; 
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
-        .footer-left { display: flex; flex-direction: column; gap: 10px; }
-        .footer-left .logo { font-size: 18px; }
-        .footer-left p { color: #999; font-size: 13px; }
-        .footer-right { display: flex; gap: 20px; }
-        .footer-right a { 
-            color: #666; font-size: 22px; text-decoration: none; 
-            transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); display: inline-block; 
+        .footer-brand .icon {
+            width: 40px; height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: var(--radius-md);
+            font-size: 20px;
+            box-shadow: 0 4px 12px rgba(255,126,95,0.3);
         }
-        .footer-right a:hover { color: #ff7e5f; transform: rotate(30deg) scale(1.6); filter: drop-shadow(0 0 15px rgba(255,126,95,1)); }
-        .footer-bottom { 
-            text-align: center; margin-top: 40px; color: #aaa; font-size: 13px; 
-            border-top: 1px solid #f0f0f0; padding-top: 28px; 
+        .footer-brand .text { display: flex; flex-direction: column; }
+        .footer-brand strong { font-size: 15px; font-weight: 800; }
+        .footer-brand span { font-size: 12px; color: var(--text-muted); }
+        
+        .footer-copy {
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        .footer-copy a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+        .footer-social {
+            display: flex;
+            gap: 8px;
+        }
+        .footer-social a {
+            width: 40px; height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-size: 18px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        .footer-social a:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-3px) rotate(6deg);
+            box-shadow: 0 8px 20px rgba(255,126,95,0.4);
         }
 
         /* ================== МОДАЛЬНОЕ ОКНО ================== */
-        .modal-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: rgba(0,0,0,0.75); display: none; 
-            justify-content: center; align-items: center; 
-            z-index: 1000; opacity: 0; transition: opacity 0.5s ease; 
-            backdrop-filter: blur(15px); 
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(15,23,42,0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            padding: 20px;
         }
-        .modal-overlay.show { display: flex; opacity: 1; }
-        .modal-content { 
-            background: #fff; border-radius: 24px; padding: 45px; 
-            width: 90%; max-width: 540px; position: relative; 
-            text-align: center; 
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5); 
-            transform: scale(0.6) translateY(60px) rotateX(-35deg); 
-            transition: transform 0.7s cubic-bezier(0.175,0.885,0.32,1.275); 
-            overflow: hidden;
+        .modal.show { display: flex; opacity: 1; }
+        .modal-box {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 36px 32px 32px;
+            width: 100%;
+            max-width: 480px;
+            position: relative;
+            text-align: center;
+            box-shadow: var(--shadow-xl);
+            transform: scale(0.9) translateY(20px);
+            transition: transform 0.4s var(--transition-bounce);
         }
-        .modal-content::before {
-            content: ''; position: absolute; top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(255,126,95,0.15), transparent, rgba(225,0,255,0.15), transparent);
-            animation: rotate-slow 8s linear infinite;
-            pointer-events: none;
+        .modal.show .modal-box { transform: scale(1) translateY(0); }
+        .modal-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            width: 36px; height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--surface-2);
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 20px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
         }
-        .modal-content > * { position: relative; z-index: 1; }
-        .modal-overlay.show .modal-content { transform: scale(1) translateY(0) rotateX(0); }
-        .modal-close { 
-            position: absolute; top: 18px; right: 24px; 
-            font-size: 32px; color: #aaa; cursor: pointer; 
-            transition: all 0.4s ease; width: 40px; height: 40px; 
-            display: flex; align-items: center; justify-content: center; 
-            border-radius: 50%; z-index: 2;
+        .modal-close:hover {
+            background: #fee;
+            color: #e74c3c;
+            transform: rotate(90deg);
         }
-        .modal-close:hover { color: #000; background: #f0f0f0; transform: rotate(180deg) scale(1.4); }
-        .modal-content h2 { color: #000; margin-bottom: 18px; font-size: 26px; }
-        .modal-content p { color: #666; margin-bottom: 28px; line-height: 1.6; font-size: 15px; }
-        .modal-content .price { 
-            font-size: 32px; color: #ff7e5f; font-weight: bold; 
-            margin-bottom: 28px; 
-            animation: price-pulse 2s ease-in-out infinite; 
-            filter: drop-shadow(0 0 20px rgba(255,126,95,0.6));
+        .modal-icon {
+            width: 72px; height: 72px;
+            margin: 0 auto 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(255,126,95,0.15), rgba(254,180,123,0.15));
+            border-radius: var(--radius-lg);
+            font-size: 36px;
         }
-        @keyframes price-pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
-        .modal-content .buy-btn { 
-            display: block; text-decoration: none; 
-            background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff7e5f); 
-            background-size: 200% 200%; 
-            color: white; padding: 20px; border-radius: 12px; 
-            font-weight: bold; font-size: 18px; transition: all 0.4s ease; 
-            animation: btn-gradient 3s ease infinite; 
-            box-shadow: 0 10px 30px rgba(255,126,95,0.6);
+        .modal-box h2 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
         }
-        .modal-content .buy-btn:hover { 
-            transform: translateY(-5px) scale(1.05); 
-            box-shadow: 0 25px 55px rgba(255,126,95,0.9); 
+        .modal-box p {
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        .modal-price {
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            margin-bottom: 24px;
+        }
+        .modal-buy {
+            display: block;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            font-size: 16px;
+            transition: var(--transition);
+            box-shadow: 0 8px 24px rgba(255,126,95,0.4);
+        }
+        .modal-buy:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 32px rgba(255,126,95,0.6);
         }
 
-        /* ================== КНОПКА "НАВЕРХ" ================== */
-        .scroll-top { 
-            position: fixed; bottom: 30px; right: 30px; 
-            width: 65px; height: 65px; border-radius: 50%; 
-            background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff7e5f); 
-            background-size: 200% 200%;
-            animation: btn-gradient 3s ease infinite;
-            color: white; border: none; font-size: 28px; cursor: pointer; 
-            box-shadow: 0 15px 40px rgba(255,126,95,0.7); 
-            z-index: 500; opacity: 0; visibility: hidden; 
-            transform: translateY(50px) scale(0.5); 
-            transition: all 0.6s cubic-bezier(0.175,0.885,0.32,1.275); 
-            display: flex; align-items: center; justify-content: center; 
+        /* ================== КНОПКА ВВЕРХ ================== */
+        .to-top {
+            position: fixed;
+            bottom: 24px; right: 24px;
+            width: 48px; height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(255,126,95,0.4);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: var(--transition);
+            z-index: 500;
         }
-        .scroll-top.show { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
-        .scroll-top:hover { 
-            transform: translateY(-10px) scale(1.2) rotate(-360deg); 
-            box-shadow: 0 25px 55px rgba(255,126,95,1), 0 0 60px rgba(255,126,95,0.7); 
+        .to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .to-top:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(255,126,95,0.6); }
+
+        /* ================== УВЕДОМЛЕНИЯ ================== */
+        .toast {
+            position: fixed;
+            top: 24px; left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            padding: 14px 24px;
+            background: var(--text);
+            color: white;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 700;
+            box-shadow: var(--shadow-xl);
+            z-index: 9999;
+            transition: transform 0.5s var(--transition-bounce);
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+
+        /* ================== АДАПТИВ ================== */
+        @media (max-width: 1024px) {
+            .nav-container { padding: 14px 24px; gap: 20px; }
+            .hero { padding: 40px 24px 30px; }
+            .hero-content { padding: 40px 32px; }
+            .hero-title { font-size: 36px; }
+            .progress-section, .shop, .rules-wrap { padding-left: 24px; padding-right: 24px; }
+            .footer { padding: 24px; }
         }
 
-        /* ================== КОНФЕТТИ ================== */
-        .confetti { 
-            position: fixed; width: 10px; height: 10px; 
-            pointer-events: none; z-index: 9999;
-            animation: confetti-fall 3s linear forwards;
-        }
-        @keyframes confetti-fall {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
-        }
-
-        /* ================== АДАПТИВНОСТЬ ================== */
         @media (max-width: 768px) {
-            body { cursor: auto; }
-            .cursor-dot, .cursor-ring, .cursor-glow { display: none; }
-            header { padding: 15px 20px; flex-wrap: wrap; gap: 15px; }
-            .hero { padding-left: 25px; height: auto; padding-top: 40px; padding-bottom: 40px; }
-            .hero h1 { font-size: 30px; }
-            .hero p { font-size: 14px; }
-            .hero-row { gap: 10px; }
-            .ip-block-hero, .online-counter, .countdown-block { padding: 8px 14px; }
-            .ip-block-hero span, .online-counter span, .countdown-block .label { font-size: 12px; }
-            .timer-item { min-width: 38px; padding: 3px 6px; }
-            .timer-item .num { font-size: 16px; }
-            .timer-item .unit { font-size: 8px; }
-            .shop-section, .goal-section { padding: 20px; }
-            .grid-container { grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 15px; }
-            .rules-container { padding: 25px; margin: 20px; }
-            .footer-content { flex-direction: column; gap: 20px; text-align: center; }
-            .filter-btn { padding: 10px 18px; font-size: 13px; }
-            .priv-banner .emoji-icon { font-size: 80px; }
-            .particles, .bg-grid, .stars { display: none; }
-            .scroll-top { bottom: 20px; right: 20px; width: 55px; height: 55px; font-size: 24px; }
+            .nav-container { flex-wrap: wrap; padding: 12px 16px; gap: 12px; }
+            .nav-menu { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; }
+            .nav-link { padding: 8px 14px; font-size: 13px; }
+            .nav-actions .btn-primary { padding: 9px 16px; font-size: 13px; }
+            
+            .hero { padding: 24px 16px 20px; }
+            .hero-content { padding: 32px 24px; border-radius: 16px; }
+            .hero-title { font-size: 28px; letter-spacing: -0.5px; }
+            .hero-subtitle { font-size: 15px; margin-bottom: 24px; }
+            .hero-actions { gap: 8px; }
+            .action-card { padding: 10px 14px; }
+            .action-card .label { font-size: 10px; }
+            .action-card .value { font-size: 13px; }
+            .timer-block { flex-direction: column; align-items: flex-start; gap: 10px; }
+            
+            .progress-section, .shop, .rules-wrap { padding-left: 16px; padding-right: 16px; }
+            .progress-card { padding: 20px 22px; }
+            .shop-heading h2 { font-size: 24px; }
+            .filters { width: 100%; overflow-x: auto; padding: 4px; }
+            .filter { padding: 8px 14px; font-size: 12px; }
+            
+            .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+            .item-image { height: 150px; }
+            .item-image .icon { font-size: 68px; }
+            .item-body { padding: 14px 16px 16px; }
+            .item-title { font-size: 13px; }
+            .price-new { font-size: 18px; }
+            .item-btn { padding: 10px; font-size: 13px; }
+            
+            .rules-header h1 { font-size: 26px; }
+            .rule-card { padding: 20px 22px; }
+            .rule-card h2 { font-size: 17px; }
+            .rule-card p, .rule-card li { font-size: 14px; }
+            
+            .footer { padding: 24px 16px; }
+            .footer-inner { flex-direction: column; text-align: center; }
+            
+            .to-top { bottom: 16px; right: 16px; width: 44px; height: 44px; }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title { font-size: 24px; }
+            .grid { grid-template-columns: 1fr; }
+            .item-image { height: 180px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- КАСТОМНЫЙ КУРСОР -->
-    <div class="cursor-glow" id="cursorGlow"></div>
-    <div class="cursor-ring" id="cursorRing"></div>
-    <div class="cursor-dot" id="cursorDot"></div>
-
-    <!-- ФОН -->
+<!-- ФОН -->
+<div class="bg-layer">
     <div class="bg-grid"></div>
-    <div class="stars" id="starsContainer"></div>
+    <div class="bg-blob bg-blob-1"></div>
+    <div class="bg-blob bg-blob-2"></div>
     <div class="particles">
         <div class="particle"></div><div class="particle"></div><div class="particle"></div>
         <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
+        <div class="particle"></div>
     </div>
+</div>
 
-    <header>
-        <div class="logo"><span>🌲</span> TIGERWORLD</div>
-        <div class="nav-links">
-            <a href="#" onclick="showPage('shop')" id="nav-shop" class="active">Главная</a>
-            <a href="#" onclick="showPage('rules')" id="nav-rules">Правила проекта</a>
-            <a href="#">Поддержка</a>
-        </div>
-        <div class="header-right">
-            <div class="social-icons">
-                <a href="https://discord.gg/53TExcVtek" target="_blank">💬</a>
+<div class="page-wrapper">
+    <!-- НАВИГАЦИЯ -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="brand" onclick="showPage('shop');return false;">
+                <span class="brand-icon">🌲</span>
+                <span>TIGERWORLD</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a class="nav-link active" id="nav-shop" onclick="showPage('shop')">Главная</a></li>
+                <li><a class="nav-link" id="nav-rules" onclick="showPage('rules')">Правила</a></li>
+                <li><a class="nav-link" href="#">Поддержка</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="https://discord.gg/53TExcVtek" target="_blank" class="icon-btn" title="Discord">💬</a>
+                <button class="btn btn-primary" onclick="showPage('shop'); document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Перейти к товарам</button>
             </div>
-            <a href="#" onclick="showPage('shop')" class="btn-black">Перейти к товарам</a>
         </div>
-    </header>
+    </nav>
 
+    <!-- ================== МАГАЗИН ================== -->
     <div id="page-shop" class="page active">
+        <!-- HERO -->
         <section class="hero">
-            <div class="bubbles">
-                <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-                <div class="bubble"></div><div class="bubble"></div><div class="bubble"></div>
-                <div class="bubble"></div><div class="bubble"></div>
-            </div>
-            <h1 id="heroTitle">Поистине лучший сервер TigerWorld!</h1>
-            <p>Поддержи проект и получи уникальные возможности</p>
-            
-            <div class="hero-row">
-                <div class="ip-block-hero">
-                    <span>IP: play.tiger-world.ru</span>
-                    <button onclick="copyIP()">Копировать</button>
-                </div>
-                <div class="online-counter" id="onlineBlock">
-                    <div class="status-dot"></div>
-                    <span>Онлайн: <span class="num" id="onlineCount">...</span></span>
-                </div>
-                <div class="countdown-block">
-                    <span class="label">🔥 До конца акции:</span>
-                    <div class="timer">
-                        <div class="timer-item"><span class="num" id="days">--</span><span class="unit">дн</span></div>
-                        <div class="timer-item"><span class="num" id="hours">--</span><span class="unit">ч</span></div>
-                        <div class="timer-item"><span class="num" id="minutes">--</span><span class="unit">м</span></div>
-                        <div class="timer-item"><span class="num" id="seconds">--</span><span class="unit">с</span></div>
+            <div class="hero-content">
+                <div class="hero-inner">
+                    <div class="hero-badge">
+                        <span class="dot"></span>
+                        Сервер онлайн 24/7
+                    </div>
+                    <h1 class="hero-title">Лучший сервер<br>TigerWorld</h1>
+                    <p class="hero-subtitle">Поддержи проект и получи уникальные привилегии, валюту и предметы для игры</p>
+
+                    <div class="hero-actions">
+                        <div class="action-card" onclick="copyIP()">
+                            <span class="icon">🎮</span>
+                            <div class="text">
+                                <span class="label">IP сервера</span>
+                                <span class="value">play.tiger-world.ru</span>
+                            </div>
+                            <button>Копировать</button>
+                        </div>
+                        <div class="online-pill" id="onlineBlock">
+                            <span class="status-dot"></span>
+                            <span>Онлайн: <span class="num" id="onlineCount">...</span></span>
+                        </div>
+                    </div>
+
+                    <div class="timer-block">
+                        <span class="timer-label">🔥 Скидки до конца</span>
+                        <div class="timer-digits">
+                            <div class="timer-digit"><div class="num" id="days">00</div><div class="unit">дн</div></div>
+                            <div class="timer-digit"><div class="num" id="hours">00</div><div class="unit">ч</div></div>
+                            <div class="timer-digit"><div class="num" id="minutes">00</div><div class="unit">м</div></div>
+                            <div class="timer-digit"><div class="num" id="seconds">00</div><div class="unit">с</div></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="goal-section">
-            <div class="goal-card">
-                <div class="goal-header">
-                    <div class="goal-title"><span class="emoji">🎯</span> Сбор на улучшение сервера</div>
-                    <div class="goal-amount">
+        <!-- ПРОГРЕСС -->
+        <section class="progress-section">
+            <div class="progress-card">
+                <div class="progress-head">
+                    <div class="progress-title">
+                        <span class="icon">🎯</span>
+                        Сбор на улучшение сервера
+                    </div>
+                    <div class="progress-numbers">
                         <span class="current" id="goalCurrent">0 ₽</span>
-                        <span class="total" id="goalTotal"> / 50 000 ₽</span>
+                        <span id="goalTotal"> / 50 000 ₽</span>
                     </div>
                 </div>
-                <div class="goal-bar">
-                    <div class="goal-progress" id="goalProgress">
-                        <span class="goal-percent" id="goalPercent">0%</span>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="goalProgress">
+                        <span class="progress-percent" id="goalPercent">0%</span>
                     </div>
                 </div>
-                <div class="goal-footer">💎 Помоги серверу стать ещё лучше — каждая покупка идёт в счёт!</div>
+                <div class="progress-foot">💎 Каждая покупка идёт в счёт общей цели</div>
             </div>
         </section>
 
-        <section class="shop-section" id="shop">
-            <div class="shop-title">Магазин TigerWorld</div>
-
-            <div class="filters-bar">
-                <button class="filter-btn active" onclick="filterSection('all', this)">🌟 Все</button>
-                <button class="filter-btn" onclick="filterSection('privileges', this)">👑 Привилегии</button>
-                <button class="filter-btn" onclick="filterSection('rilli', this)">💰 Риллики</button>
-                <button class="filter-btn" onclick="filterSection('cases', this)">🎁 Кейсы</button>
-                <button class="filter-btn" onclick="filterSection('kits', this)">⚔️ Киты</button>
+        <!-- МАГАЗИН -->
+        <section class="shop" id="shop">
+            <div class="shop-head">
+                <div class="shop-heading">
+                    <h2>Магазин</h2>
+                    <p>Выберите то, что подходит именно вам</p>
+                </div>
+                <div class="filters">
+                    <button class="filter active" onclick="filterSection('all', this)">🌟 Все</button>
+                    <button class="filter" onclick="filterSection('privileges', this)">👑 Привилегии</button>
+                    <button class="filter" onclick="filterSection('rilli', this)">💰 Риллики</button>
+                    <button class="filter" onclick="filterSection('cases', this)">🎁 Кейсы</button>
+                    <button class="filter" onclick="filterSection('kits', this)">⚔️ Киты</button>
+                </div>
             </div>
 
-            <div id="section-privileges" class="section-block active">
-                <div class="section-header">
-                    <span class="icon">👑</span>
+            <!-- ПРИВИЛЕГИИ -->
+            <div id="section-privileges" class="section active">
+                <div class="section-head">
+                    <div class="icon">👑</div>
                     <h3>Привилегии</h3>
                     <span class="count">5</span>
                 </div>
-                <div class="grid-container">
-
-                    <div class="priv-card">
-                        <div class="priv-banner bg-tiger">
-                            <span class="priv-discount">-10%</span>
-                            <span class="priv-promo">🔥 ХИТ</span>
-                            <span class="emoji-icon">🐯</span>
+                <div class="grid">
+                    <div class="item priv">
+                        <div class="item-image bg-tiger">
+                            <span class="item-badge discount">-10%</span>
+                            <span class="item-badge promo">🔥 ХИТ</span>
+                            <span class="icon">🐯</span>
+                            <div class="shine"></div>
                         </div>
-                        <div class="priv-body">
-                            <div class="priv-title">Tiger <span class="accent">+ 50K</span> Рилликов</div>
-                            <div class="priv-subtitle">1 привилегия</div>
-                            <div class="priv-price-row">
-                                <span class="priv-old-price">32 ₽</span>
-                                <span class="priv-new-price">29 ₽</span>
+                        <div class="item-body">
+                            <div class="item-title">Tiger + 50K Рилликов</div>
+                            <div class="item-meta">1 привилегия</div>
+                            <div class="item-prices">
+                                <span class="price-old">32 ₽</span>
+                                <span class="price-new">29 ₽</span>
                             </div>
-                            <button class="priv-buy-btn" onclick="openModal('Tiger', '29 ₽', 'Базовая привилегия Tiger. Цветной ник в чате, доступ к /kit tiger раз в день, приоритетный вход на сервер. Бонус: +50 000 Рилликов.')">Купить</button>
+                            <button class="item-btn" onclick="openModal('🐯','Tiger', '29 ₽', 'Базовая привилегия Tiger. Цветной ник в чате, доступ к /kit tiger раз в день, приоритетный вход на сервер. Бонус: +50 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
 
-                    <div class="priv-card">
-                        <div class="priv-banner bg-rabbit">
-                            <span class="priv-discount">-15%</span>
-                            <span class="priv-promo">🔥 ХИТ</span>
-                            <span class="emoji-icon">🐰</span>
+                    <div class="item priv">
+                        <div class="item-image bg-rabbit">
+                            <span class="item-badge discount">-15%</span>
+                            <span class="item-badge promo">🔥 ХИТ</span>
+                            <span class="icon">🐰</span>
+                            <div class="shine"></div>
                         </div>
-                        <div class="priv-body">
-                            <div class="priv-title">Rabbit <span class="accent">+ 100K</span> Рилликов</div>
-                            <div class="priv-subtitle">1 привилегия</div>
-                            <div class="priv-price-row">
-                                <span class="priv-old-price">59 ₽</span>
-                                <span class="priv-new-price">50 ₽</span>
+                        <div class="item-body">
+                            <div class="item-title">Rabbit + 100K Рилликов</div>
+                            <div class="item-meta">1 привилегия</div>
+                            <div class="item-prices">
+                                <span class="price-old">59 ₽</span>
+                                <span class="price-new">50 ₽</span>
                             </div>
-                            <button class="priv-buy-btn" onclick="openModal('Rabbit', '50 ₽', 'Привилегия Rabbit. Всё из Tiger, плюс /speed, /jump boost, /kit rabbit. Бонус: +100 000 Рилликов.')">Купить</button>
+                            <button class="item-btn" onclick="openModal('🐰','Rabbit', '50 ₽', 'Привилегия Rabbit. Всё из Tiger, плюс /speed, /jump boost, /kit rabbit. Бонус: +100 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
 
-                    <div class="priv-card">
-                        <div class="priv-banner bg-god">
-                            <span class="priv-discount">-20%</span>
-                            <span class="priv-promo">⚡ ТОП</span>
-                            <span class="emoji-icon">⚡</span>
+                    <div class="item priv">
+                        <div class="item-image bg-god">
+                            <span class="item-badge discount">-20%</span>
+                            <span class="item-badge promo">⚡ ТОП</span>
+                            <span class="icon">⚡</span>
+                            <div class="shine"></div>
                         </div>
-                        <div class="priv-body">
-                            <div class="priv-title">God <span class="accent">+ 150K</span> Рилликов</div>
-                            <div class="priv-subtitle">1 привилегия</div>
-                            <div class="priv-price-row">
-                                <span class="priv-old-price">125 ₽</span>
-                                <span class="priv-new-price">100 ₽</span>
+                        <div class="item-body">
+                            <div class="item-title">God + 150K Рилликов</div>
+                            <div class="item-meta">1 привилегия</div>
+                            <div class="item-prices">
+                                <span class="price-old">125 ₽</span>
+                                <span class="price-new">100 ₽</span>
                             </div>
-                            <button class="priv-buy-btn" onclick="openModal('God', '100 ₽', 'Привилегия God. Всё из Rabbit, плюс /god, /heal, /feed, /fly на 10 минут в день. Бонус: +150 000 Рилликов.')">Купить</button>
+                            <button class="item-btn" onclick="openModal('⚡','God', '100 ₽', 'Привилегия God. Всё из Rabbit, плюс /god, /heal, /feed, /fly на 10 минут в день. Бонус: +150 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
 
-                    <div class="priv-card">
-                        <div class="priv-banner bg-pegas">
-                            <span class="priv-discount">-25%</span>
-                            <span class="priv-promo">🦄 ИВЕНТЫ</span>
-                            <span class="emoji-icon">🦄</span>
+                    <div class="item priv">
+                        <div class="item-image bg-pegas">
+                            <span class="item-badge discount">-25%</span>
+                            <span class="item-badge promo">🦄 ИВЕНТЫ</span>
+                            <span class="icon">🦄</span>
+                            <div class="shine"></div>
                         </div>
-                        <div class="priv-body">
-                            <div class="priv-title">Pegas <span class="accent">+ 250K</span> Рилликов</div>
-                            <div class="priv-subtitle">1 привилегия</div>
-                            <div class="priv-price-row">
-                                <span class="priv-old-price">267 ₽</span>
-                                <span class="priv-new-price">200 ₽</span>
+                        <div class="item-body">
+                            <div class="item-title">Pegas + 250K Рилликов</div>
+                            <div class="item-meta">1 привилегия</div>
+                            <div class="item-prices">
+                                <span class="price-old">267 ₽</span>
+                                <span class="price-new">200 ₽</span>
                             </div>
-                            <button class="priv-buy-btn" onclick="openModal('Pegas', '200 ₽', 'Привилегия Pegas. Всё из God, плюс /fly без ограничений, /enderchest, /workbench, доступ к закрытым ивентам. Бонус: +250 000 Рилликов.')">Купить</button>
+                            <button class="item-btn" onclick="openModal('🦄','Pegas', '200 ₽', 'Привилегия Pegas. Всё из God, плюс /fly без ограничений, /enderchest, /workbench, доступ к закрытым ивентам. Бонус: +250 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
 
-                    <div class="priv-card">
-                        <div class="priv-banner bg-dracula">
-                            <span class="priv-discount">-30%</span>
-                            <span class="priv-promo">🧛 ЛЕГЕНДА</span>
-                            <span class="emoji-icon">🧛</span>
+                    <div class="item priv">
+                        <div class="item-image bg-dracula">
+                            <span class="item-badge discount">-30%</span>
+                            <span class="item-badge promo">🧛 ЛЕГЕНДА</span>
+                            <span class="icon">🧛</span>
+                            <div class="shine"></div>
                         </div>
-                        <div class="priv-body">
-                            <div class="priv-title">Dracula <span class="accent">+ 500K</span> Рилликов</div>
-                            <div class="priv-subtitle">1 привилегия</div>
-                            <div class="priv-price-row">
-                                <span class="priv-old-price">314 ₽</span>
-                                <span class="priv-new-price">220 ₽</span>
+                        <div class="item-body">
+                            <div class="item-title">Dracula + 500K Рилликов</div>
+                            <div class="item-meta">1 привилегия</div>
+                            <div class="item-prices">
+                                <span class="price-old">314 ₽</span>
+                                <span class="price-new">220 ₽</span>
                             </div>
-                            <button class="priv-buy-btn" onclick="openModal('Dracula', '220 ₽', 'Топовая привилегия Dracula. Всё из Pegas, плюс ночное зрение, /vampire, /bat, уникальный префикс. Бонус: +500 000 Рилликов.')">Купить</button>
+                            <button class="item-btn" onclick="openModal('🧛','Dracula', '220 ₽', 'Топовая привилегия Dracula. Всё из Pegas, плюс ночное зрение, /vampire, /bat, уникальный префикс. Бонус: +500 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
-
                 </div>
             </div>
 
-            <div id="section-rilli" class="section-block active">
-                <div class="section-header">
-                    <span class="icon">💰</span>
+            <!-- РИЛЛИКИ -->
+            <div id="section-rilli" class="section active">
+                <div class="section-head">
+                    <div class="icon">💰</div>
                     <h3>Риллики</h3>
                     <span class="count">1</span>
                 </div>
-                <div class="grid-container">
-                    <div class="card">
-                        <div class="rilli-input-container">
-                            <div class="rilli-icon">💰</div>
-                            <div class="rilli-label">Выберите количество (1 - 100 000):</div>
-                            <input type="range" id="rilliSlider" class="rilli-slider" min="1" max="100000" value="100" oninput="syncRilli('slider')">
-                            <div class="rilli-inputs-row">
-                                <input type="number" id="rilliAmount" class="rilli-input" min="1" max="100000" value="100" oninput="syncRilli('number')">
-                                <span class="rilli-unit">Рилликов</span>
+                <div class="grid">
+                    <div class="item rilli-card">
+                        <div class="rilli-body">
+                            <div class="rilli-icon-wrap">💰</div>
+                            <div class="rilli-label">Выберите количество (1 — 100 000)</div>
+                            <input type="range" id="rilliSlider" class="range" min="1" max="100000" value="100" oninput="syncRilli('slider')">
+                            <div class="input-wrap">
+                                <input type="number" id="rilliAmount" class="input" min="1" max="100000" value="100" oninput="syncRilli('number')">
+                                <span class="input-suffix">Рилл.</span>
                             </div>
-                            <div class="rilli-label">Итого к оплате:</div>
-                            <div class="card-price" id="rilliPrice" style="margin-bottom: 0;">50 ₽</div>
+                            <div class="rilli-total">
+                                <span class="rilli-total-label">Итого к оплате</span>
+                                <span class="rilli-total-value" id="rilliPrice">50 ₽</span>
+                            </div>
                         </div>
-                        <div class="card-info">
-                            <div class="card-title" style="text-align: center; margin-bottom: 10px;">Риллики</div>
-                            <button class="card-btn" onclick="openRilliModal()">Купить</button>
+                        <div class="item-body">
+                            <button class="item-btn" onclick="openRilliModal()">Купить риллики</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="section-cases" class="section-block active">
-                <div class="section-header">
-                    <span class="icon">🎁</span>
+            <!-- КЕЙСЫ -->
+            <div id="section-cases" class="section active">
+                <div class="section-head">
+                    <div class="icon">🎁</div>
                     <h3>Кейсы</h3>
                     <span class="count">3</span>
                 </div>
-                <div class="grid-container">
-                    <div class="card">
-                        <div class="card-image" style="background: linear-gradient(135deg, #4b6cb7, #182848);">
-                            <span class="emoji-icon">📦</span>
-                            <span class="discount">-10%</span>
+                <div class="grid">
+                    <div class="item">
+                        <div class="item-image" style="background: linear-gradient(135deg, #4b6cb7, #182848);">
+                            <span class="item-badge discount">-10%</span>
+                            <span class="icon">📦</span>
+                            <div class="shine"></div>
                         </div>
-                        <div class="card-info">
-                            <div class="card-title">Обычный кейс</div>
-                            <div class="card-price">49 ₽</div>
-                            <button class="card-btn" onclick="openModal('Обычный кейс', '49 ₽', 'Содержит случайный предмет: от алмазов до зачарованной брони. Шанс редкого предмета — 15%.')">Купить</button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-image" style="background: linear-gradient(135deg, #7b4397, #dc2430);">
-                            <span class="emoji-icon">💎</span>
-                            <span class="discount">-20%</span>
-                        </div>
-                        <div class="card-info">
-                            <div class="card-title">Редкий кейс</div>
-                            <div class="card-price">149 ₽</div>
-                            <button class="card-btn" onclick="openModal('Редкий кейс', '149 ₽', 'Редкие предметы: зачарованные книги, элитры, тотемы. Шанс легендарки — 25%.')">Купить</button>
+                        <div class="item-body">
+                            <div class="item-title">Обычный кейс</div>
+                            <div class="item-meta">Случайный предмет</div>
+                            <div class="item-prices"><span class="price-new">49 ₽</span></div>
+                            <button class="item-btn" onclick="openModal('📦','Обычный кейс', '49 ₽', 'Содержит случайный предмет: от алмазов до зачарованной брони. Шанс редкого предмета — 15%.')">Купить</button>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-image" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
-                            <span class="emoji-icon">👑</span>
-                            <span class="discount">-30%</span>
+
+                    <div class="item">
+                        <div class="item-image" style="background: linear-gradient(135deg, #7b4397, #dc2430);">
+                            <span class="item-badge discount">-20%</span>
+                            <span class="icon">💎</span>
+                            <div class="shine"></div>
                         </div>
-                        <div class="card-info">
-                            <div class="card-title">Легендарный кейс</div>
-                            <div class="card-price">399 ₽</div>
-                            <button class="card-btn" onclick="openModal('Легендарный кейс', '399 ₽', 'Топовые предметы: незеритовый набор, элитры с прочностью, кастомные предметы. Шанс джекпота — 5%.')">Купить</button>
+                        <div class="item-body">
+                            <div class="item-title">Редкий кейс</div>
+                            <div class="item-meta">Ценные предметы</div>
+                            <div class="item-prices"><span class="price-new">149 ₽</span></div>
+                            <button class="item-btn" onclick="openModal('💎','Редкий кейс', '149 ₽', 'Редкие предметы: зачарованные книги, элитры, тотемы. Шанс легендарки — 25%.')">Купить</button>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="item-image" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
+                            <span class="item-badge discount">-30%</span>
+                            <span class="icon">👑</span>
+                            <div class="shine"></div>
+                        </div>
+                        <div class="item-body">
+                            <div class="item-title">Легендарный кейс</div>
+                            <div class="item-meta">Топовые предметы</div>
+                            <div class="item-prices"><span class="price-new">399 ₽</span></div>
+                            <button class="item-btn" onclick="openModal('👑','Легендарный кейс', '399 ₽', 'Топовые предметы: незеритовый набор, элитры с прочностью, кастомные предметы. Шанс джекпота — 5%.')">Купить</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div id="section-kits" class="section-block active">
-                <div class="section-header">
-                    <span class="icon">⚔️</span>
+            <!-- КИТЫ -->
+            <div id="section-kits" class="section active">
+                <div class="section-head">
+                    <div class="icon">⚔️</div>
                     <h3>Киты</h3>
                     <span class="count">3</span>
                 </div>
-                <div class="grid-container">
-                    <div class="card">
-                        <div class="card-image" style="background: linear-gradient(135deg, #cb2d3e, #ef473a);">
-                            <span class="emoji-icon">🗡️</span>
-                            <span class="discount">-15%</span>
+                <div class="grid">
+                    <div class="item">
+                        <div class="item-image" style="background: linear-gradient(135deg, #cb2d3e, #ef473a);">
+                            <span class="item-badge discount">-15%</span>
+                            <span class="icon">🗡️</span>
+                            <div class="shine"></div>
                         </div>
-                        <div class="card-info">
-                            <div class="card-title">Кит Воина</div>
-                            <div class="card-price">79 ₽</div>
-                            <button class="card-btn" onclick="openModal('Кит Воина', '79 ₽', 'Набор: незеритовый меч, полный сет брони, 32 золотых яблока, 5 зелий силы.')">Купить</button>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-image" style="background: linear-gradient(135deg, #4776e6, #8e54e9);">
-                            <span class="emoji-icon">🔮</span>
-                            <span class="discount">-20%</span>
-                        </div>
-                        <div class="card-info">
-                            <div class="card-title">Кит Мага</div>
-                            <div class="card-price">129 ₽</div>
-                            <button class="card-btn" onclick="openModal('Кит Мага', '129 ₽', 'Набор: посох, 64 зелья, книги зачарований, 16 жемчугов Эндера.')">Купить</button>
+                        <div class="item-body">
+                            <div class="item-title">Кит Воина</div>
+                            <div class="item-meta">Для боя</div>
+                            <div class="item-prices"><span class="price-new">79 ₽</span></div>
+                            <button class="item-btn" onclick="openModal('🗡️','Кит Воина', '79 ₽', 'Набор: незеритовый меч, полный сет брони, 32 золотых яблока, 5 зелий силы.')">Купить</button>
                         </div>
                     </div>
-                    <div class="card">
-                        <div class="card-image" style="background: linear-gradient(135deg, #232526, #414345);">
-                            <span class="emoji-icon">🥷</span>
-                            <span class="discount">-25%</span>
+
+                    <div class="item">
+                        <div class="item-image" style="background: linear-gradient(135deg, #4776e6, #8e54e9);">
+                            <span class="item-badge discount">-20%</span>
+                            <span class="icon">🔮</span>
+                            <div class="shine"></div>
                         </div>
-                        <div class="card-info">
-                            <div class="card-title">Кит Ассасина</div>
-                            <div class="card-price">189 ₽</div>
-                            <button class="card-btn" onclick="openModal('Кит Ассасина', '189 ₽', 'Набор: элитры, незеритовый кинжал, зелья невидимости, 10 золотых яблок.')">Купить</button>
+                        <div class="item-body">
+                            <div class="item-title">Кит Мага</div>
+                            <div class="item-meta">Для магии</div>
+                            <div class="item-prices"><span class="price-new">129 ₽</span></div>
+                            <button class="item-btn" onclick="openModal('🔮','Кит Мага', '129 ₽', 'Набор: посох, 64 зелья, книги зачарований, 16 жемчугов Эндера.')">Купить</button>
+                        </div>
+                    </div>
+
+                    <div class="item">
+                        <div class="item-image" style="background: linear-gradient(135deg, #232526, #414345);">
+                            <span class="item-badge discount">-25%</span>
+                            <span class="icon">🥷</span>
+                            <div class="shine"></div>
+                        </div>
+                        <div class="item-body">
+                            <div class="item-title">Кит Ассасина</div>
+                            <div class="item-meta">Для скрытности</div>
+                            <div class="item-prices"><span class="price-new">189 ₽</span></div>
+                            <button class="item-btn" onclick="openModal('🥷','Кит Ассасина', '189 ₽', 'Набор: элитры, незеритовый кинжал, зелья невидимости, 10 золотых яблок.')">Купить</button>
                         </div>
                     </div>
                 </div>
             </div>
-
         </section>
     </div>
 
+    <!-- ================== ПРАВИЛА ================== -->
     <div id="page-rules" class="page">
-        <div class="rules-container">
-            <a href="#" onclick="showPage('shop')" class="back-btn">← Вернуться в магазин</a>
-            <h1>Правила проекта TigerWorld</h1>
-            <div class="rule-section">
+        <div class="rules-wrap">
+            <div class="rules-header">
+                <a class="back-link" onclick="showPage('shop')">← Вернуться в магазин</a>
+                <h1>Правила проекта</h1>
+                <p>Ознакомьтесь с правилами перед игрой на сервере TigerWorld</p>
+            </div>
+
+            <div class="rule-card">
                 <h2>1. Общие положения</h2>
-                <p><span class="rule-num">1.1</span> Данный свод правил составлен представителем проекта TigerWorld и действителен на всех игровых режимах проекта <strong>TigerWorld</strong>. Незнание правил не освобождает нарушителя от ответственности, а также может усугубить наказание.</p>
-                <p><span class="rule-num">1.2</span> Правила могут быть изменены без явного оповещения основной аудитории проекта. При значительных изменениях правил, в discord сервере проекта отображается объявление.</p>
-                <p><span class="rule-num">1.3</span> Решения и действия главной администрации не обсуждаются и не поддаются разжалованию. Главная администрация вправе выдавать наказания вне рамок данных правил.</p>
-                <p><span class="rule-num">1.4</span> Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).</p>
-                <p><span class="rule-num">1.5</span> Продажа, взломы, попытки взломов, передачи аккаунтов, покупки аккаунтов в обход официального сайта, распространение данных игроков, вред серверу, а так же продажи чего либо за реальную валюту - строго запрещены.</p>
+                <p><span class="rule-num">1.1</span> Данный свод правил составлен представителем проекта TigerWorld и действителен на всех игровых режимах проекта TigerWorld. Незнание правил не освобождает нарушителя от ответственности.</p>
+                <p><span class="rule-num">1.2</span> Правила могут быть изменены без явного оповещения. При значительных изменениях в Discord-сервере проекта отображается объявление.</p>
+                <p><span class="rule-num">1.3</span> Решения и действия главной администрации не обсуждаются. Главная администрация вправе выдавать наказания вне рамок данных правил.</p>
+                <p><span class="rule-num">1.4</span> Администрация не выдаёт игровые ресурсы за их потерю в результате кика сервера, лагов, багов или действий игроков с запрещённым ПО.</p>
+                <p><span class="rule-num">1.5</span> Продажа, взломы, передача аккаунтов, распространение данных игроков, вред серверу, продажа чего-либо за реальную валюту — строго запрещены.</p>
             </div>
-            <div class="rule-section">
+
+            <div class="rule-card">
                 <h2>2. Правила регистрации</h2>
-                <p><span class="rule-num">2.1</span> Никнейм пользователя должен быть корректным. Некорректным можно назвать любой ник, нарушающий закрепленные правила.</p>
+                <p><span class="rule-num">2.1</span> Никнейм должен быть корректным. Некорректный ник — это ник, нарушающий правила.</p>
                 <ul>
-                    <li><strong>2.1.1</strong> Никнейм, похожий на никнейм высшей Администрации.</li>
-                    <li><strong>2.1.2</strong> Никнейм, сексуального, аморального содержания.</li>
-                    <li><strong>2.1.3</strong> Никнейм, оскорбляющий никнейм другого игрока.</li>
-                    <li><strong>2.1.4</strong> Никнейм, содержащий названия запрещенных ПО.</li>
-                    <li><strong>2.1.5</strong> Никнейм, содержащий грубые матерные слова.</li>
+                    <li><strong>2.1.1</strong> Никнейм, похожий на ник высшей Администрации.</li>
+                    <li><strong>2.1.2</strong> Никнейм сексуального или аморального содержания.</li>
+                    <li><strong>2.1.3</strong> Никнейм, оскорбляющий другого игрока.</li>
+                    <li><strong>2.1.4</strong> Никнейм, содержащий названия запрещённого ПО.</li>
+                    <li><strong>2.1.5</strong> Никнейм с грубыми матерными словами.</li>
                 </ul>
-                <p><span class="rule-num">2.2</span> При покупке платных дополнительных возможностей (групп), кейсов, рилликов, предоставленный системой чек необходимо сохранить.</p>
+                <p><span class="rule-num">2.2</span> При покупке платных возможностей (групп, кейсов, рилликов) сохраняйте чек, выданный системой.</p>
             </div>
-            <div class="rule-section">
+
+            <div class="rule-card">
                 <h2>3. Приобретение платных услуг</h2>
                 <p><span class="rule-num">3.1</span> Игра на проекте не подразумевает платы за использование ресурсов TigerWorld.</p>
-                <p><span class="rule-num">3.2</span> Игрок вправе добровольно оплатить определённую сумму проекту за внутриигровую услугу в одностороннем порядке.</p>
-                <p><span class="rule-num">3.3</span> При ошибке платежа, либо отсутствия внутриигровой услуги после оплаты, нужно обращаться в техподдержку сервера.</p>
-                <p><span class="rule-num">3.4</span> Возврата средств за покупки у нас нету, так как TigerWorld не является коммерческой организацией и все покупки являются добровольными пожертвованиями.</p>
-                <p><span class="rule-num">3.5</span> Покупка платных групп не даёт привилегии на игнорирование/нарушение данных правил.</p>
+                <p><span class="rule-num">3.2</span> Игрок вправе добровольно оплатить определённую сумму проекту за внутриигровую услугу.</p>
+                <p><span class="rule-num">3.3</span> При ошибке платежа или отсутствии услуги после оплаты — обращайтесь в техподдержку.</p>
+                <p><span class="rule-num">3.4</span> Возврата средств нет: TigerWorld не является коммерческой организацией, все покупки — добровольные пожертвования.</p>
+                <p><span class="rule-num">3.5</span> Покупка платных групп не даёт права игнорировать данные правила.</p>
             </div>
-            <div class="rule-section">
+
+            <div class="rule-card">
                 <h2>4. Внутриигровое общение</h2>
-                <p><span class="rule-num">4.1</span> Запрещено флудить, отправлять больше 2-ух похожих по смыслу сообщения подряд. <span class="punishment">мут на 4 часа</span></p>
-                <p><span class="rule-num">4.2</span> Запрещено флудить символами, по типу "!!!". <span class="punishment">мут на 4 часа</span></p>
-                <p><span class="rule-num">4.3</span> Запрещено организовывать флуд опросами "отправьте + в чат". <span class="punishment">мут на 4 часа</span></p>
-                <p><span class="rule-num">4.4</span> Неадекватное поведение, чрезмерные оскорбления и агрессия. <span class="punishment">мут на 3 / 12 часов</span></p>
+                <p><span class="rule-num">4.1</span> Запрещён флуд — более 2 похожих сообщений подряд. <span class="punishment">мут на 4 часа</span></p>
+                <p><span class="rule-num">4.2</span> Запрещён флуд символами (например, "!!!"). <span class="punishment">мут на 4 часа</span></p>
+                <p><span class="rule-num">4.3</span> Запрещён флуд опросами "отправьте + в чат". <span class="punishment">мут на 4 часа</span></p>
+                <p><span class="rule-num">4.4</span> Неадекватное поведение, оскорбления и агрессия. <span class="punishment">мут на 3 / 12 часов</span></p>
                 <p><span class="rule-num">4.5</span> Выпрашивание снятия наказаний у Администрации. <span class="punishment">мут на 2 часа</span></p>
-                <p><span class="rule-num">4.6</span> Дезинформация игроков проекта. <span class="punishment">мут на 12 часов / 4 дня</span></p>
-                <p><span class="rule-num">4.7</span> Запрещено упоминание сторонних проектов, ресурсов, групп, соцсетей. <span class="punishment">мут 1 день</span></p>
+                <p><span class="rule-num">4.6</span> Дезинформация игроков. <span class="punishment">мут на 12 часов / 4 дня</span></p>
+                <p><span class="rule-num">4.7</span> Упоминание сторонних проектов, ресурсов, групп, соцсетей. <span class="punishment">мут 1 день</span></p>
                 <p><span class="rule-num">4.8</span> Оскорбление родителей любого игрока. <span class="punishment">мут на 5 / 10 / 15 дней</span></p>
-                <p><span class="rule-num">4.9</span> Затрагивание политики, политическая агитация. <span class="punishment">бан 3 / 7 дней</span></p>
-                <p><span class="rule-num">4.10</span> Выдача себя за администрацию проекта. <span class="punishment">бан на 3 дня</span></p>
+                <p><span class="rule-num">4.9</span> Затрагивание политики. <span class="punishment">бан 3 / 7 дней</span></p>
+                <p><span class="rule-num">4.10</span> Выдача себя за администрацию. <span class="punishment">бан на 3 дня</span></p>
                 <p><span class="rule-num">4.11</span> Оскорбление модерации и администрации. <span class="punishment">бан 5 / 10 / 15 дней</span></p>
                 <p><span class="rule-num">4.12</span> Оскорбление ютуберов проекта. <span class="punishment">мут IP 1 / 5 дней</span></p>
-                <p><span class="rule-num">4.13</span> Пропаганда нацизма/расизма, наркотиков, оружия, терроризма. <span class="punishment">бан на 7 дней</span></p>
+                <p><span class="rule-num">4.13</span> Пропаганда нацизма/расизма, наркотиков, оружия. <span class="punishment">бан на 7 дней</span></p>
                 <p><span class="rule-num">4.14</span> Бартер между играми. <span class="punishment">бан на 4 дня</span></p>
                 <p><span class="rule-num">4.15</span> Распространение личных данных игроков. <span class="punishment">бан на 30 дней</span></p>
                 <p><span class="rule-num">4.16</span> Провокация игроков на нарушение правил. <span class="punishment">бан 12ч / 2 / 4 дня</span></p>
-                <p><span class="rule-num">4.17</span> Любое упоминание денежных операций с реальной валютой. <span class="punishment">мут на 2 дня</span></p>
-                <p><span class="rule-num">4.18</span> Запрещено любое упоминание читов в положительном контексте. <span class="punishment">мут на 7 дней</span></p>
+                <p><span class="rule-num">4.17</span> Упоминание денежных операций с реальной валютой. <span class="punishment">мут на 2 дня</span></p>
+                <p><span class="rule-num">4.18</span> Упоминание читов в положительном контексте. <span class="punishment">мут на 7 дней</span></p>
             </div>
-            <div class="rule-section">
-                <h2>5. Запрет использование вредоносного, читерского ПО</h2>
-                <p><span class="rule-num">5.2</span> Использование вредоносного, читерского ПО. <span class="punishment">бан на 50 дней + снос дома</span></p>
+
+            <div class="rule-card">
+                <h2>5. Запрет вредоносного и читерского ПО</h2>
+                <p><span class="rule-num">5.2</span> Использование вредоносного ПО, читов. <span class="punishment">бан 50 дней + снос дома</span></p>
                 <p><span class="rule-num">5.2.1</span> Совместная игра с читером. <span class="punishment">бан на 47 дней</span></p>
                 <p><span class="rule-num">5.2.2</span> Признание на проверке. <span class="punishment">бан на 46 дней</span></p>
                 <p><span class="rule-num">5.2.3</span> Признание в наличии читов. <span class="punishment">бан на 10 дней</span></p>
                 <p><span class="rule-num">5.2.4</span> Обход блокировки аккаунта. <span class="punishment">бан на 70 дней</span></p>
-                <p><span class="rule-num">5.2.6</span> Удаление/хранение читов. <span class="punishment">бан на 50 дней</span></p>
+                <p><span class="rule-num">5.2.6</span> Удаление или хранение читов. <span class="punishment">бан на 50 дней</span></p>
                 <p><span class="rule-num">5.2.7</span> Auto-копатели, лесорубы. <span class="punishment">бан на 5 дней</span></p>
-                <p><span class="rule-num">5.2.8</span> Боты, макросы, плагины. <span class="punishment">бан на 15 дней</span></p>
+                <p><span class="rule-num">5.2.8</span> Боты, макросы, плагины-автоматизаторы. <span class="punishment">бан на 15 дней</span></p>
                 <p><span class="rule-num">5.2.9</span> Неадекватное поведение на проверке. <span class="punishment">бан на 50 дней</span></p>
-                <p><span class="rule-num">5.2.10</span> Использование виртуальных машин при проверке. <span class="punishment">бан на 50 дней</span></p>
+                <p><span class="rule-num">5.2.10</span> Виртуальные машины при проверке. <span class="punishment">бан на 50 дней</span></p>
                 <p><span class="rule-num">5.2.11</span> Макросы, запрещённые моды, кликеры. <span class="punishment">бан 5 / 7 / 15 / 30 / 50 дней</span></p>
                 <p><span class="rule-num">5.2.12</span> Использование .bat на чистку. <span class="punishment">бан на 50 дней</span></p>
             </div>
-            <div class="rule-section">
-                <h2>6. Игровые правила и прочее</h2>
+
+            <div class="rule-card">
+                <h2>6. Игровые правила</h2>
                 <p><span class="rule-num">6.1</span> Запрещено причинение вреда проекту: заливы, лаг-машины, багоюз, дюпы.</p>
                 <p><span class="rule-num">6.1.1</span> Создание заливов и багоюз. <span class="punishment">бан на 25 дней</span></p>
-                <p><span class="rule-num">6.1.2</span> Создание лаг машин. <span class="punishment">отключение аккаунта</span></p>
+                <p><span class="rule-num">6.1.2</span> Создание лаг-машин. <span class="punishment">отключение аккаунта</span></p>
                 <p><span class="rule-num">6.1.3</span> Использование недоработок клановой системы. <span class="punishment">бан создателя на 25 дней</span></p>
-                <p><span class="rule-num">6.1.4</span> Запрещено строительство ловушек без выхода. <span class="punishment">бан на 25 дней + снос</span></p>
-                <p><span class="rule-num">6.1.5</span> Использование и распространение дюпов. <span class="punishment">отключение аккаунта</span></p>
+                <p><span class="rule-num">6.1.4</span> Строительство ловушек без выхода. <span class="punishment">бан 25 дней + снос</span></p>
+                <p><span class="rule-num">6.1.5</span> Распространение дюпов. <span class="punishment">отключение аккаунта</span></p>
                 <p><span class="rule-num">6.2</span> Флуд командами. <span class="punishment">кик + бан на 12 часов</span></p>
                 <p><span class="rule-num">6.3</span> Некорректный текст на табличках, регионах, книгах. <span class="punishment">бан 5 / 15 / 30 дней</span></p>
-                <p><span class="rule-num">6.4</span> Запрещено подавать ложные жалобы. <span class="punishment">бан на 3 дня</span></p>
-                <p><span class="rule-num">6.5</span> Реклама читов, магазинов, дискорд каналов. <span class="punishment">перманентная блокировка</span></p>
-                <p><span class="rule-num">6.6</span> Создание кланов с нарушением правил чата. <span class="punishment">удаление клана + бан 5-30 дней</span></p>
-                <p><span class="rule-num">6.7</span> Использование более трёх аккаунтов для фарма. <span class="punishment">блокировка на 30 дней</span></p>
+                <p><span class="rule-num">6.4</span> Ложные жалобы. <span class="punishment">бан на 3 дня</span></p>
+                <p><span class="rule-num">6.5</span> Реклама читов, магазинов, Discord-каналов. <span class="punishment">перманентная блокировка</span></p>
+                <p><span class="rule-num">6.6</span> Кланы с нарушением правил чата. <span class="punishment">удаление клана + бан 5-30 дней</span></p>
+                <p><span class="rule-num">6.7</span> Более 3 аккаунтов для фарма. <span class="punishment">блокировка на 30 дней</span></p>
             </div>
-            <div class="rule-section">
+
+            <div class="rule-card">
                 <h2>7. Модерация</h2>
-                <p><span class="rule-num">7.1</span> Модерация не имеет право заставлять скачивать AnyDesk. Исключение: Главный модератор и выше.</p>
-                <p><span class="rule-num">7.2</span> Проверка проводится исключительно через компьютер, никаких телефонов. Обязательные программы: Systeminformer, Process Hacker 2, Everything, AnyDesk, LastActivityView, JournalTrace, ShellBags Analyzer & Cleaner, RegScanner, Ocean, ExecutedProgramsList, Recaf.</p>
+                <p><span class="rule-num">7.1</span> Модерация не имеет права заставлять скачивать AnyDesk. Исключение — Главный модератор и выше.</p>
+                <p><span class="rule-num">7.2</span> Проверка проводится исключительно через компьютер. Обязательные программы: Systeminformer, Process Hacker 2, Everything, AnyDesk, LastActivityView, JournalTrace, ShellBags Analyzer & Cleaner, RegScanner, Ocean, ExecutedProgramsList, Recaf.</p>
             </div>
         </div>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <div class="footer-left">
-                <div class="logo">🌲 TIGERWORLD</div>
-                <p>Поистине лучший сервер TigerWorld!</p>
+    <!-- ПОДВАЛ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <div class="icon">🌲</div>
+                <div class="text">
+                    <strong>TIGERWORLD</strong>
+                    <span>Поистине лучший сервер</span>
+                </div>
             </div>
-            <div class="footer-right">
-                <a href="https://discord.gg/53TExcVtek" target="_blank">💬</a>
+            <div class="footer-copy">
+                © 2026 TigerWorld. Все права защищены.<br>
+                Сайт создан с помощью <a href="#">GitHub Pages</a>
             </div>
-        </div>
-        <div class="footer-bottom">
-            © 2026 TigerWorld. Все права защищены.<br>
-            Сайт создан с помощью GitHub Pages.
+            <div class="footer-social">
+                <a href="https://discord.gg/53TExcVtek" target="_blank" title="Discord">💬</a>
+            </div>
         </div>
     </footer>
+</div>
 
-    <button class="scroll-top" id="scrollTopBtn" onclick="scrollToTop()" title="Наверх">↑</button>
+<!-- КНОПКА ВВЕРХ -->
+<button class="to-top" id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-    <div id="modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="modal-close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Название</h2>
-            <p id="modalDesc">Описание</p>
-            <div class="price" id="modalPrice">Цена</div>
-            <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="buy-btn" id="modalBuyBtn" onclick="throwConfetti()">Купить</a>
-        </div>
+<!-- МОДАЛЬНОЕ ОКНО -->
+<div class="modal" id="modal">
+    <div class="modal-box">
+        <button class="modal-close" onclick="closeModal()">×</button>
+        <div class="modal-icon" id="modalIcon">🛒</div>
+        <h2 id="modalTitle">Название</h2>
+        <p id="modalDesc">Описание</p>
+        <div class="modal-price" id="modalPrice">Цена</div>
+        <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="modal-buy" id="modalBuy" onclick="throwConfetti()">Купить сейчас</a>
     </div>
+</div>
 
-    <script>
-        const CONFIG = {
-            serverIP: 'play.tiger-world.ru',
-            saleEndDate: new Date(2026, 11, 31, 23, 59, 59),
-            goalCollected: 34500,
-            goalTotal: 50000,
-        };
+<script>
+    const CONFIG = {
+        serverIP: 'play.tiger-world.ru',
+        saleEndDate: new Date(2026, 11, 31, 23, 59, 59),
+        goalCollected: 34500,
+        goalTotal: 50000,
+    };
 
-        /* ============ КАСТОМНЫЙ КУРСОР ============ */
-        const cursorDot = document.getElementById('cursorDot');
-        const cursorRing = document.getElementById('cursorRing');
-        const cursorGlow = document.getElementById('cursorGlow');
-        
-        let mouseX = 0, mouseY = 0;
-        let ringX = 0, ringY = 0;
-        let glowX = 0, glowY = 0;
+    // Навигация
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-' + pageId).classList.add('active');
+        document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+        document.getElementById('nav-' + pageId).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-        document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
-            cursorDot.style.left = mouseX + 'px';
-            cursorDot.style.top = mouseY + 'px';
+    // Фильтры
+    function filterSection(section, btn) {
+        document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        ['privileges', 'rilli', 'cases', 'kits'].forEach(s => {
+            const el = document.getElementById('section-' + s);
+            if (section === 'all' || section === s) {
+                el.classList.add('active');
+                el.style.animation = 'none';
+                el.offsetHeight;
+                el.style.animation = 'fadeUp 0.5s ease';
+            } else el.classList.remove('active');
         });
+        throwConfetti();
+    }
 
-        function animateCursor() {
-            ringX += (mouseX - ringX) * 0.15;
-            ringY += (mouseY - ringY) * 0.15;
-            glowX += (mouseX - glowX) * 0.06;
-            glowY += (mouseY - glowY) * 0.06;
-            
-            cursorRing.style.left = ringX + 'px';
-            cursorRing.style.top = ringY + 'px';
-            cursorGlow.style.left = glowX + 'px';
-            cursorGlow.style.top = glowY + 'px';
-            
-            requestAnimationFrame(animateCursor);
-        }
-        animateCursor();
-
-        // Курсор реагирует на интерактивные элементы
-        document.querySelectorAll('a, button, .card, .priv-card, .filter-btn').forEach(el => {
-            el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
-        });
-
-        /* ============ ЗВЁЗДЫ НА ФОНЕ ============ */
-        const starsContainer = document.getElementById('starsContainer');
-        for (let i = 0; i < 50; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.width = (Math.random() * 3 + 1) + 'px';
-            star.style.height = star.style.width;
-            star.style.animationDelay = Math.random() * 3 + 's';
-            star.style.animationDuration = (Math.random() * 2 + 2) + 's';
-            starsContainer.appendChild(star);
-        }
-
-        /* ============ НАВИГАЦИЯ ============ */
-        function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
-            document.getElementById('page-' + pageId).classList.add('active');
-            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
-            if (pageId === 'shop') document.getElementById('nav-shop').classList.add('active');
-            if (pageId === 'rules') document.getElementById('nav-rules').classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function filterSection(section, btn) {
-            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            const sections = ['privileges', 'rilli', 'cases', 'kits'];
-            sections.forEach(s => {
-                const el = document.getElementById('section-' + s);
-                if (section === 'all' || section === s) {
-                    el.classList.add('active');
-                    el.style.animation = 'none';
-                    el.offsetHeight;
-                    el.style.animation = 'section-appear 0.8s cubic-bezier(0.175,0.885,0.32,1.275)';
-                } else {
-                    el.classList.remove('active');
-                }
-            });
+    // Копирование IP
+    function copyIP() {
+        navigator.clipboard.writeText(CONFIG.serverIP).then(() => {
+            showToast('✅ IP сервера скопирован!');
             throwConfetti();
+        }).catch(() => showToast('❌ Не удалось скопировать'));
+    }
+
+    // Уведомление
+    function showToast(text) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerText = text;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 10);
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => toast.remove(), 500);
+        }, 2500);
+    }
+
+    // Модальное окно
+    function openModal(icon, title, price, desc) {
+        document.getElementById('modalIcon').innerText = icon;
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalPrice').innerText = price;
+        document.getElementById('modalDesc').innerText = desc;
+        document.getElementById('modal').classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('modal').addEventListener('click', e => {
+        if (e.target.id === 'modal') closeModal();
+    });
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') closeModal();
+    });
+
+    // Риллики
+    function syncRilli(source) {
+        const slider = document.getElementById('rilliSlider');
+        const input = document.getElementById('rilliAmount');
+        const priceEl = document.getElementById('rilliPrice');
+        let amount = source === 'slider' ? parseInt(slider.value) : parseInt(input.value);
+        if (isNaN(amount) || amount < 1) amount = 1;
+        if (amount > 100000) amount = 100000;
+        slider.value = amount;
+        input.value = amount;
+        let price = amount * 0.5;
+        let formatted = price % 1 === 0 ? price.toFixed(0) : price.toFixed(2);
+        priceEl.innerText = formatted + ' ₽';
+        priceEl.style.transform = 'scale(1.1)';
+        setTimeout(() => priceEl.style.transform = 'scale(1)', 200);
+    }
+
+    function openRilliModal() {
+        let amount = parseInt(document.getElementById('rilliAmount').value);
+        if (isNaN(amount) || amount < 1) amount = 1;
+        if (amount > 100000) amount = 100000;
+        let price = amount * 0.5;
+        let formatted = price % 1 === 0 ? price.toFixed(0) : price.toFixed(2);
+        openModal('💰', 'Риллики', formatted + ' ₽', 'Вы покупаете ' + amount + ' Рилликов. После оплаты они будут зачислены на ваш игровой баланс. Укажите свой ник в комментарии к донату!');
+    }
+
+    // Таймер
+    function updateTimer() {
+        const now = new Date().getTime();
+        const distance = CONFIG.saleEndDate.getTime() - now;
+        if (distance < 0) {
+            ['days', 'hours', 'minutes', 'seconds'].forEach(id => document.getElementById(id).innerText = '00');
+            return;
         }
+        const d = Math.floor(distance / 86400000);
+        const h = Math.floor((distance % 86400000) / 3600000);
+        const m = Math.floor((distance % 3600000) / 60000);
+        const s = Math.floor((distance % 60000) / 1000);
+        document.getElementById('days').innerText = String(d).padStart(2, '0');
+        document.getElementById('hours').innerText = String(h).padStart(2, '0');
+        document.getElementById('minutes').innerText = String(m).padStart(2, '0');
+        document.getElementById('seconds').innerText = String(s).padStart(2, '0');
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
 
-        function copyIP() {
-            navigator.clipboard.writeText(CONFIG.serverIP).then(() => {
-                showNotification('✅ IP сервера скопирован!');
-                throwConfetti();
-            }).catch(() => showNotification('❌ Не удалось скопировать IP'));
-        }
-
-        function showNotification(text) {
-            const notif = document.createElement('div');
-            notif.innerText = text;
-            notif.style.cssText = `position:fixed;top:30px;left:50%;transform:translateX(-50%) translateY(-100px) scale(0.5);background:linear-gradient(135deg,#ff7e5f,#feb47b);color:#fff;padding:18px 40px;border-radius:14px;font-weight:bold;font-size:16px;box-shadow:0 15px 45px rgba(255,126,95,0.7);z-index:9999;transition:transform 0.8s cubic-bezier(0.175,0.885,0.32,1.275);`;
-            document.body.appendChild(notif);
-            setTimeout(() => notif.style.transform = 'translateX(-50%) translateY(0) scale(1)', 10);
-            setTimeout(() => {
-                notif.style.transform = 'translateX(-50%) translateY(-100px) scale(0.5)';
-                setTimeout(() => notif.remove(), 800);
-            }, 2500);
-        }
-
-        /* ============ КОНФЕТТИ ============ */
-        function throwConfetti() {
-            const colors = ['#ff7e5f', '#feb47b', '#e100ff', '#00e676', '#4a90e2', '#f5d020'];
-            for (let i = 0; i < 40; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.top = '-20px';
-                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
-                confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-                confetti.style.animationDelay = Math.random() * 0.5 + 's';
-                confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-                document.body.appendChild(confetti);
-                setTimeout(() => confetti.remove(), 4000);
-            }
-        }
-
-        function openModal(title, price, description) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalPrice').innerText = price;
-            document.getElementById('modalDesc').innerText = description;
-            document.getElementById('modal').classList.add('show');
-            document.body.style.overflow = 'hidden';
-        }
-
-        function syncRilli(source) {
-            const slider = document.getElementById('rilliSlider');
-            const numberInput = document.getElementById('rilliAmount');
-            const priceDisplay = document.getElementById('rilliPrice');
-            let amount = (source === 'slider') ? parseInt(slider.value) : parseInt(numberInput.value);
-            if (isNaN(amount) || amount < 1) amount = 1;
-            if (amount > 100000) amount = 100000;
-            slider.value = amount;
-            numberInput.value = amount;
-            let price = amount * 0.5;
-            let formattedPrice = price % 1 === 0 ? price.toFixed(0) : price.toFixed(2);
-            priceDisplay.innerText = formattedPrice + ' ₽';
-            priceDisplay.style.transform = 'scale(1.2)';
-            setTimeout(() => priceDisplay.style.transform = 'scale(1)', 250);
-        }
-
-        function openRilliModal() {
-            let amount = parseInt(document.getElementById('rilliAmount').value);
-            if (isNaN(amount) || amount < 1) amount = 1;
-            if (amount > 100000) amount = 100000;
-            let price = amount * 0.5;
-            let formattedPrice = price % 1 === 0 ? price.toFixed(0) : price.toFixed(2);
-            openModal('Риллики', formattedPrice + ' ₽', 'Вы покупаете ' + amount + ' Рилликов. После оплаты они будут зачислены на ваш игровой баланс. Укажите свой игровой ник в комментарии к донату!');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.remove('show');
-            document.body.style.overflow = '';
-        }
-
-        document.getElementById('modal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeModal();
-        });
-
-        /* ============ ТАЙМЕР ============ */
-        function updateTimer() {
-            const now = new Date().getTime();
-            const distance = CONFIG.saleEndDate.getTime() - now;
-            if (distance < 0) {
-                document.getElementById('days').innerText = '00';
-                document.getElementById('hours').innerText = '00';
-                document.getElementById('minutes').innerText = '00';
-                document.getElementById('seconds').innerText = '00';
-                return;
-            }
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            document.getElementById('days').innerText = String(days).padStart(2, '0');
-            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
-        }
-        updateTimer();
-        setInterval(updateTimer, 1000);
-
-        /* ============ ОНЛАЙН ============ */
-        async function updateOnline() {
-            const block = document.getElementById('onlineBlock');
-            const num = document.getElementById('onlineCount');
-            try {
-                const res = await fetch('https://api.mcsrvstat.us/3/' + CONFIG.serverIP);
-                const data = await res.json();
-                if (data && data.online && data.players && typeof data.players.online === 'number') {
-                    num.innerText = data.players.online;
-                    block.classList.remove('offline');
-                } else {
-                    num.innerText = '0';
-                    block.classList.add('offline');
-                }
-            } catch (e) {
-                num.innerText = '—';
+    // Онлайн
+    async function updateOnline() {
+        const block = document.getElementById('onlineBlock');
+        const num = document.getElementById('onlineCount');
+        try {
+            const res = await fetch('https://api.mcsrvstat.us/3/' + CONFIG.serverIP);
+            const data = await res.json();
+            if (data && data.online && data.players && typeof data.players.online === 'number') {
+                num.innerText = data.players.online;
+                block.classList.remove('offline');
+            } else {
+                num.innerText = '0';
                 block.classList.add('offline');
             }
+        } catch (e) {
+            num.innerText = '—';
+            block.classList.add('offline');
         }
-        updateOnline();
-        setInterval(updateOnline, 60000);
+    }
+    updateOnline();
+    setInterval(updateOnline, 60000);
 
-        /* ============ ПРОГРЕСС-БАР ============ */
-        const goalPercent = Math.min(100, Math.round((CONFIG.goalCollected / CONFIG.goalTotal) * 100));
-        document.getElementById('goalCurrent').innerText = CONFIG.goalCollected.toLocaleString('ru-RU') + ' ₽';
-        document.getElementById('goalTotal').innerText = ' / ' + CONFIG.goalTotal.toLocaleString('ru-RU') + ' ₽';
-        setTimeout(() => {
-            document.getElementById('goalProgress').style.width = goalPercent + '%';
-            let p = 0;
-            const int = setInterval(() => {
-                if (p >= goalPercent) {
-                    clearInterval(int);
-                    document.getElementById('goalPercent').innerText = goalPercent + '%';
-                } else {
-                    p++;
-                    document.getElementById('goalPercent').innerText = p + '%';
-                }
-            }, 20);
-        }, 800);
+    // Прогресс
+    const percent = Math.min(100, Math.round(CONFIG.goalCollected / CONFIG.goalTotal * 100));
+    document.getElementById('goalCurrent').innerText = CONFIG.goalCollected.toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('goalTotal').innerText = ' / ' + CONFIG.goalTotal.toLocaleString('ru-RU') + ' ₽';
+    setTimeout(() => {
+        document.getElementById('goalProgress').style.width = percent + '%';
+        let p = 0;
+        const int = setInterval(() => {
+            if (p >= percent) { clearInterval(int); document.getElementById('goalPercent').innerText = percent + '%'; }
+            else { p++; document.getElementById('goalPercent').innerText = p + '%'; }
+        }, 20);
+    }, 500);
 
-        /* ============ КНОПКА "НАВЕРХ" ============ */
-        const scrollTopBtn = document.getElementById('scrollTopBtn');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) scrollTopBtn.classList.add('show');
-            else scrollTopBtn.classList.remove('show');
-        });
+    // Кнопка вверх
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 400) toTop.classList.add('show');
+        else toTop.classList.remove('show');
+    });
 
-        function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+    // Navbar scrolled
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) navbar.classList.add('scrolled');
+        else navbar.classList.remove('scrolled');
+    });
+
+    // Конфетти
+    function throwConfetti() {
+        const colors = ['#ff7e5f', '#feb47b', '#e100ff', '#00e676', '#4a90e2', '#f5d020'];
+        for (let i = 0; i < 30; i++) {
+            const c = document.createElement('div');
+            const size = Math.random() * 8 + 4;
+            c.style.cssText = `position:fixed;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};left:${Math.random()*100}%;top:-20px;border-radius:${Math.random()>0.5?'50%':'2px'};z-index:9999;pointer-events:none;animation:confettiFall ${Math.random()*2+2}s linear forwards;`;
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 4000);
         }
+    }
 
-        /* ============ ПАРАЛЛАКС ПРИ СКРОЛЛЕ ============ */
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            document.querySelectorAll('.particle').forEach((p, i) => {
-                p.style.transform = `translateY(${scrolled * (0.1 + i * 0.02)}px)`;
-            });
-        });
-
-        /* ============ ЭФФЕКТ ПЕЧАТНОЙ МАШИНКИ ============ */
-        const heroTitle = document.getElementById('heroTitle');
-        const originalText = heroTitle.innerText;
-        heroTitle.innerText = '';
-        let charIndex = 0;
-        setTimeout(() => {
-            const typeInterval = setInterval(() => {
-                if (charIndex < originalText.length) {
-                    heroTitle.innerText += originalText.charAt(charIndex);
-                    charIndex++;
-                } else {
-                    clearInterval(typeInterval);
-                }
-            }, 60);
-        }, 500);
-
-        /* ============ КОНФЕТТИ ПРИ КЛИКЕ ПО КНОПКАМ ============ */
-        document.querySelectorAll('.priv-buy-btn, .card-btn').forEach(btn => {
-            btn.addEventListener('click', () => throwConfetti());
-        });
-    </script>
+    const style = document.createElement('style');
+    style.innerText = '@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}';
+    document.head.appendChild(style);
+</script>
 
 </body>
 </html>
