@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TigerWorld — Магазин и Правила</title>
     <style>
-        /* ================== ПЕРЕМЕННЫЕ ================== */
         :root {
             --primary: #ff7e5f;
             --primary-light: #feb47b;
@@ -18,6 +17,8 @@
             --text-secondary: #64748b;
             --text-muted: #94a3b8;
             --border: #e2e8f0;
+            --success: #00c853;
+            --danger: #e74c3c;
             --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
             --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
@@ -32,6 +33,25 @@
             --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
+        [data-theme="dark"] {
+            --bg: #0a0e1a;
+            --surface: #131826;
+            --surface-2: #1a2032;
+            --text: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: #262e42;
+        }
+        [data-theme="dark"] body { background: var(--bg); }
+        [data-theme="dark"] .navbar { background: rgba(19,24,38,0.8); }
+        [data-theme="dark"] .navbar.scrolled { background: rgba(19,24,38,0.95); }
+        [data-theme="dark"] .bg-layer { opacity: 0.5; }
+        [data-theme="dark"] .item-btn { background: var(--primary); }
+        [data-theme="dark"] .progress-bar { background: #1a2032; }
+        [data-theme="dark"] .modal-close:hover { background: #2a1a1a; }
+        [data-theme="dark"] .toast { background: #fff; color: #0f172a; }
+        [data-theme="dark"] .item-image .icon { filter: drop-shadow(0 12px 24px rgba(0,0,0,0.6)); }
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
         
@@ -44,6 +64,7 @@
             background: var(--bg);
             position: relative;
             -webkit-font-smoothing: antialiased;
+            transition: background 0.3s, color 0.3s;
         }
 
         /* ================== ФОН ================== */
@@ -55,10 +76,8 @@
             overflow: hidden;
             background: 
                 radial-gradient(ellipse 800px 600px at 10% 0%, rgba(255,126,95,0.15), transparent 50%),
-                radial-gradient(ellipse 600px 800px at 90% 100%, rgba(138,43,226,0.12), transparent 50%),
-                radial-gradient(ellipse 500px 500px at 50% 50%, rgba(74,144,226,0.06), transparent 60%);
+                radial-gradient(ellipse 600px 800px at 90% 100%, rgba(138,43,226,0.12), transparent 50%);
         }
-        
         .bg-grid {
             position: absolute;
             inset: 0;
@@ -69,16 +88,14 @@
             mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
             -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 80%);
         }
-
         .bg-blob {
             position: absolute;
             border-radius: 50%;
             filter: blur(100px);
-            opacity: 0.5;
+            opacity: 0.4;
         }
         .bg-blob-1 { width: 500px; height: 500px; background: rgba(255,126,95,0.4); top: -150px; left: -150px; animation: float-1 20s ease-in-out infinite; }
         .bg-blob-2 { width: 600px; height: 600px; background: rgba(138,43,226,0.35); bottom: -200px; right: -200px; animation: float-2 25s ease-in-out infinite; }
-        
         @keyframes float-1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(80px,60px)} }
         @keyframes float-2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-60px,-80px)} }
 
@@ -97,15 +114,12 @@
             20%,80% { opacity: 0.6; }
             to { transform: translateY(-50px) scale(1); opacity: 0; }
         }
-        .particle:nth-child(1) { left: 5%; animation-duration: 18s; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 18%; animation-duration: 22s; animation-delay: 3s; }
-        .particle:nth-child(3) { left: 32%; animation-duration: 20s; animation-delay: 6s; }
-        .particle:nth-child(4) { left: 47%; animation-duration: 25s; animation-delay: 1s; }
-        .particle:nth-child(5) { left: 63%; animation-duration: 19s; animation-delay: 4s; }
-        .particle:nth-child(6) { left: 78%; animation-duration: 23s; animation-delay: 7s; }
-        .particle:nth-child(7) { left: 90%; animation-duration: 21s; animation-delay: 2s; }
+        .particle:nth-child(1) { left: 5%; animation-duration: 18s; }
+        .particle:nth-child(2) { left: 25%; animation-duration: 22s; animation-delay: 3s; }
+        .particle:nth-child(3) { left: 50%; animation-duration: 20s; animation-delay: 6s; }
+        .particle:nth-child(4) { left: 75%; animation-duration: 25s; animation-delay: 1s; }
+        .particle:nth-child(5) { left: 90%; animation-duration: 19s; animation-delay: 4s; }
 
-        /* ================== ОБЁРТКА ================== */
         .page-wrapper {
             position: relative;
             z-index: 1;
@@ -138,7 +152,6 @@
             justify-content: space-between;
             gap: 32px;
         }
-        
         .brand {
             display: flex;
             align-items: center;
@@ -151,20 +164,10 @@
             transition: var(--transition);
         }
         .brand:hover { transform: scale(1.03); }
-        .brand-icon {
-            font-size: 24px;
-            filter: drop-shadow(0 4px 8px rgba(255,126,95,0.4));
-            display: inline-block;
-            animation: sway 3s ease-in-out infinite;
-        }
+        .brand-icon { font-size: 24px; animation: sway 3s ease-in-out infinite; }
         @keyframes sway { 0%,100%{transform:rotate(-5deg)} 50%{transform:rotate(5deg)} }
 
-        .nav-menu {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            list-style: none;
-        }
+        .nav-menu { display: flex; align-items: center; gap: 8px; list-style: none; }
         .nav-link {
             padding: 10px 18px;
             font-size: 14px;
@@ -174,28 +177,15 @@
             border-radius: var(--radius-md);
             transition: var(--transition);
             cursor: pointer;
-            position: relative;
         }
-        .nav-link:hover {
-            color: var(--text);
-            background: rgba(255,126,95,0.08);
-        }
-        .nav-link.active {
-            color: var(--primary-dark);
-            background: rgba(255,126,95,0.12);
-        }
+        .nav-link:hover { color: var(--text); background: rgba(255,126,95,0.08); }
+        .nav-link.active { color: var(--primary-dark); background: rgba(255,126,95,0.12); }
+        [data-theme="dark"] .nav-link.active { color: var(--primary-light); }
 
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .nav-actions { display: flex; align-items: center; gap: 12px; }
         .icon-btn {
-            width: 42px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 42px; height: 42px;
+            display: flex; align-items: center; justify-content: center;
             background: transparent;
             border: 1px solid var(--border);
             border-radius: var(--radius-md);
@@ -210,7 +200,6 @@
             border-color: var(--primary);
             background: rgba(255,126,95,0.06);
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255,126,95,0.2);
         }
 
         .btn {
@@ -240,25 +229,11 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(255,126,95,0.5);
         }
-        .btn-primary::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 0; height: 0;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            transform: translate(-50%,-50%);
-            transition: width 0.6s, height 0.6s;
-        }
-        .btn-primary:hover::before { width: 300px; height: 300px; }
 
         /* ================== СТРАНИЦЫ ================== */
         .page { display: none; flex: 1; }
         .page.active { display: block; animation: fadeUp 0.5s ease; }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
 
         /* ================== HERO ================== */
         .hero {
@@ -315,12 +290,12 @@
         }
         .hero-badge .dot {
             width: 6px; height: 6px;
-            background: #00e676;
+            background: var(--success);
             border-radius: 50%;
-            box-shadow: 0 0 10px #00e676;
+            box-shadow: 0 0 10px var(--success);
             animation: pulse 2s ease-in-out infinite;
         }
-        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5); box-shadow: 0 0 20px #00e676} }
+        @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.5)} }
 
         .hero-title {
             font-size: 52px;
@@ -367,7 +342,6 @@
         .action-card .text { display: flex; flex-direction: column; }
         .action-card .label { font-size: 11px; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 0.5px; }
         .action-card .value { font-size: 14px; font-weight: 700; color: #fff; font-family: 'JetBrains Mono', monospace; }
-        
         .action-card button {
             padding: 6px 12px;
             background: rgba(255,126,95,0.8);
@@ -381,7 +355,6 @@
         }
         .action-card button:hover { background: var(--primary); }
 
-        /* Таймер */
         .timer-block {
             display: flex;
             align-items: center;
@@ -422,7 +395,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* Онлайн */
         .online-pill {
             display: inline-flex;
             align-items: center;
@@ -438,15 +410,15 @@
         }
         .online-pill .status-dot {
             width: 8px; height: 8px;
-            background: #00e676;
+            background: var(--success);
             border-radius: 50%;
-            box-shadow: 0 0 12px #00e676;
+            box-shadow: 0 0 12px var(--success);
             animation: pulse 2s ease-in-out infinite;
         }
         .online-pill.offline { background: rgba(231,76,60,0.1); border-color: rgba(231,76,60,0.3); }
-        .online-pill.offline .status-dot { background: #e74c3c; box-shadow: 0 0 12px #e74c3c; animation: none; }
-        .online-pill .num { color: #00e676; font-weight: 800; font-family: 'JetBrains Mono', monospace; }
-        .online-pill.offline .num { color: #e74c3c; }
+        .online-pill.offline .status-dot { background: var(--danger); box-shadow: 0 0 12px var(--danger); animation: none; }
+        .online-pill .num { color: var(--success); font-weight: 800; font-family: 'JetBrains Mono', monospace; }
+        .online-pill.offline .num { color: var(--danger); }
 
         /* ================== ПРОГРЕСС ================== */
         .progress-section {
@@ -463,10 +435,7 @@
             border: 1px solid var(--border);
             transition: var(--transition);
         }
-        .progress-card:hover {
-            box-shadow: var(--shadow-xl);
-            transform: translateY(-3px);
-        }
+        .progress-card:hover { box-shadow: var(--shadow-xl); transform: translateY(-3px); }
         .progress-head {
             display: flex;
             justify-content: space-between;
@@ -481,7 +450,6 @@
             gap: 12px;
             font-size: 18px;
             font-weight: 800;
-            color: var(--text);
         }
         .progress-title .icon { font-size: 24px; }
         .progress-numbers {
@@ -551,18 +519,9 @@
             flex-wrap: wrap;
             gap: 20px;
         }
-        .shop-heading h2 {
-            font-size: 32px;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-        }
-        .shop-heading p {
-            font-size: 14px;
-            color: var(--text-secondary);
-        }
+        .shop-heading h2 { font-size: 32px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+        .shop-heading p { font-size: 14px; color: var(--text-secondary); }
 
-        /* Фильтры */
         .filters {
             display: flex;
             gap: 8px;
@@ -586,10 +545,7 @@
             transition: var(--transition);
             white-space: nowrap;
         }
-        .filter:hover {
-            color: var(--text);
-            background: var(--surface-2);
-        }
+        .filter:hover { color: var(--text); background: var(--surface-2); }
         .filter.active {
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
@@ -610,18 +566,12 @@
         }
         .section-head .icon {
             width: 44px; height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             background: linear-gradient(135deg, rgba(255,126,95,0.15), rgba(254,180,123,0.15));
             border-radius: var(--radius-md);
             font-size: 22px;
         }
-        .section-head h3 {
-            font-size: 22px;
-            font-weight: 800;
-            letter-spacing: -0.3px;
-        }
+        .section-head h3 { font-size: 22px; font-weight: 800; letter-spacing: -0.3px; }
         .section-head .count {
             padding: 4px 12px;
             background: var(--surface);
@@ -639,7 +589,7 @@
             gap: 24px;
         }
 
-        /* ================== КАРТОЧКА ТОВАРА ================== */
+        /* ================== КАРТОЧКА ================== */
         .item {
             background: var(--surface);
             border-radius: var(--radius-lg);
@@ -657,7 +607,6 @@
         }
         .item:hover .item-image .icon { transform: scale(1.15) rotate(-6deg); }
         .item:hover .item-btn { background: linear-gradient(135deg, var(--primary), var(--primary-light)); }
-        .item:hover .item-btn::before { width: 300px; height: 300px; }
 
         .item-image {
             position: relative;
@@ -679,7 +628,6 @@
             background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.3), transparent 60%);
             z-index: 1;
         }
-
         .item-badge {
             position: absolute;
             top: 12px;
@@ -719,23 +667,9 @@
             text-transform: uppercase;
             color: var(--text);
         }
-        .item-meta {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-bottom: 16px;
-        }
-        .item-prices {
-            display: flex;
-            align-items: baseline;
-            gap: 10px;
-            margin-bottom: 16px;
-        }
-        .price-old {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-decoration: line-through;
-            font-weight: 500;
-        }
+        .item-meta { font-size: 12px; color: var(--text-muted); margin-bottom: 16px; }
+        .item-prices { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; }
+        .price-old { font-size: 13px; color: var(--text-muted); text-decoration: line-through; font-weight: 500; }
         .price-new {
             font-size: 22px;
             font-weight: 800;
@@ -760,23 +694,7 @@
             transition: var(--transition);
             margin-top: auto;
         }
-        .item-btn::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 50%;
-            width: 0; height: 0;
-            background: rgba(255,255,255,0.25);
-            border-radius: 50%;
-            transform: translate(-50%,-50%);
-            transition: width 0.6s, height 0.6s;
-        }
         .item-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-glow); }
-
-        /* ================== ПРИВИЛЕГИИ ================== */
-        .priv .item-image { height: 190px; }
-        .priv .item-image .shine {
-            background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.4), transparent 60%);
-        }
 
         .bg-tiger { background: linear-gradient(135deg, #ff6a00, #ee0979); }
         .bg-rabbit { background: linear-gradient(135deg, #f7797d, #fbd786); }
@@ -785,26 +703,20 @@
         .bg-dracula { background: linear-gradient(135deg, #870000, #190a05); }
 
         /* ================== РИЛЛИКИ ================== */
-        .rilli-card { grid-column: span 1; }
         .rilli-body {
             padding: 24px;
-            background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+            background: var(--surface-2);
             border-bottom: 1px solid var(--border);
         }
         .rilli-icon-wrap {
             width: 64px; height: 64px;
             margin: 0 auto 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             border-radius: 50%;
             font-size: 32px;
             box-shadow: 0 8px 24px rgba(255,126,95,0.4);
-            animation: spin 4s linear infinite;
         }
-        @keyframes spin { 0%{transform:rotateY(0)} 100%{transform:rotateY(360deg)} }
-
         .rilli-label {
             font-size: 12px;
             color: var(--text-secondary);
@@ -813,15 +725,13 @@
             font-weight: 600;
         }
         .range {
-            width: 100%;
-            height: 8px;
+            width: 100%; height: 8px;
             -webkit-appearance: none;
             appearance: none;
             background: linear-gradient(90deg, var(--primary), var(--primary-light));
             border-radius: var(--radius-full);
             outline: none;
             margin-bottom: 20px;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
         }
         .range::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -835,19 +745,11 @@
         .range::-webkit-slider-thumb:hover { transform: scale(1.15); }
         .range::-moz-range-thumb {
             width: 24px; height: 24px;
-            background: white;
-            border-radius: 50%;
-            cursor: pointer;
-            border: 4px solid var(--primary);
-            box-shadow: 0 4px 12px rgba(255,126,95,0.5);
+            background: white; border-radius: 50%;
+            cursor: pointer; border: 4px solid var(--primary);
         }
 
-        .input-wrap {
-            display: flex;
-            gap: 8px;
-            align-items: stretch;
-            margin-bottom: 16px;
-        }
+        .input-wrap { display: flex; gap: 8px; align-items: stretch; margin-bottom: 16px; }
         .input {
             flex: 1;
             padding: 12px 14px;
@@ -862,15 +764,11 @@
             outline: none;
             transition: var(--transition);
         }
-        .input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(255,126,95,0.15);
-        }
+        .input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(255,126,95,0.15); }
         .input-suffix {
-            display: flex;
-            align-items: center;
+            display: flex; align-items: center;
             padding: 0 16px;
-            background: var(--surface-2);
+            background: var(--surface);
             border: 2px solid var(--border);
             border-radius: var(--radius-md);
             font-size: 13px;
@@ -879,9 +777,7 @@
         }
 
         .rilli-total {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            display: flex; justify-content: space-between; align-items: center;
             padding: 14px 18px;
             background: var(--surface);
             border-radius: var(--radius-md);
@@ -890,12 +786,174 @@
         }
         .rilli-total-label { font-size: 13px; color: var(--text-secondary); font-weight: 600; }
         .rilli-total-value {
-            font-size: 22px;
-            font-weight: 800;
+            font-size: 22px; font-weight: 800;
             color: var(--primary);
             font-family: 'JetBrains Mono', monospace;
             transition: var(--transition);
         }
+
+        /* ================== 🆕 ТОП ДОНАТЕРОВ ================== */
+        .top-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 40px;
+            width: 100%;
+        }
+        .top-card {
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: 28px 32px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+        }
+        .top-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        .top-head .icon { font-size: 26px; }
+        .top-head h3 { font-size: 20px; font-weight: 800; }
+        .top-head .sub { font-size: 13px; color: var(--text-muted); margin-left: auto; }
+
+        .top-list { display: grid; gap: 10px; }
+        .top-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: var(--surface-2);
+            border-radius: var(--radius-md);
+            transition: var(--transition);
+        }
+        .top-item:hover { transform: translateX(4px); background: rgba(255,126,95,0.06); }
+        .top-rank {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .top-rank-1 { background: linear-gradient(135deg, #ffd700, #ffb800); color: #4a3200; box-shadow: 0 4px 12px rgba(255,215,0,0.4); }
+        .top-rank-2 { background: linear-gradient(135deg, #c0c0c0, #a8a8a8); color: #2a2a2a; box-shadow: 0 4px 12px rgba(192,192,192,0.4); }
+        .top-rank-3 { background: linear-gradient(135deg, #cd7f32, #a05c1e); color: #fff; box-shadow: 0 4px 12px rgba(205,127,50,0.4); }
+        .top-rank-other { background: var(--surface); color: var(--text-secondary); border: 1px solid var(--border); }
+
+        .top-avatar {
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: var(--radius-md);
+            font-size: 20px;
+            background: linear-gradient(135deg, rgba(255,126,95,0.15), rgba(254,180,123,0.15));
+            flex-shrink: 0;
+        }
+        .top-info { flex: 1; min-width: 0; }
+        .top-name { font-size: 14px; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .top-badge { font-size: 11px; color: var(--text-muted); }
+        .top-sum {
+            font-size: 15px;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'JetBrains Mono', monospace;
+            white-space: nowrap;
+        }
+
+        /* ================== 🆕 FAQ ================== */
+        .faq-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px 60px;
+            width: 100%;
+        }
+        .faq-head { margin-bottom: 24px; }
+        .faq-head h2 { font-size: 28px; font-weight: 800; letter-spacing: -0.5px; margin-bottom: 4px; }
+        .faq-head p { font-size: 14px; color: var(--text-secondary); }
+
+        .faq-list { display: grid; gap: 12px; }
+        .faq-item {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .faq-item:hover { border-color: rgba(255,126,95,0.4); }
+        .faq-q {
+            padding: 18px 22px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--text);
+            user-select: none;
+        }
+        .faq-q::after {
+            content: '+';
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--primary);
+            transition: transform var(--transition);
+        }
+        .faq-item.open .faq-q::after { transform: rotate(45deg); }
+        .faq-a {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+            padding: 0 22px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .faq-item.open .faq-a { max-height: 400px; padding: 0 22px 20px; }
+
+        /* ================== 🆕 LIVE-ЛЕНТА ================== */
+        .live-feed {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            z-index: 400;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 320px;
+            pointer-events: none;
+        }
+        .live-toast {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--primary);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            animation: slideInLeft 0.5s var(--transition-bounce), fadeOut 0.5s 5s forwards;
+            pointer-events: auto;
+        }
+        @keyframes slideInLeft {
+            from { transform: translateX(-120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        @keyframes fadeOut {
+            to { transform: translateX(-120%); opacity: 0; }
+        }
+        .live-avatar {
+            width: 36px; height: 36px;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-radius: 50%;
+            font-weight: 800;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .live-text { font-size: 13px; line-height: 1.4; }
+        .live-text strong { color: var(--text); font-weight: 700; }
+        .live-text .time { color: var(--text-muted); font-size: 11px; }
 
         /* ================== ПРАВИЛА ================== */
         .rules-wrap {
@@ -904,20 +962,9 @@
             padding: 0 40px;
             width: 100%;
         }
-        .rules-header {
-            text-align: center;
-            margin-bottom: 32px;
-        }
-        .rules-header h1 {
-            font-size: 36px;
-            font-weight: 800;
-            letter-spacing: -0.8px;
-            margin-bottom: 8px;
-        }
-        .rules-header p {
-            color: var(--text-secondary);
-            font-size: 15px;
-        }
+        .rules-header { text-align: center; margin-bottom: 32px; }
+        .rules-header h1 { font-size: 36px; font-weight: 800; letter-spacing: -0.8px; margin-bottom: 8px; }
+        .rules-header p { color: var(--text-secondary); font-size: 15px; }
 
         .rule-card {
             background: var(--surface);
@@ -928,14 +975,10 @@
             box-shadow: var(--shadow-sm);
             transition: var(--transition);
         }
-        .rule-card:hover {
-            box-shadow: var(--shadow-md);
-            border-color: rgba(255,126,95,0.3);
-        }
+        .rule-card:hover { box-shadow: var(--shadow-md); border-color: rgba(255,126,95,0.3); }
         .rule-card h2 {
             font-size: 19px;
             font-weight: 800;
-            color: var(--text);
             margin-bottom: 18px;
             padding-bottom: 12px;
             border-bottom: 1px solid var(--border);
@@ -950,23 +993,10 @@
             background: linear-gradient(180deg, var(--primary), var(--primary-light));
             border-radius: 2px;
         }
-        .rule-card p {
-            font-size: 14.5px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 10px;
-        }
+        .rule-card p { font-size: 14.5px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 10px; }
         .rule-card p:last-child { margin-bottom: 0; }
-        .rule-card ul {
-            margin-left: 20px;
-            margin-bottom: 12px;
-            color: var(--text-secondary);
-        }
-        .rule-card li {
-            font-size: 14.5px;
-            line-height: 1.7;
-            margin-bottom: 6px;
-        }
+        .rule-card ul { margin-left: 20px; margin-bottom: 12px; color: var(--text-secondary); }
+        .rule-card li { font-size: 14.5px; line-height: 1.7; margin-bottom: 6px; }
         .rule-num {
             display: inline-block;
             padding: 1px 8px;
@@ -978,11 +1008,12 @@
             font-family: 'JetBrains Mono', monospace;
             margin-right: 4px;
         }
+        [data-theme="dark"] .rule-num { color: var(--primary-light); }
         .punishment {
             display: inline-block;
             padding: 1px 8px;
             background: rgba(231,76,60,0.1);
-            color: #c0392b;
+            color: var(--danger);
             border-radius: 6px;
             font-weight: 700;
             font-size: 13px;
@@ -1003,11 +1034,7 @@
             transition: var(--transition);
             cursor: pointer;
         }
-        .back-link:hover {
-            color: var(--primary);
-            border-color: var(--primary);
-            transform: translateX(-4px);
-        }
+        .back-link:hover { color: var(--primary); border-color: var(--primary); transform: translateX(-4px); }
 
         /* ================== ПОДВАЛ ================== */
         .footer {
@@ -1025,41 +1052,23 @@
             gap: 24px;
             flex-wrap: wrap;
         }
-        .footer-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .footer-brand { display: flex; align-items: center; gap: 12px; }
         .footer-brand .icon {
             width: 40px; height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             border-radius: var(--radius-md);
             font-size: 20px;
-            box-shadow: 0 4px 12px rgba(255,126,95,0.3);
         }
         .footer-brand .text { display: flex; flex-direction: column; }
         .footer-brand strong { font-size: 15px; font-weight: 800; }
         .footer-brand span { font-size: 12px; color: var(--text-muted); }
-        
-        .footer-copy {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-align: center;
-        }
+        .footer-copy { font-size: 13px; color: var(--text-muted); text-align: center; }
         .footer-copy a { color: var(--primary); text-decoration: none; font-weight: 600; }
-
-        .footer-social {
-            display: flex;
-            gap: 8px;
-        }
+        .footer-social { display: flex; gap: 8px; }
         .footer-social a {
             width: 40px; height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             background: var(--surface-2);
             border: 1px solid var(--border);
             border-radius: var(--radius-md);
@@ -1071,7 +1080,6 @@
             background: var(--primary);
             border-color: var(--primary);
             transform: translateY(-3px) rotate(6deg);
-            box-shadow: 0 8px 20px rgba(255,126,95,0.4);
         }
 
         /* ================== МОДАЛЬНОЕ ОКНО ================== */
@@ -1106,9 +1114,7 @@
             position: absolute;
             top: 16px; right: 16px;
             width: 36px; height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             background: var(--surface-2);
             border: none;
             border-radius: var(--radius-md);
@@ -1117,33 +1123,17 @@
             cursor: pointer;
             transition: var(--transition);
         }
-        .modal-close:hover {
-            background: #fee;
-            color: #e74c3c;
-            transform: rotate(90deg);
-        }
+        .modal-close:hover { background: #fee; color: var(--danger); transform: rotate(90deg); }
         .modal-icon {
             width: 72px; height: 72px;
             margin: 0 auto 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             background: linear-gradient(135deg, rgba(255,126,95,0.15), rgba(254,180,123,0.15));
             border-radius: var(--radius-lg);
             font-size: 36px;
         }
-        .modal-box h2 {
-            font-size: 22px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            letter-spacing: -0.3px;
-        }
-        .modal-box p {
-            color: var(--text-secondary);
-            font-size: 14px;
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
+        .modal-box h2 { font-size: 22px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.3px; }
+        .modal-box p { color: var(--text-secondary); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
         .modal-price {
             font-size: 32px;
             font-weight: 800;
@@ -1163,19 +1153,14 @@
             transition: var(--transition);
             box-shadow: 0 8px 24px rgba(255,126,95,0.4);
         }
-        .modal-buy:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 32px rgba(255,126,95,0.6);
-        }
+        .modal-buy:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255,126,95,0.6); }
 
         /* ================== КНОПКА ВВЕРХ ================== */
         .to-top {
             position: fixed;
             bottom: 24px; right: 24px;
             width: 48px; height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             color: white;
             border: none;
@@ -1190,7 +1175,39 @@
             z-index: 500;
         }
         .to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
-        .to-top:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(255,126,95,0.6); }
+        .to-top:hover { transform: translateY(-4px); }
+
+        /* ================== ТЕМА ================== */
+        .theme-toggle {
+            position: relative;
+            width: 56px;
+            height: 30px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-full);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            padding: 0 4px;
+            justify-content: space-between;
+            font-size: 12px;
+        }
+        .theme-toggle::before {
+            content: '';
+            position: absolute;
+            width: 24px; height: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 50%;
+            transition: var(--transition);
+            left: 3px;
+            z-index: 1;
+        }
+        [data-theme="dark"] .theme-toggle::before { left: calc(100% - 27px); }
+        .theme-toggle .sun, .theme-toggle .moon { position: relative; z-index: 2; font-size: 12px; }
+        [data-theme="dark"] .theme-toggle .sun { opacity: 0.5; }
+        .theme-toggle .moon { opacity: 0.5; }
+        [data-theme="dark"] .theme-toggle .moon { opacity: 1; }
 
         /* ================== УВЕДОМЛЕНИЯ ================== */
         .toast {
@@ -1199,7 +1216,7 @@
             transform: translateX(-50%) translateY(-100px);
             padding: 14px 24px;
             background: var(--text);
-            color: white;
+            color: var(--bg);
             border-radius: var(--radius-md);
             font-size: 14px;
             font-weight: 700;
@@ -1215,32 +1232,22 @@
             .hero { padding: 40px 24px 30px; }
             .hero-content { padding: 40px 32px; }
             .hero-title { font-size: 36px; }
-            .progress-section, .shop, .rules-wrap { padding-left: 24px; padding-right: 24px; }
-            .footer { padding: 24px; }
+            .progress-section, .shop, .rules-wrap, .top-section, .faq-section { padding-left: 24px; padding-right: 24px; }
         }
-
         @media (max-width: 768px) {
             .nav-container { flex-wrap: wrap; padding: 12px 16px; gap: 12px; }
-            .nav-menu { order: 3; width: 100%; justify-content: flex-start; overflow-x: auto; }
+            .nav-menu { order: 3; width: 100%; overflow-x: auto; }
             .nav-link { padding: 8px 14px; font-size: 13px; }
-            .nav-actions .btn-primary { padding: 9px 16px; font-size: 13px; }
-            
             .hero { padding: 24px 16px 20px; }
-            .hero-content { padding: 32px 24px; border-radius: 16px; }
-            .hero-title { font-size: 28px; letter-spacing: -0.5px; }
-            .hero-subtitle { font-size: 15px; margin-bottom: 24px; }
-            .hero-actions { gap: 8px; }
-            .action-card { padding: 10px 14px; }
-            .action-card .label { font-size: 10px; }
-            .action-card .value { font-size: 13px; }
+            .hero-content { padding: 32px 24px; }
+            .hero-title { font-size: 28px; }
+            .hero-subtitle { font-size: 15px; }
             .timer-block { flex-direction: column; align-items: flex-start; gap: 10px; }
-            
-            .progress-section, .shop, .rules-wrap { padding-left: 16px; padding-right: 16px; }
-            .progress-card { padding: 20px 22px; }
+            .progress-section, .shop, .rules-wrap, .top-section, .faq-section { padding-left: 16px; padding-right: 16px; }
+            .progress-card, .top-card { padding: 20px 22px; }
             .shop-heading h2 { font-size: 24px; }
-            .filters { width: 100%; overflow-x: auto; padding: 4px; }
+            .filters { width: 100%; overflow-x: auto; }
             .filter { padding: 8px 14px; font-size: 12px; }
-            
             .grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
             .item-image { height: 150px; }
             .item-image .icon { font-size: 68px; }
@@ -1248,41 +1255,28 @@
             .item-title { font-size: 13px; }
             .price-new { font-size: 18px; }
             .item-btn { padding: 10px; font-size: 13px; }
-            
             .rules-header h1 { font-size: 26px; }
             .rule-card { padding: 20px 22px; }
-            .rule-card h2 { font-size: 17px; }
-            .rule-card p, .rule-card li { font-size: 14px; }
-            
             .footer { padding: 24px 16px; }
             .footer-inner { flex-direction: column; text-align: center; }
-            
             .to-top { bottom: 16px; right: 16px; width: 44px; height: 44px; }
-        }
-
-        @media (max-width: 480px) {
-            .hero-title { font-size: 24px; }
-            .grid { grid-template-columns: 1fr; }
-            .item-image { height: 180px; }
+            .live-feed { bottom: 80px; left: 12px; max-width: calc(100% - 24px); }
         }
     </style>
 </head>
 <body>
 
-<!-- ФОН -->
 <div class="bg-layer">
     <div class="bg-grid"></div>
     <div class="bg-blob bg-blob-1"></div>
     <div class="bg-blob bg-blob-2"></div>
     <div class="particles">
         <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div><div class="particle"></div><div class="particle"></div>
-        <div class="particle"></div>
+        <div class="particle"></div><div class="particle"></div>
     </div>
 </div>
 
 <div class="page-wrapper">
-    <!-- НАВИГАЦИЯ -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="#" class="brand" onclick="showPage('shop');return false;">
@@ -1295,15 +1289,18 @@
                 <li><a class="nav-link" href="#">Поддержка</a></li>
             </ul>
             <div class="nav-actions">
+                <div class="theme-toggle" onclick="toggleTheme()" title="Сменить тему">
+                    <span class="sun">☀️</span>
+                    <span class="moon">🌙</span>
+                </div>
                 <a href="https://discord.gg/53TExcVtek" target="_blank" class="icon-btn" title="Discord">💬</a>
-                <button class="btn btn-primary" onclick="showPage('shop'); document.getElementById('shop').scrollIntoView({behavior:'smooth'})">Перейти к товарам</button>
+                <button class="btn btn-primary" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})">К товарам</button>
             </div>
         </div>
     </nav>
 
     <!-- ================== МАГАЗИН ================== -->
     <div id="page-shop" class="page active">
-        <!-- HERO -->
         <section class="hero">
             <div class="hero-content">
                 <div class="hero-inner">
@@ -1342,29 +1339,22 @@
             </div>
         </section>
 
-        <!-- ПРОГРЕСС -->
         <section class="progress-section">
             <div class="progress-card">
                 <div class="progress-head">
-                    <div class="progress-title">
-                        <span class="icon">🎯</span>
-                        Сбор на улучшение сервера
-                    </div>
+                    <div class="progress-title"><span class="icon">🎯</span> Сбор на улучшение сервера</div>
                     <div class="progress-numbers">
                         <span class="current" id="goalCurrent">0 ₽</span>
                         <span id="goalTotal"> / 50 000 ₽</span>
                     </div>
                 </div>
                 <div class="progress-bar">
-                    <div class="progress-fill" id="goalProgress">
-                        <span class="progress-percent" id="goalPercent">0%</span>
-                    </div>
+                    <div class="progress-fill" id="goalProgress"><span class="progress-percent" id="goalPercent">0%</span></div>
                 </div>
                 <div class="progress-foot">💎 Каждая покупка идёт в счёт общей цели</div>
             </div>
         </section>
 
-        <!-- МАГАЗИН -->
         <section class="shop" id="shop">
             <div class="shop-head">
                 <div class="shop-heading">
@@ -1380,7 +1370,6 @@
                 </div>
             </div>
 
-            <!-- ПРИВИЛЕГИИ -->
             <div id="section-privileges" class="section active">
                 <div class="section-head">
                     <div class="icon">👑</div>
@@ -1388,7 +1377,7 @@
                     <span class="count">5</span>
                 </div>
                 <div class="grid">
-                    <div class="item priv">
+                    <div class="item">
                         <div class="item-image bg-tiger">
                             <span class="item-badge discount">-10%</span>
                             <span class="item-badge promo">🔥 ХИТ</span>
@@ -1398,15 +1387,11 @@
                         <div class="item-body">
                             <div class="item-title">Tiger + 50K Рилликов</div>
                             <div class="item-meta">1 привилегия</div>
-                            <div class="item-prices">
-                                <span class="price-old">32 ₽</span>
-                                <span class="price-new">29 ₽</span>
-                            </div>
+                            <div class="item-prices"><span class="price-old">32 ₽</span><span class="price-new">29 ₽</span></div>
                             <button class="item-btn" onclick="openModal('🐯','Tiger', '29 ₽', 'Базовая привилегия Tiger. Цветной ник в чате, доступ к /kit tiger раз в день, приоритетный вход на сервер. Бонус: +50 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
-
-                    <div class="item priv">
+                    <div class="item">
                         <div class="item-image bg-rabbit">
                             <span class="item-badge discount">-15%</span>
                             <span class="item-badge promo">🔥 ХИТ</span>
@@ -1416,15 +1401,11 @@
                         <div class="item-body">
                             <div class="item-title">Rabbit + 100K Рилликов</div>
                             <div class="item-meta">1 привилегия</div>
-                            <div class="item-prices">
-                                <span class="price-old">59 ₽</span>
-                                <span class="price-new">50 ₽</span>
-                            </div>
+                            <div class="item-prices"><span class="price-old">59 ₽</span><span class="price-new">50 ₽</span></div>
                             <button class="item-btn" onclick="openModal('🐰','Rabbit', '50 ₽', 'Привилегия Rabbit. Всё из Tiger, плюс /speed, /jump boost, /kit rabbit. Бонус: +100 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
-
-                    <div class="item priv">
+                    <div class="item">
                         <div class="item-image bg-god">
                             <span class="item-badge discount">-20%</span>
                             <span class="item-badge promo">⚡ ТОП</span>
@@ -1434,15 +1415,11 @@
                         <div class="item-body">
                             <div class="item-title">God + 150K Рилликов</div>
                             <div class="item-meta">1 привилегия</div>
-                            <div class="item-prices">
-                                <span class="price-old">125 ₽</span>
-                                <span class="price-new">100 ₽</span>
-                            </div>
+                            <div class="item-prices"><span class="price-old">125 ₽</span><span class="price-new">100 ₽</span></div>
                             <button class="item-btn" onclick="openModal('⚡','God', '100 ₽', 'Привилегия God. Всё из Rabbit, плюс /god, /heal, /feed, /fly на 10 минут в день. Бонус: +150 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
-
-                    <div class="item priv">
+                    <div class="item">
                         <div class="item-image bg-pegas">
                             <span class="item-badge discount">-25%</span>
                             <span class="item-badge promo">🦄 ИВЕНТЫ</span>
@@ -1452,15 +1429,11 @@
                         <div class="item-body">
                             <div class="item-title">Pegas + 250K Рилликов</div>
                             <div class="item-meta">1 привилегия</div>
-                            <div class="item-prices">
-                                <span class="price-old">267 ₽</span>
-                                <span class="price-new">200 ₽</span>
-                            </div>
+                            <div class="item-prices"><span class="price-old">267 ₽</span><span class="price-new">200 ₽</span></div>
                             <button class="item-btn" onclick="openModal('🦄','Pegas', '200 ₽', 'Привилегия Pegas. Всё из God, плюс /fly без ограничений, /enderchest, /workbench, доступ к закрытым ивентам. Бонус: +250 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
-
-                    <div class="item priv">
+                    <div class="item">
                         <div class="item-image bg-dracula">
                             <span class="item-badge discount">-30%</span>
                             <span class="item-badge promo">🧛 ЛЕГЕНДА</span>
@@ -1470,17 +1443,13 @@
                         <div class="item-body">
                             <div class="item-title">Dracula + 500K Рилликов</div>
                             <div class="item-meta">1 привилегия</div>
-                            <div class="item-prices">
-                                <span class="price-old">314 ₽</span>
-                                <span class="price-new">220 ₽</span>
-                            </div>
+                            <div class="item-prices"><span class="price-old">314 ₽</span><span class="price-new">220 ₽</span></div>
                             <button class="item-btn" onclick="openModal('🧛','Dracula', '220 ₽', 'Топовая привилегия Dracula. Всё из Pegas, плюс ночное зрение, /vampire, /bat, уникальный префикс. Бонус: +500 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- РИЛЛИКИ -->
             <div id="section-rilli" class="section active">
                 <div class="section-head">
                     <div class="icon">💰</div>
@@ -1488,7 +1457,7 @@
                     <span class="count">1</span>
                 </div>
                 <div class="grid">
-                    <div class="item rilli-card">
+                    <div class="item">
                         <div class="rilli-body">
                             <div class="rilli-icon-wrap">💰</div>
                             <div class="rilli-label">Выберите количество (1 — 100 000)</div>
@@ -1509,7 +1478,6 @@
                 </div>
             </div>
 
-            <!-- КЕЙСЫ -->
             <div id="section-cases" class="section active">
                 <div class="section-head">
                     <div class="icon">🎁</div>
@@ -1530,7 +1498,6 @@
                             <button class="item-btn" onclick="openModal('📦','Обычный кейс', '49 ₽', 'Содержит случайный предмет: от алмазов до зачарованной брони. Шанс редкого предмета — 15%.')">Купить</button>
                         </div>
                     </div>
-
                     <div class="item">
                         <div class="item-image" style="background: linear-gradient(135deg, #7b4397, #dc2430);">
                             <span class="item-badge discount">-20%</span>
@@ -1544,7 +1511,6 @@
                             <button class="item-btn" onclick="openModal('💎','Редкий кейс', '149 ₽', 'Редкие предметы: зачарованные книги, элитры, тотемы. Шанс легендарки — 25%.')">Купить</button>
                         </div>
                     </div>
-
                     <div class="item">
                         <div class="item-image" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
                             <span class="item-badge discount">-30%</span>
@@ -1561,7 +1527,6 @@
                 </div>
             </div>
 
-            <!-- КИТЫ -->
             <div id="section-kits" class="section active">
                 <div class="section-head">
                     <div class="icon">⚔️</div>
@@ -1582,7 +1547,6 @@
                             <button class="item-btn" onclick="openModal('🗡️','Кит Воина', '79 ₽', 'Набор: незеритовый меч, полный сет брони, 32 золотых яблока, 5 зелий силы.')">Купить</button>
                         </div>
                     </div>
-
                     <div class="item">
                         <div class="item-image" style="background: linear-gradient(135deg, #4776e6, #8e54e9);">
                             <span class="item-badge discount">-20%</span>
@@ -1596,7 +1560,6 @@
                             <button class="item-btn" onclick="openModal('🔮','Кит Мага', '129 ₽', 'Набор: посох, 64 зелья, книги зачарований, 16 жемчугов Эндера.')">Купить</button>
                         </div>
                     </div>
-
                     <div class="item">
                         <div class="item-image" style="background: linear-gradient(135deg, #232526, #414345);">
                             <span class="item-badge discount">-25%</span>
@@ -1613,6 +1576,98 @@
                 </div>
             </div>
         </section>
+
+        <!-- 🆕 ТОП ДОНАТЕРОВ -->
+        <section class="top-section">
+            <div class="top-card">
+                <div class="top-head">
+                    <span class="icon">🏆</span>
+                    <h3>Топ донатеров месяца</h3>
+                    <span class="sub">Обновляется каждый день</span>
+                </div>
+                <div class="top-list">
+                    <div class="top-item">
+                        <div class="top-rank top-rank-1">1</div>
+                        <div class="top-avatar">🐉</div>
+                        <div class="top-info">
+                            <div class="top-name">DragonSlayer_228</div>
+                            <div class="top-badge">Pegas • 3 дня назад</div>
+                        </div>
+                        <div class="top-sum">1 250 ₽</div>
+                    </div>
+                    <div class="top-item">
+                        <div class="top-rank top-rank-2">2</div>
+                        <div class="top-avatar">👑</div>
+                        <div class="top-info">
+                            <div class="top-name">KingCraft_Pro</div>
+                            <div class="top-badge">God • 5 дней назад</div>
+                        </div>
+                        <div class="top-sum">890 ₽</div>
+                    </div>
+                    <div class="top-item">
+                        <div class="top-rank top-rank-3">3</div>
+                        <div class="top-avatar">🔥</div>
+                        <div class="top-info">
+                            <div class="top-name">FireStorm</div>
+                            <div class="top-badge">Dracula • сегодня</div>
+                        </div>
+                        <div class="top-sum">720 ₽</div>
+                    </div>
+                    <div class="top-item">
+                        <div class="top-rank top-rank-other">4</div>
+                        <div class="top-avatar">⚡</div>
+                        <div class="top-info">
+                            <div class="top-name">Lightning_MC</div>
+                            <div class="top-badge">Pegas • вчера</div>
+                        </div>
+                        <div class="top-sum">540 ₽</div>
+                    </div>
+                    <div class="top-item">
+                        <div class="top-rank top-rank-other">5</div>
+                        <div class="top-avatar">🗡️</div>
+                        <div class="top-info">
+                            <div class="top-name">ShadowHunter</div>
+                            <div class="top-badge">God • 2 дня назад</div>
+                        </div>
+                        <div class="top-sum">410 ₽</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 🆕 FAQ -->
+        <section class="faq-section">
+            <div class="faq-head">
+                <h2>Частые вопросы</h2>
+                <p>Отвечаем на то, что спрашивают чаще всего</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-q">Как быстро приходит покупка после оплаты?</div>
+                    <div class="faq-a">Мгновенно. После подтверждения оплаты плагин на сервере автоматически выдаёт вам покупку в течение 10–30 секунд. Если вы офлайн — товар выдастся при следующем входе на сервер.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-q">Что делать, если покупка не пришла?</div>
+                    <div class="faq-a">Напишите в наш Discord-сервер в канал #поддержка. Приложите чек об оплате (скриншот или PDF) и ваш игровой ник. Обычно мы решаем такие вопросы в течение 15 минут.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-q">Можно ли вернуть деньги за покупку?</div>
+                    <div class="faq-a">Возврат средств не предусмотрен, так как все покупки являются добровольными пожертвованиями на развитие сервера. Это указано в правилах проекта (пункт 3.4).</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-q">Что такое Риллики и зачем они нужны?</div>
+                    <div class="faq-a">Риллики — это внутриигровая валюта TigerWorld. Их можно тратить на покупку предметов у других игроков, оплату услуг, участие в аукционах и покупку в специальных магазинах на сервере. 1 Риллик = 0.5 ₽.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-q">Работают ли привилегии после вайпа сервера?</div>
+                    <div class="faq-a">Да, все привилегии сохраняются навсегда и не сбрасываются при вайпах. Исключение — внутриигровые предметы и Риллики, их количество может обнуляться при капитальном вайпе.</div>
+                </div>
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-q">Как связаться с администрацией?</div>
+                    <div class="faq-a">Самый быстрый способ — наш Discord-сервер (кнопка в шапке). Также можно написать на почту support@tiger-world.ru. Отвечаем с 10:00 до 23:00 по МСК.</div>
+                </div>
+            </div>
+        </section>
     </div>
 
     <!-- ================== ПРАВИЛА ================== -->
@@ -1626,13 +1681,12 @@
 
             <div class="rule-card">
                 <h2>1. Общие положения</h2>
-                <p><span class="rule-num">1.1</span> Данный свод правил составлен представителем проекта TigerWorld и действителен на всех игровых режимах проекта TigerWorld. Незнание правил не освобождает нарушителя от ответственности.</p>
+                <p><span class="rule-num">1.1</span> Данный свод правил составлен представителем проекта TigerWorld и действителен на всех игровых режимах. Незнание правил не освобождает от ответственности.</p>
                 <p><span class="rule-num">1.2</span> Правила могут быть изменены без явного оповещения. При значительных изменениях в Discord-сервере проекта отображается объявление.</p>
-                <p><span class="rule-num">1.3</span> Решения и действия главной администрации не обсуждаются. Главная администрация вправе выдавать наказания вне рамок данных правил.</p>
+                <p><span class="rule-num">1.3</span> Решения главной администрации не обсуждаются. Главная администрация вправе выдавать наказания вне рамок данных правил.</p>
                 <p><span class="rule-num">1.4</span> Администрация не выдаёт игровые ресурсы за их потерю в результате кика сервера, лагов, багов или действий игроков с запрещённым ПО.</p>
-                <p><span class="rule-num">1.5</span> Продажа, взломы, передача аккаунтов, распространение данных игроков, вред серверу, продажа чего-либо за реальную валюту — строго запрещены.</p>
+                <p><span class="rule-num">1.5</span> Продажа, взломы, передача аккаунтов, распространение данных игроков, вред серверу — строго запрещены.</p>
             </div>
-
             <div class="rule-card">
                 <h2>2. Правила регистрации</h2>
                 <p><span class="rule-num">2.1</span> Никнейм должен быть корректным. Некорректный ник — это ник, нарушающий правила.</p>
@@ -1640,84 +1694,78 @@
                     <li><strong>2.1.1</strong> Никнейм, похожий на ник высшей Администрации.</li>
                     <li><strong>2.1.2</strong> Никнейм сексуального или аморального содержания.</li>
                     <li><strong>2.1.3</strong> Никнейм, оскорбляющий другого игрока.</li>
-                    <li><strong>2.1.4</strong> Никнейм, содержащий названия запрещённого ПО.</li>
+                    <li><strong>2.1.4</strong> Никнейм с названиями запрещённого ПО.</li>
                     <li><strong>2.1.5</strong> Никнейм с грубыми матерными словами.</li>
                 </ul>
-                <p><span class="rule-num">2.2</span> При покупке платных возможностей (групп, кейсов, рилликов) сохраняйте чек, выданный системой.</p>
+                <p><span class="rule-num">2.2</span> При покупке платных возможностей сохраняйте чек, выданный системой.</p>
             </div>
-
             <div class="rule-card">
-                <h2>3. Приобретение платных услуг</h2>
+                <h2>3. Платные услуги</h2>
                 <p><span class="rule-num">3.1</span> Игра на проекте не подразумевает платы за использование ресурсов TigerWorld.</p>
-                <p><span class="rule-num">3.2</span> Игрок вправе добровольно оплатить определённую сумму проекту за внутриигровую услугу.</p>
-                <p><span class="rule-num">3.3</span> При ошибке платежа или отсутствии услуги после оплаты — обращайтесь в техподдержку.</p>
-                <p><span class="rule-num">3.4</span> Возврата средств нет: TigerWorld не является коммерческой организацией, все покупки — добровольные пожертвования.</p>
+                <p><span class="rule-num">3.2</span> Игрок вправе добровольно оплатить определённую сумму за внутриигровую услугу.</p>
+                <p><span class="rule-num">3.3</span> При ошибке платежа обращайтесь в техподдержку.</p>
+                <p><span class="rule-num">3.4</span> Возврата средств нет: все покупки — добровольные пожертвования.</p>
                 <p><span class="rule-num">3.5</span> Покупка платных групп не даёт права игнорировать данные правила.</p>
             </div>
-
             <div class="rule-card">
                 <h2>4. Внутриигровое общение</h2>
-                <p><span class="rule-num">4.1</span> Запрещён флуд — более 2 похожих сообщений подряд. <span class="punishment">мут на 4 часа</span></p>
-                <p><span class="rule-num">4.2</span> Запрещён флуд символами (например, "!!!"). <span class="punishment">мут на 4 часа</span></p>
-                <p><span class="rule-num">4.3</span> Запрещён флуд опросами "отправьте + в чат". <span class="punishment">мут на 4 часа</span></p>
-                <p><span class="rule-num">4.4</span> Неадекватное поведение, оскорбления и агрессия. <span class="punishment">мут на 3 / 12 часов</span></p>
-                <p><span class="rule-num">4.5</span> Выпрашивание снятия наказаний у Администрации. <span class="punishment">мут на 2 часа</span></p>
-                <p><span class="rule-num">4.6</span> Дезинформация игроков. <span class="punishment">мут на 12 часов / 4 дня</span></p>
-                <p><span class="rule-num">4.7</span> Упоминание сторонних проектов, ресурсов, групп, соцсетей. <span class="punishment">мут 1 день</span></p>
-                <p><span class="rule-num">4.8</span> Оскорбление родителей любого игрока. <span class="punishment">мут на 5 / 10 / 15 дней</span></p>
+                <p><span class="rule-num">4.1</span> Запрещён флуд — более 2 похожих сообщений подряд. <span class="punishment">мут 4 часа</span></p>
+                <p><span class="rule-num">4.2</span> Запрещён флуд символами. <span class="punishment">мут 4 часа</span></p>
+                <p><span class="rule-num">4.3</span> Запрещён флуд опросами "отправьте + в чат". <span class="punishment">мут 4 часа</span></p>
+                <p><span class="rule-num">4.4</span> Неадекватное поведение, оскорбления и агрессия. <span class="punishment">мут 3 / 12 часов</span></p>
+                <p><span class="rule-num">4.5</span> Выпрашивание снятия наказаний у Администрации. <span class="punishment">мут 2 часа</span></p>
+                <p><span class="rule-num">4.6</span> Дезинформация игроков. <span class="punishment">мут 12 часов / 4 дня</span></p>
+                <p><span class="rule-num">4.7</span> Упоминание сторонних проектов и соцсетей. <span class="punishment">мут 1 день</span></p>
+                <p><span class="rule-num">4.8</span> Оскорбление родителей любого игрока. <span class="punishment">мут 5 / 10 / 15 дней</span></p>
                 <p><span class="rule-num">4.9</span> Затрагивание политики. <span class="punishment">бан 3 / 7 дней</span></p>
-                <p><span class="rule-num">4.10</span> Выдача себя за администрацию. <span class="punishment">бан на 3 дня</span></p>
+                <p><span class="rule-num">4.10</span> Выдача себя за администрацию. <span class="punishment">бан 3 дня</span></p>
                 <p><span class="rule-num">4.11</span> Оскорбление модерации и администрации. <span class="punishment">бан 5 / 10 / 15 дней</span></p>
                 <p><span class="rule-num">4.12</span> Оскорбление ютуберов проекта. <span class="punishment">мут IP 1 / 5 дней</span></p>
-                <p><span class="rule-num">4.13</span> Пропаганда нацизма/расизма, наркотиков, оружия. <span class="punishment">бан на 7 дней</span></p>
-                <p><span class="rule-num">4.14</span> Бартер между играми. <span class="punishment">бан на 4 дня</span></p>
-                <p><span class="rule-num">4.15</span> Распространение личных данных игроков. <span class="punishment">бан на 30 дней</span></p>
+                <p><span class="rule-num">4.13</span> Пропаганда нацизма/расизма, наркотиков, оружия. <span class="punishment">бан 7 дней</span></p>
+                <p><span class="rule-num">4.14</span> Бартер между играми. <span class="punishment">бан 4 дня</span></p>
+                <p><span class="rule-num">4.15</span> Распространение личных данных игроков. <span class="punishment">бан 30 дней</span></p>
                 <p><span class="rule-num">4.16</span> Провокация игроков на нарушение правил. <span class="punishment">бан 12ч / 2 / 4 дня</span></p>
-                <p><span class="rule-num">4.17</span> Упоминание денежных операций с реальной валютой. <span class="punishment">мут на 2 дня</span></p>
-                <p><span class="rule-num">4.18</span> Упоминание читов в положительном контексте. <span class="punishment">мут на 7 дней</span></p>
+                <p><span class="rule-num">4.17</span> Упоминание денежных операций с реальной валютой. <span class="punishment">мут 2 дня</span></p>
+                <p><span class="rule-num">4.18</span> Упоминание читов в положительном контексте. <span class="punishment">мут 7 дней</span></p>
             </div>
-
             <div class="rule-card">
-                <h2>5. Запрет вредоносного и читерского ПО</h2>
-                <p><span class="rule-num">5.2</span> Использование вредоносного ПО, читов. <span class="punishment">бан 50 дней + снос дома</span></p>
-                <p><span class="rule-num">5.2.1</span> Совместная игра с читером. <span class="punishment">бан на 47 дней</span></p>
-                <p><span class="rule-num">5.2.2</span> Признание на проверке. <span class="punishment">бан на 46 дней</span></p>
-                <p><span class="rule-num">5.2.3</span> Признание в наличии читов. <span class="punishment">бан на 10 дней</span></p>
-                <p><span class="rule-num">5.2.4</span> Обход блокировки аккаунта. <span class="punishment">бан на 70 дней</span></p>
-                <p><span class="rule-num">5.2.6</span> Удаление или хранение читов. <span class="punishment">бан на 50 дней</span></p>
-                <p><span class="rule-num">5.2.7</span> Auto-копатели, лесорубы. <span class="punishment">бан на 5 дней</span></p>
-                <p><span class="rule-num">5.2.8</span> Боты, макросы, плагины-автоматизаторы. <span class="punishment">бан на 15 дней</span></p>
-                <p><span class="rule-num">5.2.9</span> Неадекватное поведение на проверке. <span class="punishment">бан на 50 дней</span></p>
-                <p><span class="rule-num">5.2.10</span> Виртуальные машины при проверке. <span class="punishment">бан на 50 дней</span></p>
+                <h2>5. Запрет вредоносного ПО</h2>
+                <p><span class="rule-num">5.2</span> Использование читов и вредоносного ПО. <span class="punishment">бан 50 дней + снос дома</span></p>
+                <p><span class="rule-num">5.2.1</span> Совместная игра с читером. <span class="punishment">бан 47 дней</span></p>
+                <p><span class="rule-num">5.2.2</span> Признание на проверке. <span class="punishment">бан 46 дней</span></p>
+                <p><span class="rule-num">5.2.3</span> Признание в наличии читов. <span class="punishment">бан 10 дней</span></p>
+                <p><span class="rule-num">5.2.4</span> Обход блокировки аккаунта. <span class="punishment">бан 70 дней</span></p>
+                <p><span class="rule-num">5.2.6</span> Удаление или хранение читов. <span class="punishment">бан 50 дней</span></p>
+                <p><span class="rule-num">5.2.7</span> Auto-копатели, лесорубы. <span class="punishment">бан 5 дней</span></p>
+                <p><span class="rule-num">5.2.8</span> Боты, макросы, плагины-автоматизаторы. <span class="punishment">бан 15 дней</span></p>
+                <p><span class="rule-num">5.2.9</span> Неадекватное поведение на проверке. <span class="punishment">бан 50 дней</span></p>
+                <p><span class="rule-num">5.2.10</span> Виртуальные машины при проверке. <span class="punishment">бан 50 дней</span></p>
                 <p><span class="rule-num">5.2.11</span> Макросы, запрещённые моды, кликеры. <span class="punishment">бан 5 / 7 / 15 / 30 / 50 дней</span></p>
-                <p><span class="rule-num">5.2.12</span> Использование .bat на чистку. <span class="punishment">бан на 50 дней</span></p>
+                <p><span class="rule-num">5.2.12</span> Использование .bat на чистку. <span class="punishment">бан 50 дней</span></p>
             </div>
-
             <div class="rule-card">
                 <h2>6. Игровые правила</h2>
                 <p><span class="rule-num">6.1</span> Запрещено причинение вреда проекту: заливы, лаг-машины, багоюз, дюпы.</p>
-                <p><span class="rule-num">6.1.1</span> Создание заливов и багоюз. <span class="punishment">бан на 25 дней</span></p>
+                <p><span class="rule-num">6.1.1</span> Создание заливов и багоюз. <span class="punishment">бан 25 дней</span></p>
                 <p><span class="rule-num">6.1.2</span> Создание лаг-машин. <span class="punishment">отключение аккаунта</span></p>
-                <p><span class="rule-num">6.1.3</span> Использование недоработок клановой системы. <span class="punishment">бан создателя на 25 дней</span></p>
-                <p><span class="rule-num">6.1.4</span> Строительство ловушек без выхода. <span class="punishment">бан 25 дней + снос</span></p>
+                <p><span class="rule-num">6.1.3</span> Недоработки клановой системы. <span class="punishment">бан создателя 25 дней</span></p>
+                <p><span class="rule-num">6.1.4</span> Ловушки без выхода. <span class="punishment">бан 25 дней + снос</span></p>
                 <p><span class="rule-num">6.1.5</span> Распространение дюпов. <span class="punishment">отключение аккаунта</span></p>
-                <p><span class="rule-num">6.2</span> Флуд командами. <span class="punishment">кик + бан на 12 часов</span></p>
+                <p><span class="rule-num">6.2</span> Флуд командами. <span class="punishment">кик + бан 12 часов</span></p>
                 <p><span class="rule-num">6.3</span> Некорректный текст на табличках, регионах, книгах. <span class="punishment">бан 5 / 15 / 30 дней</span></p>
-                <p><span class="rule-num">6.4</span> Ложные жалобы. <span class="punishment">бан на 3 дня</span></p>
+                <p><span class="rule-num">6.4</span> Ложные жалобы. <span class="punishment">бан 3 дня</span></p>
                 <p><span class="rule-num">6.5</span> Реклама читов, магазинов, Discord-каналов. <span class="punishment">перманентная блокировка</span></p>
                 <p><span class="rule-num">6.6</span> Кланы с нарушением правил чата. <span class="punishment">удаление клана + бан 5-30 дней</span></p>
-                <p><span class="rule-num">6.7</span> Более 3 аккаунтов для фарма. <span class="punishment">блокировка на 30 дней</span></p>
+                <p><span class="rule-num">6.7</span> Более 3 аккаунтов для фарма. <span class="punishment">блокировка 30 дней</span></p>
             </div>
-
             <div class="rule-card">
                 <h2>7. Модерация</h2>
                 <p><span class="rule-num">7.1</span> Модерация не имеет права заставлять скачивать AnyDesk. Исключение — Главный модератор и выше.</p>
-                <p><span class="rule-num">7.2</span> Проверка проводится исключительно через компьютер. Обязательные программы: Systeminformer, Process Hacker 2, Everything, AnyDesk, LastActivityView, JournalTrace, ShellBags Analyzer & Cleaner, RegScanner, Ocean, ExecutedProgramsList, Recaf.</p>
+                <p><span class="rule-num">7.2</span> Проверка проводится через компьютер. Обязательные программы: Systeminformer, Process Hacker 2, Everything, AnyDesk, LastActivityView, JournalTrace, ShellBags Analyzer & Cleaner, RegScanner, Ocean, ExecutedProgramsList, Recaf.</p>
             </div>
         </div>
     </div>
 
-    <!-- ПОДВАЛ -->
     <footer class="footer">
         <div class="footer-inner">
             <div class="footer-brand">
@@ -1738,7 +1786,9 @@
     </footer>
 </div>
 
-<!-- КНОПКА ВВЕРХ -->
+<!-- LIVE-ЛЕНТА -->
+<div class="live-feed" id="liveFeed"></div>
+
 <button class="to-top" id="toTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
 <!-- МОДАЛЬНОЕ ОКНО -->
@@ -1749,7 +1799,7 @@
         <h2 id="modalTitle">Название</h2>
         <p id="modalDesc">Описание</p>
         <div class="modal-price" id="modalPrice">Цена</div>
-        <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="modal-buy" id="modalBuy" onclick="throwConfetti()">Купить сейчас</a>
+        <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="modal-buy">Купить сейчас</a>
     </div>
 </div>
 
@@ -1761,7 +1811,18 @@
         goalTotal: 50000,
     };
 
-    // Навигация
+    /* ============ ТЕМА ============ */
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme') || 'light';
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    }
+    // Применяем сохранённую тему сразу
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+
+    /* ============ НАВИГАЦИЯ ============ */
     function showPage(pageId) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-' + pageId).classList.add('active');
@@ -1770,7 +1831,6 @@
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Фильтры
     function filterSection(section, btn) {
         document.querySelectorAll('.filter').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -1786,7 +1846,6 @@
         throwConfetti();
     }
 
-    // Копирование IP
     function copyIP() {
         navigator.clipboard.writeText(CONFIG.serverIP).then(() => {
             showToast('✅ IP сервера скопирован!');
@@ -1794,7 +1853,6 @@
         }).catch(() => showToast('❌ Не удалось скопировать'));
     }
 
-    // Уведомление
     function showToast(text) {
         const toast = document.createElement('div');
         toast.className = 'toast';
@@ -1807,7 +1865,6 @@
         }, 2500);
     }
 
-    // Модальное окно
     function openModal(icon, title, price, desc) {
         document.getElementById('modalIcon').innerText = icon;
         document.getElementById('modalTitle').innerText = title;
@@ -1816,21 +1873,13 @@
         document.getElementById('modal').classList.add('show');
         document.body.style.overflow = 'hidden';
     }
-
     function closeModal() {
         document.getElementById('modal').classList.remove('show');
         document.body.style.overflow = '';
     }
+    document.getElementById('modal').addEventListener('click', e => { if (e.target.id === 'modal') closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
-    document.getElementById('modal').addEventListener('click', e => {
-        if (e.target.id === 'modal') closeModal();
-    });
-
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Escape') closeModal();
-    });
-
-    // Риллики
     function syncRilli(source) {
         const slider = document.getElementById('rilliSlider');
         const input = document.getElementById('rilliAmount');
@@ -1846,7 +1895,6 @@
         priceEl.style.transform = 'scale(1.1)';
         setTimeout(() => priceEl.style.transform = 'scale(1)', 200);
     }
-
     function openRilliModal() {
         let amount = parseInt(document.getElementById('rilliAmount').value);
         if (isNaN(amount) || amount < 1) amount = 1;
@@ -1856,10 +1904,9 @@
         openModal('💰', 'Риллики', formatted + ' ₽', 'Вы покупаете ' + amount + ' Рилликов. После оплаты они будут зачислены на ваш игровой баланс. Укажите свой ник в комментарии к донату!');
     }
 
-    // Таймер
+    /* ============ ТАЙМЕР ============ */
     function updateTimer() {
-        const now = new Date().getTime();
-        const distance = CONFIG.saleEndDate.getTime() - now;
+        const distance = CONFIG.saleEndDate.getTime() - new Date().getTime();
         if (distance < 0) {
             ['days', 'hours', 'minutes', 'seconds'].forEach(id => document.getElementById(id).innerText = '00');
             return;
@@ -1876,7 +1923,7 @@
     updateTimer();
     setInterval(updateTimer, 1000);
 
-    // Онлайн
+    /* ============ ОНЛАЙН ============ */
     async function updateOnline() {
         const block = document.getElementById('onlineBlock');
         const num = document.getElementById('onlineCount');
@@ -1898,7 +1945,7 @@
     updateOnline();
     setInterval(updateOnline, 60000);
 
-    // Прогресс
+    /* ============ ПРОГРЕСС ============ */
     const percent = Math.min(100, Math.round(CONFIG.goalCollected / CONFIG.goalTotal * 100));
     document.getElementById('goalCurrent').innerText = CONFIG.goalCollected.toLocaleString('ru-RU') + ' ₽';
     document.getElementById('goalTotal').innerText = ' / ' + CONFIG.goalTotal.toLocaleString('ru-RU') + ' ₽';
@@ -1911,21 +1958,24 @@
         }, 20);
     }, 500);
 
-    // Кнопка вверх
+    /* ============ СКРОЛЛ ============ */
     const toTop = document.getElementById('toTop');
+    const navbar = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
         if (window.scrollY > 400) toTop.classList.add('show');
         else toTop.classList.remove('show');
-    });
-
-    // Navbar scrolled
-    const navbar = document.getElementById('navbar');
-    window.addEventListener('scroll', () => {
         if (window.scrollY > 50) navbar.classList.add('scrolled');
         else navbar.classList.remove('scrolled');
     });
 
-    // Конфетти
+    /* ============ FAQ ============ */
+    function toggleFaq(el) {
+        const wasOpen = el.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!wasOpen) el.classList.add('open');
+    }
+
+    /* ============ КОНФЕТТИ ============ */
     function throwConfetti() {
         const colors = ['#ff7e5f', '#feb47b', '#e100ff', '#00e676', '#4a90e2', '#f5d020'];
         for (let i = 0; i < 30; i++) {
@@ -1936,10 +1986,39 @@
             setTimeout(() => c.remove(), 4000);
         }
     }
+    const styleConfetti = document.createElement('style');
+    styleConfetti.innerText = '@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}';
+    document.head.appendChild(styleConfetti);
 
-    const style = document.createElement('style');
-    style.innerText = '@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}';
-    document.head.appendChild(style);
+    /* ============ 🆕 LIVE-ЛЕНТА ПОКУПОК ============ */
+    const purchases = [
+        { name: 'DragonSlayer', item: 'Pegas', icon: '🦄', time: 'только что' },
+        { name: 'CraftMaster', item: 'Редкий кейс', icon: '💎', time: '2 минуты назад' },
+        { name: 'ShadowKiller', item: 'Dracula', icon: '🧛', time: '5 минут назад' },
+        { name: 'Alex_Pro', item: '10 000 Рилликов', icon: '💰', time: '8 минут назад' },
+        { name: 'MegaMine', item: 'Кит Воина', icon: '🗡️', time: '12 минут назад' },
+        { name: 'KingCraft', item: 'God', icon: '⚡', time: '15 минут назад' },
+        { name: 'NightWolf', item: 'Tiger', icon: '🐯', time: '18 минут назад' },
+        { name: 'BuilderBoy', item: 'Обычный кейс', icon: '📦', time: '22 минуты назад' },
+    ];
+
+    function showLivePurchase() {
+        const feed = document.getElementById('liveFeed');
+        const p = purchases[Math.floor(Math.random() * purchases.length)];
+        const toast = document.createElement('div');
+        toast.className = 'live-toast';
+        toast.innerHTML = `
+            <div class="live-avatar">${p.name.charAt(0)}</div>
+            <div class="live-text">
+                <strong>${p.name}</strong> купил ${p.icon} <strong>${p.item}</strong>
+                <div class="time">${p.time}</div>
+            </div>
+        `;
+        feed.appendChild(toast);
+        setTimeout(() => toast.remove(), 6000);
+    }
+    setTimeout(showLivePurchase, 3000);
+    setInterval(showLivePurchase, 8000);
 </script>
 
 </body>
