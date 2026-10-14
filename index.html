@@ -8,7 +8,6 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         html { scroll-behavior: smooth; }
         
-        /* ================== ФОН ================== */
         body {
             color: #333; overflow-x: hidden; position: relative; min-height: 100vh;
             background: linear-gradient(-45deg, #eef2f7, #e0e7ff, #f0e6ff, #dbeafe, #eef2f7);
@@ -26,7 +25,7 @@
 
         header, .page, footer, .modal-overlay { position: relative; z-index: 1; }
 
-        /* ================== ШАПКА ================== */
+        /* ===== ШАПКА ===== */
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background-color: rgba(255,255,255,0.85); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(224,224,224,0.5); box-shadow: 0 2px 10px rgba(0,0,0,0.05); position: sticky; top: 0; z-index: 100; transition: all 0.3s ease; }
         header:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); background-color: rgba(255,255,255,0.95); }
         .logo { font-weight: bold; font-size: 18px; color: #000; display: flex; align-items: center; gap: 10px; transition: transform 0.3s ease; }
@@ -51,12 +50,12 @@
         .btn-black::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: rgba(255,255,255,0.3); border-radius: 50%; transform: translate(-50%,-50%); transition: width 0.5s ease, height 0.5s ease; }
         .btn-black:hover::before { width: 300px; height: 300px; }
 
-        /* ================== СТРАНИЦЫ ================== */
+        /* ===== СТРАНИЦЫ ===== */
         .page { display: none; opacity: 0; }
         .page.active { display: block; animation: page-fade-in 0.6s ease forwards; }
         @keyframes page-fade-in { from{opacity:0;transform:translateY(15px)} to{opacity:1;transform:translateY(0)} }
 
-        /* ================== БАННЕР ================== */
+        /* ===== БАННЕР ===== */
         .hero { position: relative; height: 400px; background: linear-gradient(135deg, #ff7e5f, #feb47b, #ff7e5f); background-size: 200% 200%; animation: orange-gradient 10s ease infinite; display: flex; flex-direction: column; justify-content: center; padding-left: 60px; color: white; overflow: hidden; }
         @keyframes orange-gradient { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
         .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%); animation: shine 6s infinite; }
@@ -73,21 +72,18 @@
         .ip-block-hero span { font-size: 16px; font-weight: bold; color: #fff; letter-spacing: 1px; }
         .ip-block-hero button { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.4); padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; transition: all 0.3s ease; }
         .ip-block-hero button:hover { background: rgba(255,255,255,0.2); transform: scale(1.05); }
-        .ip-block-hero button:active { transform: scale(0.95); }
 
-        /* ================== МАГАЗИН ================== */
+        /* ===== МАГАЗИН ===== */
         .shop-section { padding: 40px; }
         .shop-title { font-size: 24px; font-weight: bold; margin-bottom: 20px; color: #000; position: relative; display: inline-block; }
         .shop-title::after { content: ''; display: block; width: 60px; height: 3px; background: linear-gradient(90deg, #ff7e5f, #feb47b); margin-top: 8px; border-radius: 2px; animation: grow-width 1s ease 0.3s backwards; }
         @keyframes grow-width { from{width:0} to{width:60px} }
 
-        /* ===== КНОПКИ-ФИЛЬТРЫ ===== */
         .filters-bar { display: flex; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
-        .filter-btn { background: #fff; color: #666; border: 2px solid #e0e0e0; padding: 10px 22px; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 14px; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .filter-btn { background: #fff; color: #666; border: 2px solid #e0e0e0; padding: 10px 22px; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 14px; transition: all 0.3s ease; }
         .filter-btn:hover { border-color: #ff7e5f; color: #ff7e5f; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255,126,95,0.2); }
         .filter-btn.active { background: linear-gradient(135deg, #ff7e5f, #feb47b); color: white; border-color: transparent; box-shadow: 0 5px 15px rgba(255,126,95,0.4); }
 
-        /* ===== СЕКЦИИ ===== */
         .section-block { display: none; margin-bottom: 50px; animation: section-appear 0.5s ease; }
         .section-block.active { display: block; }
         @keyframes section-appear { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
@@ -98,92 +94,205 @@
         .section-header h3 { font-size: 22px; color: #000; font-weight: 800; }
         .section-header .count { background: linear-gradient(135deg, #ff7e5f, #feb47b); color: white; font-size: 12px; padding: 3px 10px; border-radius: 20px; font-weight: bold; }
 
-        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 20px; }
 
-        /* ================== КАРТОЧКИ ================== */
-        .card { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.6); transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); display: flex; flex-direction: column; position: relative; box-shadow: 0 4px 15px rgba(0,0,0,0.08); animation: card-appear 0.6s ease backwards; }
-        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(255,126,95,0.3); border-color: #ff7e5f; background: rgba(255,255,255,1); }
-        .card:hover .card-image img { transform: scale(1.1); }
-        .card:hover .card-btn { background: linear-gradient(135deg, #ff7e5f, #feb47b); }
+        /* ===================================================== */
+        /* ===== НОВЫЕ ТЁМНЫЕ КАРТОЧКИ ПРИВИЛЕГИЙ (как на скрине) */
+        /* ===================================================== */
+        .priv-card {
+            background: #13131a;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #23232e;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            animation: card-appear 0.6s ease backwards;
+            position: relative;
+        }
+        .priv-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(255,126,95,0.35);
+            border-color: #ff7e5f;
+        }
         @keyframes card-appear { from{opacity:0;transform:translateY(30px) scale(0.95)} to{opacity:1;transform:translateY(0) scale(1)} }
 
-        .card-image { position: relative; height: 180px; background-color: #e9ecef; overflow: hidden; }
-        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .discount { position: absolute; top: 10px; right: 10px; background: #e74c3c; color: white; padding: 4px 8px; border-radius: 5px; font-size: 12px; font-weight: bold; animation: pulse-badge 2s ease-in-out infinite; box-shadow: 0 4px 10px rgba(231,76,60,0.4); }
-        @keyframes pulse-badge { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+        /* Баннер с картинкой */
+        .priv-banner {
+            position: relative;
+            height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .priv-banner::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2), transparent 60%);
+            z-index: 1;
+        }
+        .priv-banner .emoji-icon {
+            font-size: 95px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+            z-index: 2;
+            transition: transform 0.5s ease;
+        }
+        .priv-card:hover .priv-banner .emoji-icon {
+            transform: scale(1.15) rotate(-5deg);
+        }
+
+        /* Значок скидки (сверху-слева, зелёный) */
+        .priv-discount {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, #00c853, #00e676);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            z-index: 3;
+            box-shadow: 0 4px 10px rgba(0,200,83,0.4);
+        }
+
+        /* Плашка "ОСЕННИЕ СКИДКИ" (сверху-справа) */
+        .priv-promo {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            z-index: 3;
+            box-shadow: 0 4px 10px rgba(255,126,95,0.4);
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+        @keyframes pulse-badge { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+
+        /* Тело карточки */
+        .priv-body { padding: 16px; color: #fff; display: flex; flex-direction: column; flex-grow: 1; }
+        .priv-title {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #fff;
+        }
+        .priv-title .accent { color: #ff7e5f; }
+        .priv-subtitle {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 15px;
+        }
+        .priv-price-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .priv-old-price {
+            color: #666;
+            text-decoration: line-through;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .priv-new-price {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .priv-buy-btn {
+            position: relative;
+            overflow: hidden;
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,126,95,0.4);
+        }
+        .priv-buy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255,126,95,0.6);
+            filter: brightness(1.1);
+        }
+        .priv-buy-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            width: 0; height: 0;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transform: translate(-50%,-50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        .priv-buy-btn:hover::before { width: 300px; height: 300px; }
+
+        /* Тематические градиенты для привилегий */
+        .bg-tiger   { background: linear-gradient(135deg, #ff6a00, #ee0979); }
+        .bg-rabbit  { background: linear-gradient(135deg, #f7797d, #fbd786); }
+        .bg-god     { background: linear-gradient(135deg, #f5d020, #f53803); }
+        .bg-pegas   { background: linear-gradient(135deg, #7f00ff, #e100ff); }
+        .bg-dracula { background: linear-gradient(135deg, #870000, #190a05); }
+
+        /* ===== ОБЫЧНЫЕ КАРТОЧКИ (кейсы, киты) ===== */
+        .card { background: rgba(255,255,255,0.9); backdrop-filter: blur(10px); border-radius: 10px; overflow: hidden; border: 1px solid rgba(255,255,255,0.6); transition: all 0.4s cubic-bezier(0.175,0.885,0.32,1.275); display: flex; flex-direction: column; box-shadow: 0 4px 15px rgba(0,0,0,0.08); animation: card-appear 0.6s ease backwards; }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(255,126,95,0.3); border-color: #ff7e5f; background: rgba(255,255,255,1); }
+        .card:hover .card-btn { background: linear-gradient(135deg, #ff7e5f, #feb47b); }
 
         .card-info { padding: 15px; display: flex; flex-direction: column; flex-grow: 1; }
-        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; color: #000; transition: color 0.3s ease; }
-        .card:hover .card-title { color: #ff7e5f; }
-        .card-price { color: #ff7e5f; font-size: 18px; font-weight: bold; margin-bottom: 15px; transition: all 0.3s ease; }
-        .card:hover .card-price { transform: translateX(5px); }
+        .card-title { font-size: 16px; font-weight: bold; margin-bottom: 5px; text-transform: uppercase; color: #000; }
+        .card-price { color: #ff7e5f; font-size: 18px; font-weight: bold; margin-bottom: 15px; }
 
-        .card-btn { position: relative; overflow: hidden; display: block; text-align: center; text-decoration: none; background: #000; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: auto; transition: all 0.3s ease; font-size: 14px; }
+        .card-btn { position: relative; overflow: hidden; display: block; text-align: center; background: #000; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: auto; transition: all 0.3s ease; font-size: 14px; }
         .card-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.2); }
         .card-btn::before { content: ''; position: absolute; top: 50%; left: 50%; width: 0; height: 0; background: rgba(255,255,255,0.3); border-radius: 50%; transform: translate(-50%,-50%); transition: width 0.6s ease, height 0.6s ease; }
         .card-btn:hover::before { width: 300px; height: 300px; }
 
-        /* ===== КРАСИВЫЕ CSS-КАРТИНКИ ДЛЯ ПРИВИЛЕГИЙ ===== */
-        .priv-image {
-            position: relative;
-            height: 180px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-        .priv-image .emoji-icon {
-            font-size: 90px;
-            filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4));
-            z-index: 2;
-            transition: transform 0.5s ease;
-        }
-        .card:hover .priv-image .emoji-icon {
-            transform: scale(1.2) rotate(5deg);
-        }
-        .priv-image::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15), transparent 60%);
-            z-index: 1;
-        }
-        .priv-image::after {
-            content: '';
-            position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.15), transparent);
-            animation: rotate-slow 8s linear infinite;
-            z-index: 0;
-        }
+        .card-image { position: relative; height: 180px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .card-image .emoji-icon { font-size: 90px; filter: drop-shadow(0 8px 20px rgba(0,0,0,0.4)); z-index: 2; transition: transform 0.5s ease; }
+        .card:hover .card-image .emoji-icon { transform: scale(1.2) rotate(5deg); }
+        .card-image::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15), transparent 60%); z-index: 1; }
+        .card-image::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: conic-gradient(from 0deg, transparent, rgba(255,255,255,0.15), transparent); animation: rotate-slow 8s linear infinite; z-index: 0; }
         @keyframes rotate-slow { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
 
-        /* Тематические фоны для каждой привилегии */
-        .priv-tiger { background: linear-gradient(135deg, #ff6a00, #ee0979); }
-        .priv-rabbit { background: linear-gradient(135deg, #f7797d, #fbd786); }
-        .priv-god { background: linear-gradient(135deg, #f5d020, #f53803); }
-        .priv-pegas { background: linear-gradient(135deg, #7f00ff, #e100ff); }
-        .priv-dracula { background: linear-gradient(135deg, #870000, #190a05); }
-
-        /* ================== РИЛЛИКИ ================== */
+        /* ===== РИЛЛИКИ ===== */
         .rilli-input-container { padding: 20px; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; background: linear-gradient(135deg, #f8f9fa, #eef2f7); border-bottom: 1px solid #eee; }
         .rilli-icon { font-size: 40px; margin-bottom: 15px; animation: coin-spin 3s ease-in-out infinite; }
         @keyframes coin-spin { 0%,100%{transform:rotateY(0deg)} 50%{transform:rotateY(180deg)} }
         .rilli-label { font-size: 13px; color: #666; margin-bottom: 10px; text-align: center; }
-        
         .rilli-slider { width: 100%; margin: 10px 0 20px 0; -webkit-appearance: none; appearance: none; height: 8px; border-radius: 5px; background: #e0e0e0; outline: none; }
-        .rilli-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #ff7e5f, #feb47b); cursor: pointer; box-shadow: 0 2px 10px rgba(255,126,95,0.5); transition: transform 0.2s; }
-        .rilli-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
-        .rilli-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #ff7e5f, #feb47b); cursor: pointer; border: none; box-shadow: 0 2px 10px rgba(255,126,95,0.5); }
-
+        .rilli-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #ff7e5f, #feb47b); cursor: pointer; box-shadow: 0 2px 10px rgba(255,126,95,0.5); }
+        .rilli-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: linear-gradient(135deg, #ff7e5f, #feb47b); cursor: pointer; border: none; }
         .rilli-inputs-row { display: flex; gap: 10px; align-items: center; width: 100%; margin-bottom: 15px; }
         .rilli-input { flex-grow: 1; padding: 10px; background: rgba(255,255,255,0.9); border: 1px solid #ccc; border-radius: 6px; color: #000; font-size: 16px; text-align: center; outline: none; transition: all 0.3s ease; }
         .rilli-input:focus { border-color: #ff7e5f; box-shadow: 0 0 0 3px rgba(255,126,95,0.2); }
         .rilli-unit { font-size: 14px; color: #666; font-weight: bold; }
 
-        /* ================== ПРАВИЛА ================== */
-        .rules-container { max-width: 1000px; margin: 40px auto; padding: 40px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); animation: page-fade-in 0.5s ease; border: 1px solid rgba(255,255,255,0.6); }
+        /* ===== ПРАВИЛА ===== */
+        .rules-container { max-width: 1000px; margin: 40px auto; padding: 40px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-radius: 10px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); border: 1px solid rgba(255,255,255,0.6); }
         .rules-container h1 { text-align: center; margin-bottom: 30px; color: #000; font-size: 28px; }
         .rule-section { margin-bottom: 30px; }
         .rule-section h2 { color: #ff7e5f; margin-bottom: 15px; font-size: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; position: relative; }
@@ -196,7 +305,7 @@
         .back-btn { display: inline-block; background: #000; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: all 0.3s ease; }
         .back-btn:hover { background: #333; transform: translateX(-5px); }
 
-        /* ================== ПОДВАЛ ================== */
+        /* ===== ПОДВАЛ ===== */
         footer { background-color: rgba(255,255,255,0.9); backdrop-filter: blur(10px); padding: 30px 40px; margin-top: 50px; border-top: 1px solid rgba(224,224,224,0.5); }
         .footer-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
         .footer-left { display: flex; flex-direction: column; gap: 5px; }
@@ -208,7 +317,7 @@
         .footer-bottom { text-align: center; margin-top: 30px; color: #aaa; font-size: 12px; border-top: 1px solid #f0f0f0; padding-top: 20px; }
         .footer-bottom a { color: #ff7e5f; text-decoration: none; }
 
-        /* ================== МОДАЛЬНОЕ ОКНО ================== */
+        /* ===== МОДАЛЬНОЕ ОКНО ===== */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; opacity: 0; transition: opacity 0.3s ease; backdrop-filter: blur(8px); }
         .modal-overlay.show { display: flex; opacity: 1; }
         .modal-content { background: #fff; border-radius: 10px; padding: 30px; width: 90%; max-width: 500px; position: relative; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.3); transform: scale(0.8) translateY(20px); transition: transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275); }
@@ -218,10 +327,10 @@
         .modal-content h2 { color: #000; margin-bottom: 10px; }
         .modal-content p { color: #666; margin-bottom: 20px; line-height: 1.5; }
         .modal-content .price { font-size: 24px; color: #ff7e5f; font-weight: bold; margin-bottom: 20px; }
-        .modal-content .buy-btn { position: relative; overflow: hidden; display: block; text-decoration: none; background: linear-gradient(135deg, #ff7e5f, #feb47b); color: white; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 16px; transition: all 0.3s ease; }
+        .modal-content .buy-btn { display: block; text-decoration: none; background: linear-gradient(135deg, #ff7e5f, #feb47b); color: white; padding: 15px; border-radius: 8px; font-weight: bold; font-size: 16px; transition: all 0.3s ease; }
         .modal-content .buy-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(255,126,95,0.4); }
 
-        /* ================== АДАПТИВНОСТЬ ================== */
+        /* ===== АДАПТИВНОСТЬ ===== */
         @media (max-width: 768px) {
             header { padding: 15px 20px; flex-wrap: wrap; gap: 15px; }
             .hero { padding-left: 25px; height: 300px; }
@@ -232,7 +341,7 @@
             .rules-container { padding: 20px; margin: 20px; }
             .footer-content { flex-direction: column; gap: 15px; text-align: center; }
             .filter-btn { padding: 8px 16px; font-size: 12px; }
-            .priv-image .emoji-icon { font-size: 70px; }
+            .priv-banner .emoji-icon { font-size: 70px; }
         }
     </style>
 </head>
@@ -268,7 +377,6 @@
         <section class="shop-section" id="shop">
             <div class="shop-title">Магазин TigerWorld</div>
 
-            <!-- КНОПКИ-ФИЛЬТРЫ -->
             <div class="filters-bar">
                 <button class="filter-btn active" onclick="filterSection('all', this)">🌟 Все</button>
                 <button class="filter-btn" onclick="filterSection('privileges', this)">👑 Привилегии</button>
@@ -277,7 +385,7 @@
                 <button class="filter-btn" onclick="filterSection('kits', this)">⚔️ Киты</button>
             </div>
 
-            <!-- СЕКЦИЯ: ПРИВИЛЕГИИ (ОБНОВЛЕНА) -->
+            <!-- ===== ПРИВИЛЕГИИ ===== -->
             <div id="section-privileges" class="section-block active">
                 <div class="section-header">
                     <span class="icon">👑</span>
@@ -285,76 +393,101 @@
                     <span class="count">5</span>
                 </div>
                 <div class="grid-container">
-                    
+
                     <!-- TIGER -->
-                    <div class="card">
-                        <div class="priv-image priv-tiger">
+                    <div class="priv-card">
+                        <div class="priv-banner bg-tiger">
+                            <span class="priv-discount">-10%</span>
+                            <span class="priv-promo">🔥 ХИТ</span>
                             <span class="emoji-icon">🐯</span>
-                            <div class="discount">-10%</div>
                         </div>
-                        <div class="card-info">
-                            <div class="card-title">Tiger</div>
-                            <div class="card-price">29 ₽</div>
-                            <button class="card-btn" onclick="openModal('Tiger', '29 ₽', 'Базовая привилегия Tiger. Цветной ник в чате, доступ к /kit tiger раз в день, приоритетный вход на сервер.')">Подробнее</button>
+                        <div class="priv-body">
+                            <div class="priv-title">Tiger <span class="accent">+ 50K</span> Рилликов</div>
+                            <div class="priv-subtitle">1 привилегия</div>
+                            <div class="priv-price-row">
+                                <span class="priv-old-price">32 ₽</span>
+                                <span class="priv-new-price">29 ₽</span>
+                            </div>
+                            <button class="priv-buy-btn" onclick="openModal('Tiger', '29 ₽', 'Базовая привилегия Tiger. Цветной ник в чате, доступ к /kit tiger раз в день, приоритетный вход на сервер. Бонус: +50 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
 
                     <!-- RABBIT -->
-                    <div class="card">
-                        <div class="priv-image priv-rabbit">
+                    <div class="priv-card">
+                        <div class="priv-banner bg-rabbit">
+                            <span class="priv-discount">-15%</span>
+                            <span class="priv-promo">🔥 ХИТ</span>
                             <span class="emoji-icon">🐰</span>
-                            <div class="discount">-15%</div>
                         </div>
-                        <div class="card-info">
-                            <div class="card-title">Rabbit</div>
-                            <div class="card-price">50 ₽</div>
-                            <button class="card-btn" onclick="openModal('Rabbit', '50 ₽', 'Привилегия Rabbit. Всё из Tiger, плюс /speed, /jump boost, /kit rabbit и +500 Рилликов в подарок.')">Подробнее</button>
+                        <div class="priv-body">
+                            <div class="priv-title">Rabbit <span class="accent">+ 100K</span> Рилликов</div>
+                            <div class="priv-subtitle">1 привилегия</div>
+                            <div class="priv-price-row">
+                                <span class="priv-old-price">59 ₽</span>
+                                <span class="priv-new-price">50 ₽</span>
+                            </div>
+                            <button class="priv-buy-btn" onclick="openModal('Rabbit', '50 ₽', 'Привилегия Rabbit. Всё из Tiger, плюс /speed, /jump boost, /kit rabbit. Бонус: +100 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
 
                     <!-- GOD -->
-                    <div class="card">
-                        <div class="priv-image priv-god">
+                    <div class="priv-card">
+                        <div class="priv-banner bg-god">
+                            <span class="priv-discount">-20%</span>
+                            <span class="priv-promo">⚡ ТОП</span>
                             <span class="emoji-icon">⚡</span>
-                            <div class="discount">-20%</div>
                         </div>
-                        <div class="card-info">
-                            <div class="card-title">God</div>
-                            <div class="card-price">100 ₽</div>
-                            <button class="card-btn" onclick="openModal('God', '100 ₽', 'Привилегия God. Всё из Rabbit, плюс /god, /heal, /feed, /fly на 10 минут в день и +1500 Рилликов.')">Подробнее</button>
+                        <div class="priv-body">
+                            <div class="priv-title">God <span class="accent">+ 150K</span> Рилликов</div>
+                            <div class="priv-subtitle">1 привилегия</div>
+                            <div class="priv-price-row">
+                                <span class="priv-old-price">125 ₽</span>
+                                <span class="priv-new-price">100 ₽</span>
+                            </div>
+                            <button class="priv-buy-btn" onclick="openModal('God', '100 ₽', 'Привилегия God. Всё из Rabbit, плюс /god, /heal, /feed, /fly на 10 минут в день. Бонус: +150 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
 
                     <!-- PEGAS -->
-                    <div class="card">
-                        <div class="priv-image priv-pegas">
+                    <div class="priv-card">
+                        <div class="priv-banner bg-pegas">
+                            <span class="priv-discount">-25%</span>
+                            <span class="priv-promo">🦄 ИВЕНТЫ</span>
                             <span class="emoji-icon">🦄</span>
-                            <div class="discount">-25%</div>
                         </div>
-                        <div class="card-info">
-                            <div class="card-title">Pegas</div>
-                            <div class="card-price">200 ₽</div>
-                            <button class="card-btn" onclick="openModal('Pegas', '200 ₽', 'Привилегия Pegas. Всё из God, плюс /fly без ограничений, /enderchest, /workbench, доступ к закрытым ивентам и +3000 Рилликов.')">Подробнее</button>
+                        <div class="priv-body">
+                            <div class="priv-title">Pegas <span class="accent">+ 250K</span> Рилликов</div>
+                            <div class="priv-subtitle">1 привилегия</div>
+                            <div class="priv-price-row">
+                                <span class="priv-old-price">267 ₽</span>
+                                <span class="priv-new-price">200 ₽</span>
+                            </div>
+                            <button class="priv-buy-btn" onclick="openModal('Pegas', '200 ₽', 'Привилегия Pegas. Всё из God, плюс /fly без ограничений, /enderchest, /workbench, доступ к закрытым ивентам. Бонус: +250 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
 
                     <!-- DRACULA -->
-                    <div class="card">
-                        <div class="priv-image priv-dracula">
+                    <div class="priv-card">
+                        <div class="priv-banner bg-dracula">
+                            <span class="priv-discount">-30%</span>
+                            <span class="priv-promo">🧛 ЛЕГЕНДА</span>
                             <span class="emoji-icon">🧛</span>
-                            <div class="discount">-30%</div>
                         </div>
-                        <div class="card-info">
-                            <div class="card-title">Dracula</div>
-                            <div class="card-price">220 ₽</div>
-                            <button class="card-btn" onclick="openModal('Dracula', '220 ₽', 'Топовая привилегия Dracula. Всё из Pegas, плюс ночное зрение, /vampire, /bat (превращение в летучую мышь), уникальный префикс и +5000 Рилликов.')">Подробнее</button>
+                        <div class="priv-body">
+                            <div class="priv-title">Dracula <span class="accent">+ 500K</span> Рилликов</div>
+                            <div class="priv-subtitle">1 привилегия</div>
+                            <div class="priv-price-row">
+                                <span class="priv-old-price">314 ₽</span>
+                                <span class="priv-new-price">220 ₽</span>
+                            </div>
+                            <button class="priv-buy-btn" onclick="openModal('Dracula', '220 ₽', 'Топовая привилегия Dracula. Всё из Pegas, плюс ночное зрение, /vampire, /bat, уникальный префикс. Бонус: +500 000 Рилликов.')">Купить</button>
                         </div>
                     </div>
 
                 </div>
             </div>
 
-            <!-- СЕКЦИЯ: РИЛЛИКИ -->
+            <!-- ===== РИЛЛИКИ ===== -->
             <div id="section-rilli" class="section-block active">
                 <div class="section-header">
                     <span class="icon">💰</span>
@@ -382,7 +515,7 @@
                 </div>
             </div>
 
-            <!-- СЕКЦИЯ: КЕЙСЫ -->
+            <!-- ===== КЕЙСЫ ===== -->
             <div id="section-cases" class="section-block active">
                 <div class="section-header">
                     <span class="icon">🎁</span>
@@ -391,42 +524,42 @@
                 </div>
                 <div class="grid-container">
                     <div class="card">
-                        <div class="priv-image" style="background: linear-gradient(135deg, #4b6cb7, #182848);">
+                        <div class="card-image" style="background: linear-gradient(135deg, #4b6cb7, #182848);">
                             <span class="emoji-icon">📦</span>
-                            <div class="discount">-10%</div>
+                            <span class="discount">-10%</span>
                         </div>
                         <div class="card-info">
                             <div class="card-title">Обычный кейс</div>
                             <div class="card-price">49 ₽</div>
-                            <button class="card-btn" onclick="openModal('Обычный кейс', '49 ₽', 'Содержит случайный предмет: от алмазов до зачарованной брони. Шанс выпадения редкого предмета — 15%.')">Подробнее</button>
+                            <button class="card-btn" onclick="openModal('Обычный кейс', '49 ₽', 'Содержит случайный предмет: от алмазов до зачарованной брони. Шанс редкого предмета — 15%.')">Купить</button>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="priv-image" style="background: linear-gradient(135deg, #7b4397, #dc2430);">
+                        <div class="card-image" style="background: linear-gradient(135deg, #7b4397, #dc2430);">
                             <span class="emoji-icon">💎</span>
-                            <div class="discount">-20%</div>
+                            <span class="discount">-20%</span>
                         </div>
                         <div class="card-info">
                             <div class="card-title">Редкий кейс</div>
                             <div class="card-price">149 ₽</div>
-                            <button class="card-btn" onclick="openModal('Редкий кейс', '149 ₽', 'Содержит редкие предметы: зачарованные книги, элитры, тотемы. Шанс выпадения легендарки — 25%.')">Подробнее</button>
+                            <button class="card-btn" onclick="openModal('Редкий кейс', '149 ₽', 'Редкие предметы: зачарованные книги, элитры, тотемы. Шанс легендарки — 25%.')">Купить</button>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="priv-image" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
+                        <div class="card-image" style="background: linear-gradient(135deg, #f7971e, #ffd200);">
                             <span class="emoji-icon">👑</span>
-                            <div class="discount">-30%</div>
+                            <span class="discount">-30%</span>
                         </div>
                         <div class="card-info">
                             <div class="card-title">Легендарный кейс</div>
                             <div class="card-price">399 ₽</div>
-                            <button class="card-btn" onclick="openModal('Легендарный кейс', '399 ₽', 'Только топовые предметы: незеритовый набор, элитры с прочностью, кастомные предметы. Шанс джекпота — 5%.')">Подробнее</button>
+                            <button class="card-btn" onclick="openModal('Легендарный кейс', '399 ₽', 'Топовые предметы: незеритовый набор, элитры с прочностью, кастомные предметы. Шанс джекпота — 5%.')">Купить</button>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- СЕКЦИЯ: КИТЫ -->
+            <!-- ===== КИТЫ ===== -->
             <div id="section-kits" class="section-block active">
                 <div class="section-header">
                     <span class="icon">⚔️</span>
@@ -435,36 +568,36 @@
                 </div>
                 <div class="grid-container">
                     <div class="card">
-                        <div class="priv-image" style="background: linear-gradient(135deg, #cb2d3e, #ef473a);">
+                        <div class="card-image" style="background: linear-gradient(135deg, #cb2d3e, #ef473a);">
                             <span class="emoji-icon">🗡️</span>
-                            <div class="discount">-15%</div>
+                            <span class="discount">-15%</span>
                         </div>
                         <div class="card-info">
                             <div class="card-title">Кит Воина</div>
                             <div class="card-price">79 ₽</div>
-                            <button class="card-btn" onclick="openModal('Кит Воина', '79 ₽', 'Набор: незеритовый меч, полный сет брони, 32 золотых яблока, 5 зелий силы.')">Подробнее</button>
+                            <button class="card-btn" onclick="openModal('Кит Воина', '79 ₽', 'Набор: незеритовый меч, полный сет брони, 32 золотых яблока, 5 зелий силы.')">Купить</button>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="priv-image" style="background: linear-gradient(135deg, #4776e6, #8e54e9);">
+                        <div class="card-image" style="background: linear-gradient(135deg, #4776e6, #8e54e9);">
                             <span class="emoji-icon">🔮</span>
-                            <div class="discount">-20%</div>
+                            <span class="discount">-20%</span>
                         </div>
                         <div class="card-info">
                             <div class="card-title">Кит Мага</div>
                             <div class="card-price">129 ₽</div>
-                            <button class="card-btn" onclick="openModal('Кит Мага', '129 ₽', 'Набор: посох, 64 зелья (разные), книги зачарований, 16 жемчугов Эндера.')">Подробнее</button>
+                            <button class="card-btn" onclick="openModal('Кит Мага', '129 ₽', 'Набор: посох, 64 зелья, книги зачарований, 16 жемчугов Эндера.')">Купить</button>
                         </div>
                     </div>
                     <div class="card">
-                        <div class="priv-image" style="background: linear-gradient(135deg, #232526, #414345);">
+                        <div class="card-image" style="background: linear-gradient(135deg, #232526, #414345);">
                             <span class="emoji-icon">🥷</span>
-                            <div class="discount">-25%</div>
+                            <span class="discount">-25%</span>
                         </div>
                         <div class="card-info">
                             <div class="card-title">Кит Ассасина</div>
                             <div class="card-price">189 ₽</div>
-                            <button class="card-btn" onclick="openModal('Кит Ассасина', '189 ₽', 'Набор: элитры, незеритовый кинжал, зелья невидимости, 10 золотых яблок.')">Подробнее</button>
+                            <button class="card-btn" onclick="openModal('Кит Ассасина', '189 ₽', 'Набор: элитры, незеритовый кинжал, зелья невидимости, 10 золотых яблок.')">Купить</button>
                         </div>
                     </div>
                 </div>
@@ -478,160 +611,89 @@
         <div class="rules-container">
             <a href="#" onclick="showPage('shop')" class="back-btn">← Вернуться в магазин</a>
             <h1>Правила проекта TigerWorld</h1>
-
             <div class="rule-section">
                 <h2>1. Общие положения</h2>
                 <p><span class="rule-num">1.1</span> Данный свод правил составлен представителем проекта TigerWorld и действителен на всех игровых режимах проекта <strong>TigerWorld</strong>. Незнание правил не освобождает нарушителя от ответственности, а также может усугубить наказание.</p>
-                <p><span class="rule-num">1.2</span> Правила могут быть изменены без явного оповещения основной аудитории проекта. При значительных изменениях правил, в дискорд сервере проекта отображается объявление.</p>
+                <p><span class="rule-num">1.2</span> Правила могут быть изменены без явного оповещения основной аудитории проекта. При значительных изменениях правил, в discord сервере проекта отображается объявление.</p>
                 <p><span class="rule-num">1.3</span> Решения и действия главной администрации не обсуждаются и не поддаются разжалованию. Главная администрация вправе выдавать наказания вне рамок данных правил.</p>
                 <p><span class="rule-num">1.4</span> Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).</p>
-                <p><span class="rule-num">1.5</span> Продажа, взломы, попытки взломов, передачи аккаунтов, покупки аккаунтов в обход официального сайта, распространение данных игроков, вред серверу, а так же продажи чего либо за реальную валюту - строго запрещены. Наказание - отключение всех аккаунтов без возможности приобрести разбан. Соучастие, содействие, совместная игра с нарушителями так же попадают под это правило. Аккаунты с которых был нанесен серьезный вред проекту - не подлежат восстановлению, даже если аккаунт был в тот момент взломан или добровольно передан или продан. Ответственность несет владелец аккаунта, независимо от того, кто совершал действия под данным аккаунтом.</p>
+                <p><span class="rule-num">1.5</span> Продажа, взломы, попытки взломов, передачи аккаунтов, покупки аккаунтов в обход официального сайта, распространение данных игроков, вред серверу, а так же продажи чего либо за реальную валюту - строго запрещены. Наказание - отключение всех аккаунтов без возможности приобрести разбан.</p>
             </div>
-
             <div class="rule-section">
                 <h2>2. Правила регистрации</h2>
-                <p><span class="rule-num">2.1</span> Никнейм пользователя должен быть корректным. Некорректным можно назвать любой ник, нарушающий закрепленные правила, а также: блокировка аккаунта; для сменённых - предупреждение, затем блокировка</p>
+                <p><span class="rule-num">2.1</span> Никнейм пользователя должен быть корректным. Некорректным можно назвать любой ник, нарушающий закрепленные правила.</p>
                 <ul>
-                    <li><strong>2.1.1</strong> Никнейм, похожий на никнейм высшей Администрации (исключение – никнеймы ютуберов проекта).</li>
-                    <li><strong>2.1.2</strong> Никнейм, сексуального, аморального содержания (название половых органов, процессов и пр.)</li>
+                    <li><strong>2.1.1</strong> Никнейм, похожий на никнейм высшей Администрации.</li>
+                    <li><strong>2.1.2</strong> Никнейм, сексуального, аморального содержания.</li>
                     <li><strong>2.1.3</strong> Никнейм, оскорбляющий никнейм другого игрока.</li>
                     <li><strong>2.1.4</strong> Никнейм, содержащий названия запрещенных ПО.</li>
                     <li><strong>2.1.5</strong> Никнейм, содержащий грубые матерные слова.</li>
                 </ul>
                 <p><span class="rule-num">2.2</span> При покупке платных дополнительных возможностей (групп), кейсов, рилликов, предоставленный системой чек необходимо сохранить.</p>
             </div>
-
             <div class="rule-section">
                 <h2>3. Приобретение платных услуг</h2>
                 <p><span class="rule-num">3.1</span> Игра на проекте не подразумевает платы за использование ресурсов TigerWorld.</p>
                 <p><span class="rule-num">3.2</span> Игрок вправе добровольно оплатить определённую сумму проекту за внутриигровую услугу в одностороннем порядке.</p>
                 <p><span class="rule-num">3.3</span> При ошибке платежа, либо отсутствия внутриигровой услуги после оплаты, нужно обращаться в техподдержку сервера.</p>
-                <p><span class="rule-num">3.4</span> Возврата средств за покупки у нас нету, так как TigerWorld не является коммерческой организацией и все покупки являются добровольными пожертвованиями на развитие сервера.</p>
+                <p><span class="rule-num">3.4</span> Возврата средств за покупки у нас нету, так как TigerWorld не является коммерческой организацией и все покупки являются добровольными пожертвованиями.</p>
                 <p><span class="rule-num">3.5</span> Покупка платных групп не даёт привилегии на игнорирование/нарушение данных правил.</p>
             </div>
-
             <div class="rule-section">
                 <h2>4. Внутриигровое общение</h2>
-                <p><span class="rule-num">4.1</span> Запрещено флудить, отправлять больше 2-ух похожих по смыслу, или одинаковых сообщения подряд (2 сообщения можно, 3 нельзя) (за одну минуту) <span class="punishment">мут на 4 часа</span></p>
-                <p><span class="rule-num">4.1.1</span> Запрещено согласовывать с другими игроками или использовать свои твинки для отправки одного и того же сообщения в короткий промежуток времени, иными словами, обходить наказание за флуд, используя третьи аккаунты. <span class="punishment">мут каждому участник на 4 часа</span></p>
-                <p><span class="rule-num">4.1.2</span> Запрещено использовать объявления для обхода наказания за флуд (использовать 2 /bc и сообщение в глобал, или наоборот, 2 сообщения и 1 /bc) <span class="punishment">бан на 6 часов</span></p>
-                <p><span class="rule-num">4.2</span> Запрещено флудить символами, т.е. использовать комбинации бессмысленных символов, по типу "!!!", или же смеха. <span class="punishment">мут на 4 часа, более 10 символов</span></p>
-                <p><span class="rule-num">4.3</span> Запрещено организовывать флуд опросами, по типу "отправьте + в чат". Исключение - просьба приютить/продать или обменять ресурсы/математические примеры(не более 3-х примеров в течении 5-ти минут). Также исключениями из этого правила являются сообщения следующего типа: "кто примет в клан + в чат/кто дуэль + в чат/кто выживать вместе+ в чат <span class="punishment">мут на 4 часа</span></p>
-                <p><span class="rule-num">4.3.1</span> Если при организации флуда, на ваше сообщение ответило 6 и более человек, то вам выдаётся <span class="punishment">мут на 6 часов</span>, а всем, кто отреагировал - <span class="punishment">мут на 4 часа</span></p>
-                <p><span class="rule-num">4.4</span> Неадекватное поведение, чрезмерные оскорбления и агрессия. <span class="punishment">мут на 3 часа / 12 часов</span></p>
-                <p><span class="rule-num">4.4.1</span> Оскорбления, унижения, угрозы к участникам сервера, игрокам (даже без указания конкретного игрока/ Упоминание/затрагивание расы - исключение) <span class="punishment">мут на 4 часа</span></p>
-                <p><span class="rule-num">4.4.2</span> Злоупотребление нецензурной лексикой. <span class="punishment">мут на 2 / 4 часа</span></p>
-                <p><span class="rule-num">4.4.3</span> Аморальное поведение, темы для совершеннолетних. <span class="punishment">мут на 3 часа</span></p>
-                <p><span class="rule-num">4.4.4</span> Призывы к суициду <span class="punishment">мут на 6 часов</span></p>
-                <p><span class="rule-num">4.4.5</span> Оскорбление проекта, унижение проекта, оскорбительные названия. Любой вид чата. <span class="punishment">мут на 120 дней</span></p>
-                <p><span class="rule-num">4.4.6</span> Публичная критика проекта в общем чате. <span class="punishment">мут на 3 дня</span></p>
-                <p><span class="rule-num">4.5</span> Выпрашивание снятия, выдачи наказаний у Администрации. <span class="punishment">мут на 2 часа</span></p>
-                <p><span class="rule-num">4.5.1</span> Выпрашивание ресурсов у персонала проекта. <span class="punishment">мут на 1 час</span></p>
-                <p><span class="rule-num">4.6</span> Дезинформация игроков проекта неофициальной информацией, внутриигровой информацией. "Скоро вайп" - исключение. <span class="punishment">мут на 12 часов / 4 дня</span></p>
-                <p><span class="rule-num">4.6.1</span> Вне-игровой обман игроков. Например, сочетаниями клавиш Alt+F4, командами /рги и так далее. <span class="punishment">мут на 6 часов</span></p>
-                <p><span class="rule-num">4.7</span> Запрещено упоминание сторонних проектов ресурсов, групп, соцсетей и подобного. <span class="punishment">мут 1 день</span> Обход правила: <span class="punishment">мут 3 дня</span></p>
-                <p><span class="rule-num">4.7.1</span> Любое упоминание Discord-контактов. Исключение: личные сообщения, локальный чат с модератором. <span class="punishment">бан на 2 дня</span></p>
-                <p><span class="rule-num">4.7.2</span> Реклама сторонних проектов (обход данного правила) Любой вид чата. <span class="punishment">мут на 60 дней</span></p>
-                <p><span class="rule-num">4.7.3</span> Реклама в Личных сообщениях, попытка обойти наказание в глобальном чате. <span class="punishment">бан на 60 дней</span></p>
-                <p><span class="rule-num">4.7.4</span> Распространение вредоносных ссылок (скримеры, стиллеры, платные краткие ссылки) <span class="punishment">бан на 14 дней</span></p>
-                <p><span class="rule-num">4.7.5</span> Реклама каналов на YouTube, TikTok, Telegram и других платформах. Исключение: разрешено только со статусом "YouTube" <span class="punishment">мут 60 дней</span></p>
-                <p><span class="rule-num">4.8</span> Оскорбление родителей, некорректное обращение к родителям любого игрока, оскорбительные упоминания <span class="punishment">мут на 5 дней за оскорбительное упоминание, на 10 / 15 дней - за оскорбление</span></p>
-                <p><span class="rule-num">4.8.1</span> Оскорбление своих родителей <span class="punishment">мут 5 дней</span></p>
-                <p><span class="rule-num">4.9</span> Затрагивание политики, политическая агитация <span class="punishment">бан на 3 дня / 7 дней или мут на 2 дня</span></p>
+                <p><span class="rule-num">4.1</span> Запрещено флудить, отправлять больше 2-ух похожих по смыслу, или одинаковых сообщения подряд. <span class="punishment">мут на 4 часа</span></p>
+                <p><span class="rule-num">4.2</span> Запрещено флудить символами, по типу "!!!". <span class="punishment">мут на 4 часа</span></p>
+                <p><span class="rule-num">4.3</span> Запрещено организовывать флуд опросами "отправьте + в чат". <span class="punishment">мут на 4 часа</span></p>
+                <p><span class="rule-num">4.4</span> Неадекватное поведение, чрезмерные оскорбления и агрессия. <span class="punishment">мут на 3 / 12 часов</span></p>
+                <p><span class="rule-num">4.5</span> Выпрашивание снятия наказаний у Администрации. <span class="punishment">мут на 2 часа</span></p>
+                <p><span class="rule-num">4.6</span> Дезинформация игроков проекта. <span class="punishment">мут на 12 часов / 4 дня</span></p>
+                <p><span class="rule-num">4.7</span> Запрещено упоминание сторонних проектов, ресурсов, групп, соцсетей. <span class="punishment">мут 1 день</span></p>
+                <p><span class="rule-num">4.8</span> Оскорбление родителей любого игрока. <span class="punishment">мут на 5 / 10 / 15 дней</span></p>
+                <p><span class="rule-num">4.9</span> Затрагивание политики, политическая агитация. <span class="punishment">бан 3 / 7 дней</span></p>
                 <p><span class="rule-num">4.10</span> Выдача себя за администрацию проекта. <span class="punishment">бан на 3 дня</span></p>
-                <p><span class="rule-num">4.10.1</span> Угрозы баном/киком/мутом <span class="punishment">бан на 12 часов</span></p>
-                <p><span class="rule-num">4.11</span> Оскорбление модерации и администрации. Любой вид чата. <span class="punishment">бан на 5 / 10 / 15 дней</span></p>
-                <p><span class="rule-num">4.11.1</span> Оскорбление родных администрации. Любой вид чата <span class="punishment">бан на 20 дней</span></p>
-                <p><span class="rule-num">4.11.2</span> Шутки или рофлы в сторону администрации, состава проекта (Кроме высшей администрации). <span class="punishment">бан на 8 часов</span></p>
-                <p><span class="rule-num">4.11.3</span> Неуважительное/неадекватное общение с администрацией. <span class="punishment">мут на 12 часов</span></p>
-                <p><span class="rule-num">4.11.4</span> Угроза администрации снятием, угроза наказанием. <span class="punishment">мут на 4 часа</span></p>
-                <p><span class="rule-num">4.12</span> Оскорбление ютуберов проекта. Любой вид чата. <span class="punishment">мут IP от 1 день / 5 дней</span></p>
-                <p><span class="rule-num">4.12.1</span> Шутки или рофлы в сторону ютуберов проекта <span class="punishment">мут IP на 1 день</span></p>
-                <p><span class="rule-num">4.12.2</span> Неадекватное общение с ютуберами проекта <span class="punishment">мут на 6 часов</span></p>
-                <p><span class="rule-num">4.13</span> Пропаганда нацизма/расизма, табакокурения, наркотиков, оружия, терроризма, и.т.д <span class="punishment">бан на 7 дней</span></p>
+                <p><span class="rule-num">4.11</span> Оскорбление модерации и администрации. <span class="punishment">бан 5 / 10 / 15 дней</span></p>
+                <p><span class="rule-num">4.12</span> Оскорбление ютуберов проекта. <span class="punishment">мут IP 1 / 5 дней</span></p>
+                <p><span class="rule-num">4.13</span> Пропаганда нацизма/расизма, наркотиков, оружия, терроризма. <span class="punishment">бан на 7 дней</span></p>
                 <p><span class="rule-num">4.14</span> Бартер между играми. <span class="punishment">бан на 4 дня</span></p>
-                <p><span class="rule-num">4.15</span> Распространение личных данных игроков (доксинг, сватинг) Угрозы также сюда относятся. <span class="punishment">бан на 30 дней</span></p>
-                <p><span class="rule-num">4.15.1</span> Доксинг, сватинг и подобные нарушения в сторону сотрудника сервера <span class="punishment">отключение аккаунта</span></p>
-                <p><span class="rule-num">4.16</span> Провокация игроков на нарушение правил. <span class="punishment">бан от 12 часов / 2 дня / 4 дня</span></p>
-                <p><span class="rule-num">4.17</span> Любое упоминание денежных операций с реальной валютой любой размерности. <span class="punishment">мут на 2 дня</span></p>
-                <p><span class="rule-num">4.18</span> Запрещено любое упоминание читов в положительном контексте, а также их нормализация. <span class="punishment">мут на 7 дней</span></p>
+                <p><span class="rule-num">4.15</span> Распространение личных данных игроков. <span class="punishment">бан на 30 дней</span></p>
+                <p><span class="rule-num">4.16</span> Провокация игроков на нарушение правил. <span class="punishment">бан 12ч / 2 / 4 дня</span></p>
+                <p><span class="rule-num">4.17</span> Любое упоминание денежных операций с реальной валютой. <span class="punishment">мут на 2 дня</span></p>
+                <p><span class="rule-num">4.18</span> Запрещено любое упоминание читов в положительном контексте. <span class="punishment">мут на 7 дней</span></p>
             </div>
-
             <div class="rule-section">
-                <h2>5. Запрет использование вредоносного, читерского ПО и ПО для получения преимуществ</h2>
-                <p><span class="rule-num">5.2</span> Использование вредоносного, читерского ПО, получение преимущества над игроками. <span class="punishment">бан на 50 дней + снос основного дома + возможное отключение аккаунта (на усмотрение администрации).</span></p>
-                <p><span class="rule-num">5.2.1</span> Совместная игра с игроком, нарушивший пункт 5.2 <span class="punishment">бан на 47 дней</span></p>
+                <h2>5. Запрет использование вредоносного, читерского ПО</h2>
+                <p><span class="rule-num">5.2</span> Использование вредоносного, читерского ПО. <span class="punishment">бан на 50 дней + снос дома</span></p>
+                <p><span class="rule-num">5.2.1</span> Совместная игра с читером. <span class="punishment">бан на 47 дней</span></p>
                 <p><span class="rule-num">5.2.2</span> Признание на проверке. <span class="punishment">бан на 46 дней</span></p>
-                <p><span class="rule-num">5.2.3</span> Признание в наличии читов (В любом виде чата) <span class="punishment">бан на 10 дней</span></p>
-                <p><span class="rule-num">5.2.4</span> Обход блокировки аккаунта. Считается вход с любого аккаунта, после уже имеющиеся блокировки. Любые попытки обойти правило будут квалифицироваться как обход бана. <span class="punishment">бан на 70 дней</span></p>
-                <p><span class="rule-num">5.2.6</span> Удаление читов перед проверкой <span class="punishment">бан на 50 дней</span></p>
-                <p><span class="rule-num">5.2.6.1</span> Запрещено хранение читов. <span class="punishment">бан на 50 дней</span></p>
-                <p><span class="rule-num">5.2.7</span> Использование Auto-копателей или лесорубов. <span class="punishment">бан на 5 дней</span></p>
-                <p><span class="rule-num">5.2.8</span> Использование ботов, макросов, плагинов позволяющих автоматизировать сложные игровые процессы. <span class="punishment">бан на 15 дней</span> Единственный пример: бот казино с фармом валюты. <span class="punishment">бан на 14 дней</span></p>
-                <p><span class="rule-num">5.2.9</span> Неадекватное поведение на проверке. Сюда относятся различные фейк папки с названиями читов, шутки рофлы в сторону администрации, попытка выпросить разбан или что бы не банили, вопросы не по теме проверки. <span class="punishment">бан на 50 дней</span></p>
-                <p><span class="rule-num">5.2.10</span> Использование виртуальных машин при проверке, различные манипуляции с обязательными программами для проверки, доступом к локальным дискам (ничего из этого не открывается, пишет администратор ограничил доступ, просит пин код, родительский контроль, и.т.д) - <span class="punishment">бан на 50 дней (попытка обхода проверки)</span></p>
-                <p><span class="rule-num">5.2.11</span> Использование макросов, запрещённых модов, кликеров (кроме фармилок). <span class="punishment">бан на 5 дней / 7 дней / 15 дней / 30 дней / 50 дней</span></p>
-                <p><span class="rule-num">5.2.12</span> Использование .bat (батников) на чистку. <span class="punishment">бан на 50 дней</span></p>
-                <p><span class="rule-num">5.2.12.1</span> Запрещено хранить у себя .bat (батники) на очистку. <span class="punishment">бан на 20 дней</span></p>
-                
-                <h3>Список запрещенный модификаций:</h3>
-                <p>Любые модификации, которые являются интерпретацией чит-функции</p>
-                <ul>
-                    <li>AutoLeave - <span class="punishment">10d бана</span></li>
-                    <li>ElytraSwap - <span class="punishment">5d бана</span></li>
-                    <li>ArmorHotSwap - <span class="punishment">5d бана</span></li>
-                    <li>Slippery Mod - <span class="punishment">50d бана</span></li>
-                    <li>StepUp Mod - <span class="punishment">30d бана</span></li>
-                    <li>AFK-Fish Mod - <span class="punishment">5d бана</span></li>
-                    <li>InvMove - <span class="punishment">7d бана</span></li>
-                    <li>Inventory Totem - <span class="punishment">50d бана</span></li>
-                    <li>GoProne - <span class="punishment">15d бана</span></li>
-                    <li>CleanCut - <span class="punishment">15d бана</span></li>
-                    <li>Моды позволяющие изменять хитбоксы любых предметов (стойки и т.д.) - <span class="punishment">15d бана</span></li>
-                </ul>
-
-                <h3>Список запрещенных модов которые расцениваются как читы (50 дней бана):</h3>
-                <p>Любые модификации, которые являются интерпретацией чит-функции</p>
-                <ul>
-                    <li>Aim Assistance</li>
-                    <li>Auto Look</li>
-                    <li>Zergatul.cheatutils</li>
-                    <li>DiamondSim</li>
-                    <li>X-ray Mod</li>
-                    <li>Chest Locator</li>
-                    <li>Entity/Player X-Ray</li>
-                    <li>Spawner Locator</li>
-                    <li>AutoAttack</li>
-                    <li>InventoryProfilesNext</li>
-                    <li>Baritone/Fabritone</li>
-                    <li>NoClipFlyMod</li>
-                    <li>FreeCam</li>
-                    <li>PlayerHighlighter</li>
-                </ul>
+                <p><span class="rule-num">5.2.3</span> Признание в наличии читов. <span class="punishment">бан на 10 дней</span></p>
+                <p><span class="rule-num">5.2.4</span> Обход блокировки аккаунта. <span class="punishment">бан на 70 дней</span></p>
+                <p><span class="rule-num">5.2.6</span> Удаление/хранение читов. <span class="punishment">бан на 50 дней</span></p>
+                <p><span class="rule-num">5.2.7</span> Auto-копатели, лесорубы. <span class="punishment">бан на 5 дней</span></p>
+                <p><span class="rule-num">5.2.8</span> Боты, макросы, плагины. <span class="punishment">бан на 15 дней</span></p>
+                <p><span class="rule-num">5.2.9</span> Неадекватное поведение на проверке. <span class="punishment">бан на 50 дней</span></p>
+                <p><span class="rule-num">5.2.10</span> Использование виртуальных машин при проверке. <span class="punishment">бан на 50 дней</span></p>
+                <p><span class="rule-num">5.2.11</span> Макросы, запрещённые моды, кликеры. <span class="punishment">бан 5 / 7 / 15 / 30 / 50 дней</span></p>
+                <p><span class="rule-num">5.2.12</span> Использование .bat на чистку. <span class="punishment">бан на 50 дней</span></p>
             </div>
-
             <div class="rule-section">
                 <h2>6. Игровые правила и прочее</h2>
                 <p><span class="rule-num">6.1</span> Запрещено причинение вреда проекту: заливы, лаг-машины, багоюз, дюпы.</p>
-                <p><span class="rule-num">6.1.1</span> Создание заливов и багоюз <span class="punishment">бан на 25 дней</span></p>
-                <p><span class="rule-num">6.1.2</span> Создание лаг машин и всё что может нанести вред работоспособности сервера <span class="punishment">отключение аккаунта</span></p>
-                <p><span class="rule-num">6.1.3</span> Использование недоработок клановой системы (фарм киллов, накрутка статистики и.т.д) - <span class="punishment">бан создателя клана на 25 дней + удаление клана</span></p>
-                <p><span class="rule-num">6.1.4</span> Запрещено строительство ловушек без возможности выхода за счёт ограничений, выдвинутые сервером. Например, использование стоек для брони, рамок, снега и песка душ. <span class="punishment">бан на 25 дней + снос дома/части дома в регионе, котором находилась ловушка</span></p>
-                <p><span class="rule-num">6.1.5</span> Использование и распространение дюпов <span class="punishment">отключение аккаунта</span></p>
-                <p><span class="rule-num">6.1.6</span> Помеха работе персоналу. Например, "Я по рофлу написал спек" <span class="punishment">Бан на 6 часов</span></p>
-                <p><span class="rule-num">6.2</span> Флуд командами. Например, /pay nick 1 (более 12 раз) <span class="punishment">кик, далее бан на 12 часов</span></p>
-                <p><span class="rule-num">6.3</span> Некорректный текст, нарушающий правила чата на табличках, регионах, книгах. <span class="punishment">бан на 5 / 15 / 30 дней</span></p>
-                <p><span class="rule-num">6.4</span> Запрещено подавать жалобу на самого себя или кидать ложные жалобы. <span class="punishment">бан на 3 дня</span></p>
-                <p><span class="rule-num">6.4.1</span> Жалоба оскорбляющая высшую администрацию <span class="punishment">Бан на 5 дней</span></p>
-                <p><span class="rule-num">6.5</span> Запрещена реклама, продажа, распространение читов, магазинов, дискорд каналов, групп которые связаны с продажей, взломом, обменом ресурсов. <span class="punishment">перманентная блокировка аккаунта</span></p>
-                <p><span class="rule-num">6.6</span> Создание кланов с нарушением правил чата (оскорбления, аморальное содержание, политический контекст, пропаганда чего-либо). <span class="punishment">удаление клана, блокировка аккаунта основателя (не лидера) клана на срок от 5 до 30 дней</span></p>
-                <p><span class="rule-num">6.7</span> Использование более трёх аккаунтов для фарма /free, /warp afk. <span class="punishment">Блокировка одного или нескольких аккаунтов на 30 дней</span></p>
+                <p><span class="rule-num">6.1.1</span> Создание заливов и багоюз. <span class="punishment">бан на 25 дней</span></p>
+                <p><span class="rule-num">6.1.2</span> Создание лаг машин. <span class="punishment">отключение аккаунта</span></p>
+                <p><span class="rule-num">6.1.3</span> Использование недоработок клановой системы. <span class="punishment">бан создателя на 25 дней</span></p>
+                <p><span class="rule-num">6.1.4</span> Запрещено строительство ловушек без выхода. <span class="punishment">бан на 25 дней + снос</span></p>
+                <p><span class="rule-num">6.1.5</span> Использование и распространение дюпов. <span class="punishment">отключение аккаунта</span></p>
+                <p><span class="rule-num">6.2</span> Флуд командами. <span class="punishment">кик + бан на 12 часов</span></p>
+                <p><span class="rule-num">6.3</span> Некорректный текст на табличках, регионах, книгах. <span class="punishment">бан 5 / 15 / 30 дней</span></p>
+                <p><span class="rule-num">6.4</span> Запрещено подавать ложные жалобы. <span class="punishment">бан на 3 дня</span></p>
+                <p><span class="rule-num">6.5</span> Реклама читов, магазинов, дискорд каналов. <span class="punishment">перманентная блокировка</span></p>
+                <p><span class="rule-num">6.6</span> Создание кланов с нарушением правил чата. <span class="punishment">удаление клана + бан 5-30 дней</span></p>
+                <p><span class="rule-num">6.7</span> Использование более трёх аккаунтов для фарма. <span class="punishment">блокировка на 30 дней</span></p>
             </div>
-
             <div class="rule-section">
                 <h2>7. Модерация</h2>
-                <p><span class="rule-num">7.1</span> Модерация не имеет право заставлять скачивать AnyDesk и похожие программы. Исключение: Главный модератор и выше.</p>
-                <p><span class="rule-num">7.2</span> Проверка проводится исключительно через компьютер, никаких телефонов. Модерация не имеет права скидывать различные программы со своего компьютера. Все программы для проверки на читы скачиваются самостоятельно в браузере. Обязательными есть: Systeminformer, Process Hacker 2, Everything, AnyDesk, LastActivityView, JournalTrace, ShellBags Analyzer & Cleaner, RegScanner, Ocean, ExecutedProgramsList, Recaf.</p>
+                <p><span class="rule-num">7.1</span> Модерация не имеет право заставлять скачивать AnyDesk. Исключение: Главный модератор и выше.</p>
+                <p><span class="rule-num">7.2</span> Проверка проводится исключительно через компьютер, никаких телефонов. Обязательные программы: Systeminformer, Process Hacker 2, Everything, AnyDesk, LastActivityView, JournalTrace, ShellBags Analyzer & Cleaner, RegScanner, Ocean, ExecutedProgramsList, Recaf.</p>
             </div>
         </div>
     </div>
@@ -688,9 +750,7 @@
         function copyIP() {
             navigator.clipboard.writeText('play.tiger-world.ru').then(() => {
                 showNotification('✅ IP сервера скопирован!');
-            }).catch(() => {
-                showNotification('❌ Не удалось скопировать IP');
-            });
+            }).catch(() => showNotification('❌ Не удалось скопировать IP'));
         }
 
         function showNotification(text) {
