@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TigerWorld - Магазин</title>
+    <title>TigerWorld - Магазин и Правила</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f4f6f8; color: #333; }
@@ -11,32 +11,32 @@
         /* Шапка */
         header { display: flex; justify-content: space-between; align-items: center; padding: 15px 40px; background-color: #ffffff; border-bottom: 1px solid #e0e0e0; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
         .logo { font-weight: bold; font-size: 18px; color: #000; display: flex; align-items: center; gap: 10px; }
-        .logo span { color: #000; }
-        .nav-links a { color: #666; text-decoration: none; margin: 0 15px; font-size: 14px; transition: 0.3s; }
+        .nav-links a { color: #666; text-decoration: none; margin: 0 15px; font-size: 14px; transition: 0.3s; cursor: pointer; }
         .nav-links a:hover { color: #000; }
+        .nav-links a.active { color: #000; font-weight: bold; }
         .header-right { display: flex; align-items: center; gap: 20px; }
-        .social-icons { display: flex; gap: 10px; }
-        .social-icons a { color: #666; font-size: 18px; text-decoration: none; }
+        .social-icons a { color: #666; font-size: 18px; text-decoration: none; transition: 0.3s; }
+        .social-icons a:hover { color: #4a90e2; }
         .btn-black { background: #000; color: #fff; border: none; padding: 10px 20px; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; text-decoration: none; font-size: 14px; }
         .btn-black:hover { background: #333; }
 
-        /* Баннер */
+        /* Скрытие/показ страниц */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* --- СТИЛИ МАГАЗИНА --- */
         .hero { position: relative; height: 400px; background: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.6)), url('img/banner.jpg') center/cover; display: flex; flex-direction: column; justify-content: center; padding-left: 60px; color: white; }
         .hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 10px; text-shadow: 2px 2px 10px rgba(0,0,0,0.7); line-height: 1.2; }
         .hero p { color: #e0e0e0; font-size: 18px; margin-bottom: 30px; text-shadow: 1px 1px 5px rgba(0,0,0,0.7); }
-        
-        /* Блок IP на баннере */
         .ip-block-hero { background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 8px; display: flex; align-items: center; gap: 15px; width: fit-content; backdrop-filter: blur(5px); }
         .ip-block-hero span { font-size: 16px; font-weight: bold; color: #fff; letter-spacing: 1px; }
         .ip-block-hero button { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); padding: 5px 15px; border-radius: 5px; cursor: pointer; font-size: 12px; transition: 0.3s; }
         .ip-block-hero button:hover { background: rgba(255,255,255,0.1); }
 
-        /* Сетка товаров */
         .shop-section { padding: 40px; }
         .shop-title { font-size: 24px; font-weight: bold; margin-bottom: 20px; color: #000; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
         
-        /* Карточка товара */
         .card { background: #ffffff; border-radius: 10px; overflow: hidden; border: 1px solid #e0e0e0; transition: 0.3s; display: flex; flex-direction: column; position: relative; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: #4a90e2; }
         .card-image { position: relative; height: 180px; background-color: #e9ecef; }
@@ -48,25 +48,38 @@
         .card-btn { display: block; text-align: center; text-decoration: none; background: #000; color: white; border: none; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: auto; transition: 0.3s; font-size: 14px; }
         .card-btn:hover { background: #333; }
 
-        /* Специальные стили для карточки Рилликов */
         .rilli-input-container { padding: 15px; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%; background: #f8f9fa; }
         .rilli-icon { font-size: 40px; margin-bottom: 10px; }
         .rilli-label { font-size: 12px; color: #666; margin-bottom: 5px; }
         .rilli-input { width: 100%; padding: 10px; background: #fff; border: 1px solid #ccc; border-radius: 6px; color: #000; font-size: 16px; text-align: center; margin-bottom: 10px; outline: none; }
         .rilli-input:focus { border-color: #4a90e2; box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); }
 
-        /* Подвал */
+        /* --- СТИЛИ ПРАВИЛ --- */
+        .rules-container { max-width: 1000px; margin: 40px auto; padding: 40px; background: #ffffff; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .rules-container h1 { text-align: center; margin-bottom: 30px; color: #000; font-size: 28px; }
+        .rule-section { margin-bottom: 30px; }
+        .rule-section h2 { color: #4a90e2; margin-bottom: 15px; font-size: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .rule-section p { margin-bottom: 10px; color: #444; font-size: 15px; }
+        .rule-section ul { margin-left: 20px; margin-bottom: 15px; color: #444; }
+        .rule-section li { margin-bottom: 5px; }
+        .rule-num { color: #4a90e2; font-weight: bold; }
+        .punishment { color: #e74c3c; font-weight: bold; }
+        .back-btn { display: inline-block; background: #000; color: #fff; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; margin-bottom: 20px; transition: 0.3s; }
+        .back-btn:hover { background: #333; }
+
+        /* --- ПОДВАЛ --- */
         footer { background-color: #ffffff; padding: 30px 40px; margin-top: 50px; border-top: 1px solid #e0e0e0; }
         .footer-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto; }
         .footer-left { display: flex; flex-direction: column; gap: 5px; }
         .footer-left .logo { font-size: 16px; }
         .footer-left p { color: #999; font-size: 12px; }
         .footer-right { display: flex; gap: 15px; }
-        .footer-right a { color: #666; font-size: 18px; text-decoration: none; }
+        .footer-right a { color: #666; font-size: 18px; text-decoration: none; transition: 0.3s; }
+        .footer-right a:hover { color: #4a90e2; }
         .footer-bottom { text-align: center; margin-top: 30px; color: #aaa; font-size: 12px; border-top: 1px solid #f0f0f0; padding-top: 20px; }
         .footer-bottom a { color: #4a90e2; text-decoration: none; }
 
-        /* Модальное окно */
+        /* Модальное окно (для магазина) */
         .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: #fff; border-radius: 10px; padding: 30px; width: 90%; max-width: 500px; position: relative; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
         .modal-close { position: absolute; top: 10px; right: 15px; font-size: 24px; color: #aaa; cursor: pointer; }
@@ -85,119 +98,274 @@
             <span>🌲 TIGERWORLD</span>
         </div>
         <div class="nav-links">
-            <a href="index.html">Главная</a>
-            <a href="#">Магазин</a>
-            <a href="rules.html">Правила проекта</a>
+            <a href="#" onclick="showPage('shop')" id="nav-shop" class="active">Главная</a>
+            <a href="#" onclick="showPage('shop')">Магазин</a>
+            <a href="#" onclick="showPage('rules')" id="nav-rules">Правила проекта</a>
             <a href="#">Поддержка</a>
         </div>
         <div class="header-right">
             <div class="social-icons">
-                <a href="https://discord.gg/ваш_инвайт" target="_blank">💬</a>
-                <a href="https://t.me/ваш_канал" target="_blank">📢</a>
+                <a href="https://discord.gg/53TExcVtek" target="_blank">💬</a>
             </div>
-            <a href="#shop" class="btn-black">Перейти к товарам</a>
+            <a href="#" onclick="showPage('shop')" class="btn-black">Перейти к товарам</a>
         </div>
     </header>
 
-    <section class="hero">
-        <h1>Поистине лучший сервер TigerWorld!</h1>
-        <p>Поддержи проект и получи уникальные возможности</p>
-        
-        <!-- Блок IP на баннере -->
-        <div class="ip-block-hero">
-            <span>IP: play.tiger-world.ru</span>
-            <button onclick="copyIP()">Копировать</button>
+    <!-- ================= СТРАНИЦА МАГАЗИНА ================= -->
+    <div id="page-shop" class="page active">
+        <section class="hero">
+            <h1>Поистине лучший сервер TigerWorld!</h1>
+            <p>Поддержи проект и получи уникальные возможности</p>
+            <div class="ip-block-hero">
+                <span>IP: play.tiger-world.ru</span>
+                <button onclick="copyIP()">Копировать</button>
+            </div>
+        </section>
+
+        <section class="shop-section" id="shop">
+            <div class="shop-title">Доступные товары</div>
+            <div class="grid-container">
+                
+                <div class="card">
+                    <div class="card-image">
+                        <img src="img/admin.jpg" alt="D_ADMIN">
+                        <div class="discount">-20%</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">D_ADMIN</div>
+                        <div class="card-price">99 ₽</div>
+                        <button class="card-btn" onclick="openModal('D_ADMIN', '99 ₽', 'Вы получаете права администратора, доступ к /fly, /heal, /god и креативному режиму.')">Подробнее</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                        <img src="img/mladmin.jpg" alt="D_ML_ADMIN">
+                        <div class="discount">-50%</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">D_ML_ADMIN</div>
+                        <div class="card-price">149 ₽</div>
+                        <button class="card-btn" onclick="openModal('D_ML_ADMIN', '149 ₽', 'Продвинутая админка. Доступ к /ban, /mute, /kick, а также ко всем возможностям обычного админа.')">Подробнее</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                        <img src="img/custom.jpg" alt="CUSTOM">
+                        <div class="discount">-50%</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">CUSTOM</div>
+                        <div class="card-price">249 ₽</div>
+                        <button class="card-btn" onclick="openModal('CUSTOM', '249 ₽', 'Возможность создать свой собственный префикс, выбрать цвет ника и получить уникальный набор предметов.')">Подробнее</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                        <img src="img/sponsor.jpg" alt="SPONSOR">
+                        <div class="discount">-25%</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">SPONSOR</div>
+                        <div class="card-price">399 ₽</div>
+                        <button class="card-btn" onclick="openModal('SPONSOR', '399 ₽', 'Спонсорская привилегия. Выделенный цветной ник, доступ к закрытым ивентам и +1000 Рилликов.')">Подробнее</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="rilli-input-container">
+                        <div class="rilli-icon">💰</div>
+                        <div class="rilli-label">Введите количество (1 - 100000):</div>
+                        <input type="number" id="rilliAmount" class="rilli-input" min="1" max="100000" value="100" oninput="updateRilliPrice()">
+                        <div class="rilli-label">Итого к оплате:</div>
+                        <div class="card-price" id="rilliPrice" style="margin-bottom: 0;">100 ₽</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title" style="text-align: center; margin-bottom: 10px;">Риллики</div>
+                        <button class="card-btn" onclick="openRilliModal()">Купить</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-image">
+                        <img src="img/premium.jpg" alt="PREMIUM">
+                        <div class="discount">-15%</div>
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">PREMIUM</div>
+                        <div class="card-price">199 ₽</div>
+                        <button class="card-btn" onclick="openModal('PREMIUM', '199 ₽', 'Премиум набор. /kit premium, доступ к /enderchest, /workbench и увеличенный дом.')">Подробнее</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- ================= СТРАНИЦА ПРАВИЛ ================= -->
+    <div id="page-rules" class="page">
+        <div class="rules-container">
+            <a href="#" onclick="showPage('shop')" class="back-btn">← Вернуться в магазин</a>
+            <h1>Правила проекта TigerWorld</h1>
+
+            <div class="rule-section">
+                <h2>1. Общие положения</h2>
+                <p><span class="rule-num">1.1</span> Данный свод правил составлен представителем проекта TigerWorld и действителен на всех игровых режимах проекта <strong>TigerWorld</strong>. Незнание правил не освобождает нарушителя от ответственности, а также может усугубить наказание.</p>
+                <p><span class="rule-num">1.2</span> Правила могут быть изменены без явного оповещения основной аудитории проекта. При значительных изменениях правил, в дискорд сервере проекта отображается объявление.</p>
+                <p><span class="rule-num">1.3</span> Решения и действия главной администрации не обсуждаются и не поддаются разжалованию. Главная администрация вправе выдавать наказания вне рамок данных правил.</p>
+                <p><span class="rule-num">1.4</span> Администрация сервера не выдаёт игровые ресурсы/компенсации за их потерю в результате кика сервера, лагов/багов, а также действия игроков, использующие запрещённое ПО (читы).</p>
+                <p><span class="rule-num">1.5</span> Продажа, взломы, попытки взломов, передачи аккаунтов, покупки аккаунтов в обход официального сайта, распространение данных игроков, вред серверу, а так же продажи чего либо за реальную валюту - строго запрещены. Наказание - отключение всех аккаунтов без возможности приобрести разбан. Соучастие, содействие, совместная игра с нарушителями так же попадают под это правило. Аккаунты с которых был нанесен серьезный вред проекту - не подлежат восстановлению, даже если аккаунт был в тот момент взломан или добровольно передан или продан. Ответственность несет владелец аккаунта, независимо от того, кто совершал действия под данным аккаунтом.</p>
+            </div>
+
+            <div class="rule-section">
+                <h2>2. Правила регистрации</h2>
+                <p><span class="rule-num">2.1</span> Никнейм пользователя должен быть корректным. Некорректным можно назвать любой ник, нарушающий закрепленные правила, а также: блокировка аккаунта; для сменённых - предупреждение, затем блокировка</p>
+                <ul>
+                    <li><strong>2.1.1</strong> Никнейм, похожий на никнейм высшей Администрации (исключение – никнеймы ютуберов проекта).</li>
+                    <li><strong>2.1.2</strong> Никнейм, сексуального, аморального содержания (название половых органов, процессов и пр.)</li>
+                    <li><strong>2.1.3</strong> Никнейм, оскорбляющий никнейм другого игрока.</li>
+                    <li><strong>2.1.4</strong> Никнейм, содержащий названия запрещенных ПО.</li>
+                    <li><strong>2.1.5</strong> Никнейм, содержащий грубые матерные слова.</li>
+                </ul>
+                <p><span class="rule-num">2.2</span> При покупке платных дополнительных возможностей (групп), кейсов, рилликов, предоставленный системой чек необходимо сохранить.</p>
+            </div>
+
+            <div class="rule-section">
+                <h2>3. Приобретение платных услуг</h2>
+                <p><span class="rule-num">3.1</span> Игра на проекте не подразумевает платы за использование ресурсов TigerWorld.</p>
+                <p><span class="rule-num">3.2</span> Игрок вправе добровольно оплатить определённую сумму проекту за внутриигровую услугу в одностороннем порядке.</p>
+                <p><span class="rule-num">3.3</span> При ошибке платежа, либо отсутствия внутриигровой услуги после оплаты, нужно обращаться в техподдержку сервера.</p>
+                <p><span class="rule-num">3.4</span> Возврата средств за покупки у нас нету, так как TigerWorld не является коммерческой организацией и все покупки являются добровольными пожертвованиями на развитие сервера.</p>
+                <p><span class="rule-num">3.5</span> Покупка платных групп не даёт привилегии на игнорирование/нарушение данных правил.</p>
+            </div>
+
+            <div class="rule-section">
+                <h2>4. Внутриигровое общение</h2>
+                <p><span class="rule-num">4.1</span> Запрещено флудить, отправлять больше 2-ух похожих по смыслу, или одинаковых сообщения подряд (2 сообщения можно, 3 нельзя) (за одну минуту) <span class="punishment">мут на 4 часа</span></p>
+                <p><span class="rule-num">4.1.1</span> Запрещено согласовывать с другими игроками или использовать свои твинки для отправки одного и того же сообщения в короткий промежуток времени, иными словами, обходить наказание за флуд, используя третьи аккаунты. <span class="punishment">мут каждому участник на 4 часа</span></p>
+                <p><span class="rule-num">4.1.2</span> Запрещено использовать объявления для обхода наказания за флуд (использовать 2 /bc и сообщение в глобал, или наоборот, 2 сообщения и 1 /bc) <span class="punishment">бан на 6 часов</span></p>
+                <p><span class="rule-num">4.2</span> Запрещено флудить символами, т.е. использовать комбинации бессмысленных символов, по типу “!!!”, или же смеха. <span class="punishment">мут на 4 часа, более 10 символов</span></p>
+                <p><span class="rule-num">4.3</span> Запрещено организовывать флуд опросами, по типу “отправьте + в чат”. Исключение - просьба приютить/продать или обменять ресурсы/математические примеры(не более 3-х примеров в течении 5-ти минут). Также исключениями из этого правила являются сообщения следующего типа: “кто примет в клан + в чат/кто дуэль + в чат/кто выживать вместе+ в чат <span class="punishment">мут на 4 часа</span></p>
+                <p><span class="rule-num">4.3.1</span> Если при организации флуда, на ваше сообщение ответило 6 и более человек, то вам выдаётся <span class="punishment">мут на 6 часов</span>, а всем, кто отреагировал - <span class="punishment">мут на 4 часа</span></p>
+                <p><span class="rule-num">4.4</span> Неадекватное поведение, чрезмерные оскорбления и агрессия. <span class="punishment">мут на 3 часа / 12 часов</span></p>
+                <p><span class="rule-num">4.4.1</span> Оскорбления, унижения, угрозы к участникам сервера, игрокам (даже без указания конкретного игрока/ Упоминание/затрагивание расы - исключение) <span class="punishment">мут на 4 часа</span></p>
+                <p><span class="rule-num">4.4.2</span> Злоупотребление нецензурной лексикой. <span class="punishment">мут на 2 / 4 часа</span></p>
+                <p><span class="rule-num">4.4.3</span> Аморальное поведение, темы для совершеннолетних. <span class="punishment">мут на 3 часа</span></p>
+                <p><span class="rule-num">4.4.4</span> Призывы к суициду <span class="punishment">мут на 6 часов</span></p>
+                <p><span class="rule-num">4.4.5</span> Оскорбление проекта, унижение проекта, оскорбительные названия. Любой вид чата. <span class="punishment">мут на 120 дней</span></p>
+                <p><span class="rule-num">4.4.6</span> Публичная критика проекта в общем чате. <span class="punishment">мут на 3 дня</span></p>
+                <p><span class="rule-num">4.5</span> Выпрашивание снятия, выдачи наказаний у Администрации. <span class="punishment">мут на 2 часа</span></p>
+                <p><span class="rule-num">4.5.1</span> Выпрашивание ресурсов у персонала проекта. <span class="punishment">мут на 1 час</span></p>
+                <p><span class="rule-num">4.6</span> Дезинформация игроков проекта неофициальной информацией, внутриигровой информацией. “Скоро вайп” - исключение. <span class="punishment">мут на 12 часов / 4 дня</span></p>
+                <p><span class="rule-num">4.6.1</span> Вне-игровой обман игроков. Например, сочетаниями клавиш Alt+F4, командами /рги и так далее. <span class="punishment">мут на 6 часов</span></p>
+                <p><span class="rule-num">4.7</span> Запрещено упоминание сторонних проектов ресурсов, групп, соцсетей и подобного. <span class="punishment">мут 1 день</span> Обход правила: <span class="punishment">мут 3 дня</span></p>
+                <p><span class="rule-num">4.7.1</span> Любое упоминание Discord-контактов. Исключение: личные сообщения, локальный чат с модератором. <span class="punishment">бан на 2 дня</span></p>
+                <p><span class="rule-num">4.7.2</span> Реклама сторонних проектов (обход данного правила) Любой вид чата. <span class="punishment">мут на 60 дней</span></p>
+                <p><span class="rule-num">4.7.3</span> Реклама в Личных сообщениях, попытка обойти наказание в глобальном чате. <span class="punishment">бан на 60 дней</span></p>
+                <p><span class="rule-num">4.7.4</span> Распространение вредоносных ссылок (скримеры, стиллеры, платные краткие ссылки) <span class="punishment">бан на 14 дней</span></p>
+                <p><span class="rule-num">4.7.5</span> Реклама каналов на YouTube, TikTok, Telegram и других платформах. Исключение: разрешено только со статусом “YouTube” <span class="punishment">мут 60 дней</span></p>
+                <p><span class="rule-num">4.8</span> Оскорбление родителей, некорректное обращение к родителям любого игрока, оскорбительные упоминания <span class="punishment">мут на 5 дней за оскорбительное упоминание, на 10 / 15 дней - за оскорбление</span></p>
+                <p><span class="rule-num">4.8.1</span> Оскорбление своих родителей <span class="punishment">мут 5 дней</span></p>
+                <p><span class="rule-num">4.9</span> Затрагивание политики, политическая агитация <span class="punishment">бан на 3 дня / 7 дней или мут на 2 дня</span></p>
+                <p><span class="rule-num">4.10</span> Выдача себя за администрацию проекта. <span class="punishment">бан на 3 дня</span></p>
+                <p><span class="rule-num">4.10.1</span> Угрозы баном/киком/мутом <span class="punishment">бан на 12 часов</span></p>
+                <p><span class="rule-num">4.11</span> Оскорбление модерации и администрации. Любой вид чата. <span class="punishment">бан на 5 / 10 / 15 дней</span></p>
+                <p><span class="rule-num">4.11.1</span> Оскорбление родных администрации. Любой вид чата <span class="punishment">бан на 20 дней</span></p>
+                <p><span class="rule-num">4.11.2</span> Шутки или рофлы в сторону администрации, состава проекта (Кроме высшей администрации). <span class="punishment">бан на 8 часов</span></p>
+                <p><span class="rule-num">4.11.3</span> Неуважительное/неадекватное общение с администрацией. <span class="punishment">мут на 12 часов</span></p>
+                <p><span class="rule-num">4.11.4</span> Угроза администрации снятием, угроза наказанием. <span class="punishment">мут на 4 часа</span></p>
+                <p><span class="rule-num">4.12</span> Оскорбление ютуберов проекта. Любой вид чата. <span class="punishment">мут IP от 1 день / 5 дней</span></p>
+                <p><span class="rule-num">4.12.1</span> Шутки или рофлы в сторону ютуберов проекта <span class="punishment">мут IP на 1 день</span></p>
+                <p><span class="rule-num">4.12.2</span> Неадекватное общение с ютуберами проекта <span class="punishment">мут на 6 часов</span></p>
+                <p><span class="rule-num">4.13</span> Пропаганда нацизма/расизма, табакокурения, наркотиков, оружия, терроризма, и.т.д <span class="punishment">бан на 7 дней</span></p>
+                <p><span class="rule-num">4.14</span> Бартер между играми. <span class="punishment">бан на 4 дня</span></p>
+                <p><span class="rule-num">4.15</span> Распространение личных данных игроков (доксинг, сватинг) Угрозы также сюда относятся. <span class="punishment">бан на 30 дней</span></p>
+                <p><span class="rule-num">4.15.1</span> Доксинг, сватинг и подобные нарушения в сторону сотрудника сервера <span class="punishment">отключение аккаунта</span></p>
+                <p><span class="rule-num">4.16</span> Провокация игроков на нарушение правил. <span class="punishment">бан от 12 часов / 2 дня / 4 дня</span></p>
+                <p><span class="rule-num">4.17</span> Любое упоминание денежных операций с реальной валютой любой размерности. <span class="punishment">мут на 2 дня</span></p>
+                <p><span class="rule-num">4.18</span> Запрещено любое упоминание читов в положительном контексте, а также их нормализация. <span class="punishment">мут на 7 дней</span></p>
+            </div>
+
+            <div class="rule-section">
+                <h2>5. Запрет использование вредоносного, читерского ПО и ПО для получения преимуществ</h2>
+                <p><span class="rule-num">5.2</span> Использование вредоносного, читерского ПО, получение преимущества над игроками. <span class="punishment">бан на 50 дней + снос основного дома + возможное отключение аккаунта (на усмотрение администрации).</span></p>
+                <p><span class="rule-num">5.2.1</span> Совместная игра с игроком, нарушивший пункт 5.2 <span class="punishment">бан на 47 дней</span></p>
+                <p><span class="rule-num">5.2.2</span> Признание на проверке. <span class="punishment">бан на 46 дней</span></p>
+                <p><span class="rule-num">5.2.3</span> Признание в наличии читов (В любом виде чата) <span class="punishment">бан на 10 дней</span></p>
+                <p><span class="rule-num">5.2.4</span> Обход блокировки аккаунта. Считается вход с любого аккаунта, после уже имеющиеся блокировки. Любые попытки обойти правило будут квалифицироваться как обход бана. <span class="punishment">бан на 70 дней</span></p>
+                <p><span class="rule-num">5.2.6</span> Удаление читов перед проверкой <span class="punishment">бан на 50 дней</span></p>
+                <p><span class="rule-num">5.2.6.1</span> Запрещено хранение читов. <span class="punishment">бан на 50 дней</span></p>
+                <p><span class="rule-num">5.2.7</span> Использование Auto-копателей или лесорубов. <span class="punishment">бан на 5 дней</span></p>
+                <p><span class="rule-num">5.2.8</span> Использование ботов, макросов, плагинов позволяющих автоматизировать сложные игровые процессы. <span class="punishment">бан на 15 дней</span> Единственный пример: бот казино с фармом валюты. <span class="punishment">бан на 14 дней</span></p>
+                <p><span class="rule-num">5.2.9</span> Неадекватное поведение на проверке. Сюда относятся различные фейк папки с названиями читов, шутки рофлы в сторону администрации, попытка выпросить разбан или что бы не банили, вопросы не по теме проверки. <span class="punishment">бан на 50 дней</span></p>
+                <p><span class="rule-num">5.2.10</span> Использование виртуальных машин при проверке, различные манипуляции с обязательными программами для проверки, доступом к локальным дискам (ничего из этого не открывается, пишет администратор ограничил доступ, просит пин код, родительский контроль, и.т.д) - <span class="punishment">бан на 50 дней (попытка обхода проверки)</span></p>
+                <p><span class="rule-num">5.2.11</span> Использование макросов, запрещённых модов, кликеров (кроме фармилок). <span class="punishment">бан на 5 дней / 7 дней / 15 дней / 30 дней / 50 дней</span></p>
+                <p><span class="rule-num">5.2.12</span> Использование .bat (батников) на чистку. <span class="punishment">бан на 50 дней</span></p>
+                <p><span class="rule-num">5.2.12.1</span> Запрещено хранить у себя .bat (батники) на очистку. <span class="punishment">бан на 20 дней</span></p>
+                
+                <h3>Список запрещенный модификаций:</h3>
+                <p>Любые модификации, которые являются интерпретацией чит-функции</p>
+                <ul>
+                    <li>AutoLeave - <span class="punishment">10d бана</span></li>
+                    <li>ElytraSwap - <span class="punishment">5d бана</span></li>
+                    <li>ArmorHotSwap - <span class="punishment">5d бана</span></li>
+                    <li>Slippery Mod - <span class="punishment">50d бана</span></li>
+                    <li>StepUp Mod - <span class="punishment">30d бана</span></li>
+                    <li>AFK-Fish Mod - <span class="punishment">5d бана</span></li>
+                    <li>InvMove - <span class="punishment">7d бана</span></li>
+                    <li>Inventory Totem - <span class="punishment">50d бана</span></li>
+                    <li>GoProne - <span class="punishment">15d бана</span></li>
+                    <li>CleanCut - <span class="punishment">15d бана</span></li>
+                    <li>Моды позволяющие изменять хитбоксы любых предметов (стойки и т.д.) - <span class="punishment">15d бана</span></li>
+                </ul>
+
+                <h3>Список запрещенных модов которые расцениваются как читы (50 дней бана):</h3>
+                <p>Любые модификации, которые являются интерпретацией чит-функции</p>
+                <ul>
+                    <li>Aim Assistance</li>
+                    <li>Auto Look</li>
+                    <li>Zergatul.cheatutils</li>
+                    <li>DiamondSim</li>
+                    <li>X-ray Mod</li>
+                    <li>Chest Locator</li>
+                    <li>Entity/Player X-Ray</li>
+                    <li>Spawner Locator</li>
+                    <li>AutoAttack</li>
+                    <li>InventoryProfilesNext</li>
+                    <li>Baritone/Fabritone</li>
+                    <li>NoClipFlyMod</li>
+                    <li>FreeCam</li>
+                    <li>PlayerHighlighter</li>
+                </ul>
+            </div>
+
+            <div class="rule-section">
+                <h2>6. Игровые правила и прочее</h2>
+                <p><span class="rule-num">6.1</span> Запрещено причинение вреда проекту: заливы, лаг-машины, багоюз, дюпы.</p>
+                <p><span class="rule-num">6.1.1</span> Создание заливов и багоюз <span class="punishment">бан на 25 дней</span></p>
+                <p><span class="rule-num">6.1.2</span> Создание лаг машин и всё что может нанести вред работоспособности сервера <span class="punishment">отключение аккаунта</span></p>
+                <p><span class="rule-num">6.1.3</span> Использование недоработок клановой системы (фарм киллов, накрутка статистики и.т.д) - <span class="punishment">бан создателя клана на 25 дней + удаление клана</span></p>
+                <p><span class="rule-num">6.1.4</span> Запрещено строительство ловушек без возможности выхода за счёт ограничений, выдвинутые сервером. Например, использование стоек для брони, рамок, снега и песка душ. <span class="punishment">бан на 25 дней + снос дома/части дома в регионе, котором находилась ловушка</span></p>
+                <p><span class="rule-num">6.1.5</span> Использование и распространение дюпов <span class="punishment">отключение аккаунта</span></p>
+                <p><span class="rule-num">6.1.6</span> Помеха работе персоналу. Например, “Я по рофлу написал спек” <span class="punishment">Бан на 6 часов</span></p>
+                <p><span class="rule-num">6.2</span> Флуд командами. Например, /pay nick 1 (более 12 раз) <span class="punishment">кик, далее бан на 12 часов</span></p>
+                <p><span class="rule-num">6.3</span> Некорректный текст, нарушающий правила чата на табличках, регионах, книгах. <span class="punishment">бан на 5 / 15 / 30 дней</span></p>
+                <p><span class="rule-num">6.4</span> Запрещено подавать жалобу на самого себя или кидать ложные жалобы. <span class="punishment">бан на 3 дня</span></p>
+                <p><span class="rule-num">6.4.1</span> Жалоба оскорбляющая высшую администрацию <span class="punishment">Бан на 5 дней</span></p>
+                <p><span class="rule-num">6.5</span> Запрещена реклама, продажа, распространение читов, магазинов, дискорд каналов, групп которые связаны с продажей, взломом, обменом ресурсов. <span class="punishment">перманентная блокировка аккаунта</span></p>
+                <p><span class="rule-num">6.6</span> Создание кланов с нарушением правил чата (оскорбления, аморальное содержание, политический контекст, пропаганда чего-либо). <span class="punishment">удаление клана, блокировка аккаунта основателя (не лидера) клана на срок от 5 до 30 дней</span></p>
+                <p><span class="rule-num">6.7</span> Использование более трёх аккаунтов для фарма /free, /warp afk. <span class="punishment">Блокировка одного или нескольких аккаунтов на 30 дней</span></p>
+            </div>
+
+            <div class="rule-section">
+                <h2>7. Модерация</h2>
+                <p><span class="rule-num">7.1</span> Модерация не имеет право заставлять скачивать AnyDesk и похожие программы. Исключение: Главный модератор и выше.</p>
+                <p><span class="rule-num">7.2</span> Проверка проводится исключительно через компьютер, никаких телефонов. Модерация не имеет право скидывать различные программы со своего компьютера. Все программы для проверки на читы скачиваются самостоятельно в браузере. Обязательными есть: Systeminformer, Process Hacker 2, Everything, AnyDesk, LastActivityView, JournalTrace, ShellBags Analyzer & Cleaner, RegScanner, Ocean, ExecutedProgramsList, Recaf.</p>
+            </div>
         </div>
-    </section>
-
-    <!-- Секция товаров -->
-    <section class="shop-section" id="shop">
-        <div class="shop-title">Доступные товары</div>
-        
-        <div class="grid-container">
-            
-            <!-- Карточка 1 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="img/admin.jpg" alt="D_ADMIN">
-                    <div class="discount">-20%</div>
-                </div>
-                <div class="card-info">
-                    <div class="card-title">D_ADMIN</div>
-                    <div class="card-price">99 ₽</div>
-                    <button class="card-btn" onclick="openModal('D_ADMIN', '99 ₽', 'Вы получаете права администратора, доступ к /fly, /heal, /god и креативному режиму.')">Подробнее</button>
-                </div>
-            </div>
-
-            <!-- Карточка 2 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="img/mladmin.jpg" alt="D_ML_ADMIN">
-                    <div class="discount">-50%</div>
-                </div>
-                <div class="card-info">
-                    <div class="card-title">D_ML_ADMIN</div>
-                    <div class="card-price">149 ₽</div>
-                    <button class="card-btn" onclick="openModal('D_ML_ADMIN', '149 ₽', 'Продвинутая админка. Доступ к /ban, /mute, /kick, а также ко всем возможностям обычного админа.')">Подробнее</button>
-                </div>
-            </div>
-
-            <!-- Карточка 3 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="img/custom.jpg" alt="CUSTOM">
-                    <div class="discount">-50%</div>
-                </div>
-                <div class="card-info">
-                    <div class="card-title">CUSTOM</div>
-                    <div class="card-price">249 ₽</div>
-                    <button class="card-btn" onclick="openModal('CUSTOM', '249 ₽', 'Возможность создать свой собственный префикс, выбрать цвет ника и получить уникальный набор предметов.')">Подробнее</button>
-                </div>
-            </div>
-
-            <!-- Карточка 4 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="img/sponsor.jpg" alt="SPONSOR">
-                    <div class="discount">-25%</div>
-                </div>
-                <div class="card-info">
-                    <div class="card-title">SPONSOR</div>
-                    <div class="card-price">399 ₽</div>
-                    <button class="card-btn" onclick="openModal('SPONSOR', '399 ₽', 'Спонсорская привилегия. Выделенный цветной ник, доступ к закрытым ивентам и +1000 Рилликов.')">Подробнее</button>
-                </div>
-            </div>
-
-            <!-- Карточка 5 (Риллики) -->
-            <div class="card">
-                <div class="rilli-input-container">
-                    <div class="rilli-icon">💰</div>
-                    <div class="rilli-label">Введите количество (1 - 100000):</div>
-                    <input type="number" id="rilliAmount" class="rilli-input" min="1" max="100000" value="100" oninput="updateRilliPrice()">
-                    <div class="rilli-label">Итого к оплате:</div>
-                    <div class="card-price" id="rilliPrice" style="margin-bottom: 0;">100 ₽</div>
-                </div>
-                <div class="card-info">
-                    <div class="card-title" style="text-align: center; margin-bottom: 10px;">Риллики</div>
-                    <button class="card-btn" onclick="openRilliModal()">Купить</button>
-                </div>
-            </div>
-
-            <!-- Карточка 6 -->
-            <div class="card">
-                <div class="card-image">
-                    <img src="img/premium.jpg" alt="PREMIUM">
-                    <div class="discount">-15%</div>
-                </div>
-                <div class="card-info">
-                    <div class="card-title">PREMIUM</div>
-                    <div class="card-price">199 ₽</div>
-                    <button class="card-btn" onclick="openModal('PREMIUM', '199 ₽', 'Премиум набор. /kit premium, доступ к /enderchest, /workbench и увеличенный дом.')">Подробнее</button>
-                </div>
-            </div>
-
-        </div>
-    </section>
+    </div>
 
     <!-- Подвал -->
     <footer>
@@ -207,8 +375,7 @@
                 <p>Поистине лучший сервер TigerWorld!</p>
             </div>
             <div class="footer-right">
-                <a href="https://discord.gg/ваш_инвайт" target="_blank">💬</a>
-                <a href="https://t.me/ваш_канал" target="_blank">📢</a>
+                <a href="https://discord.gg/53TExcVtek" target="_blank">💬</a>
             </div>
         </div>
         <div class="footer-bottom">
@@ -217,19 +384,36 @@
         </div>
     </footer>
 
-    <!-- Модальное окно -->
+    <!-- Модальное окно (для магазина) -->
     <div id="modal" class="modal-overlay">
         <div class="modal-content">
             <span class="modal-close" onclick="closeModal()">&times;</span>
             <h2 id="modalTitle">Название</h2>
             <p id="modalDesc">Описание</p>
             <div class="price" id="modalPrice">Цена</div>
-            <a href="https://www.donationalerts.com/r/ваш_ник" target="_blank" class="buy-btn" id="modalBuyBtn">Купить</a>
+            <a href="https://www.donationalerts.com/r/siuser" target="_blank" class="buy-btn" id="modalBuyBtn">Купить</a>
         </div>
     </div>
 
     <!-- JavaScript -->
     <script>
+        // Переключение страниц (Магазин / Правила)
+        function showPage(pageId) {
+            // Скрываем все страницы
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            // Показываем нужную
+            document.getElementById('page-' + pageId).classList.add('active');
+            
+            // Обновляем активную ссылку в меню
+            document.querySelectorAll('.nav-links a').forEach(link => link.classList.remove('active'));
+            if (pageId === 'shop') document.getElementById('nav-shop').classList.add('active');
+            if (pageId === 'rules') document.getElementById('nav-rules').classList.add('active');
+
+            // Прокручиваем наверх
+            window.scrollTo(0, 0);
+        }
+
+        // Копирование IP
         function copyIP() {
             navigator.clipboard.writeText('play.tiger-world.ru').then(() => {
                 alert('IP сервера скопирован в буфер обмена!');
@@ -238,6 +422,7 @@
             });
         }
 
+        // Модальное окно
         function openModal(title, price, description) {
             document.getElementById('modalTitle').innerText = title;
             document.getElementById('modalPrice').innerText = price;
