@@ -62,74 +62,15 @@
             transition: background 0.6s var(--ease-in-out), color 0.6s var(--ease-in-out);
         }
 
-        /* ================== 🆕 ПРЕЛОАДЕР ================== */
-        .preloader {
-            position: fixed;
-            inset: 0;
-            z-index: 99999;
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 24px;
-            transition: opacity 0.8s var(--ease-out), visibility 0.8s;
-        }
-        .preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        .preloader-logo {
-            font-size: 64px;
-            animation: preloaderPulse 1.5s var(--ease-in-out) infinite;
-            filter: drop-shadow(0 0 30px rgba(255,126,95,0.6));
-        }
-        @keyframes preloaderPulse {
-            0%,100% { transform: scale(1) rotate(-5deg); }
-            50% { transform: scale(1.15) rotate(5deg); }
-        }
-        .preloader-title {
-            color: white;
-            font-size: 20px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-        .preloader-title span {
-            background: linear-gradient(135deg, #ff7e5f, #feb47b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .preloader-bar {
-            width: 240px;
-            height: 4px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-            overflow: hidden;
-            position: relative;
-        }
-        .preloader-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #ff7e5f, #feb47b, #e100ff);
-            background-size: 200% 100%;
-            border-radius: 4px;
-            transition: width 0.3s ease;
-            animation: preloaderShimmer 1.5s linear infinite;
-        }
-        @keyframes preloaderShimmer { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
-        .preloader-percent {
-            color: rgba(255,255,255,0.6);
-            font-size: 13px;
-            font-weight: 700;
-            font-family: 'JetBrains Mono', monospace;
-        }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--surface-2); }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--primary), var(--primary-light)); border-radius: 10px; border: 2px solid var(--surface-2); }
 
-        /* ================== 🆕 СКРОЛЛ-ПРОГРЕСС ================== */
+        /* ================== СКРОЛЛ-ПРОГРЕСС ================== */
         .scroll-progress {
             position: fixed;
-            top: 0;
-            left: 0;
-            height: 3px;
-            width: 0%;
+            top: 0; left: 0;
+            height: 3px; width: 0%;
             background: linear-gradient(90deg, var(--primary), var(--primary-light), var(--accent));
             background-size: 200% 100%;
             z-index: 1000;
@@ -137,6 +78,7 @@
             animation: preloaderShimmer 3s linear infinite;
             box-shadow: 0 0 12px rgba(255,126,95,0.6);
         }
+        @keyframes preloaderShimmer { 0%{background-position:0% 50%} 100%{background-position:200% 50%} }
 
         /* ================== КУРСОР ================== */
         .cursor-dot, .cursor-ring { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 99999; will-change: transform; }
@@ -268,7 +210,7 @@
         .online-pill .num { color: var(--success); font-weight: 900; font-family: 'JetBrains Mono', monospace; }
         .online-pill.offline .num { color: var(--danger); }
 
-        /* ================== 🆕 КАК КУПИТЬ ================== */
+        /* ================== КАК КУПИТЬ ================== */
         .how-section { max-width: 1440px; margin: 0 auto; padding: 20px 44px 40px; width: 100%; }
         .how-card { background: var(--surface); border-radius: var(--radius-xl); padding: 40px 44px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); border: 1px solid var(--border); }
         .how-head { text-align: center; margin-bottom: 36px; }
@@ -399,7 +341,7 @@
         .rilli-total-label { font-size: 13px; color: var(--text-secondary); font-weight: 600; }
         .rilli-total-value { font-size: 24px; font-weight: 900; color: var(--primary); font-family: 'JetBrains Mono', monospace; transition: transform 0.4s var(--ease-bounce); }
 
-        /* ================== 🆕 ОТЗЫВЫ ================== */
+        /* ================== ОТЗЫВЫ ================== */
         .reviews-section { max-width: 1440px; margin: 0 auto; padding: 20px 44px 40px; width: 100%; }
         .reviews-head { text-align: center; margin-bottom: 36px; }
         .reviews-head h2 { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 8px; background: linear-gradient(135deg, var(--text), var(--text-secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
@@ -415,7 +357,7 @@
         .review-info strong { display: block; font-size: 14px; font-weight: 800; }
         .review-info span { font-size: 12px; color: var(--text-muted); }
 
-        /* ================== 🆕 НОВОСТИ ================== */
+        /* ================== НОВОСТИ ================== */
         .news-section { max-width: 1440px; margin: 0 auto; padding: 0 44px 40px; width: 100%; }
         .news-card { background: var(--surface); border-radius: var(--radius-xl); padding: 32px 36px; box-shadow: 0 20px 50px rgba(0,0,0,0.08); border: 1px solid var(--border); }
         .news-head { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; }
@@ -591,17 +533,7 @@
 </head>
 <body>
 
-<!-- 🆕 ПРЕЛОАДЕР -->
-<div class="preloader" id="preloader">
-    <div class="preloader-logo">🌲</div>
-    <div class="preloader-title">TIGER<span>WORLD</span></div>
-    <div class="preloader-bar"><div class="preloader-fill" id="preloaderFill"></div></div>
-    <div class="preloader-percent" id="preloaderPercent">0%</div>
-</div>
-
-<!-- 🆕 СКРОЛЛ-ПРОГРЕСС -->
 <div class="scroll-progress" id="scrollProgress"></div>
-
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
@@ -677,7 +609,6 @@
             </div>
         </section>
 
-        <!-- 🆕 КАК КУПИТЬ -->
         <section class="how-section">
             <div class="how-card">
                 <div class="how-head">
@@ -942,7 +873,6 @@
             </div>
         </section>
 
-        <!-- 🆕 НОВОСТИ -->
         <section class="news-section">
             <div class="news-card">
                 <div class="news-head">
@@ -976,7 +906,6 @@
             </div>
         </section>
 
-        <!-- 🆕 ОТЗЫВЫ -->
         <section class="reviews-section">
             <div class="reviews-head">
                 <h2>Отзывы игроков</h2>
@@ -1238,24 +1167,7 @@
         goalTotal: 50000,
     };
 
-    /* ============ 🆕 ПРЕЛОАДЕР ============ */
-    let progress = 0;
-    const preloaderFill = document.getElementById('preloaderFill');
-    const preloaderPercent = document.getElementById('preloaderPercent');
-    const preloader = document.getElementById('preloader');
-    
-    const preloaderInterval = setInterval(() => {
-        progress += Math.random() * 15 + 5;
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(preloaderInterval);
-            setTimeout(() => preloader.classList.add('hidden'), 400);
-        }
-        preloaderFill.style.width = progress + '%';
-        preloaderPercent.innerText = Math.floor(progress) + '%';
-    }, 120);
-
-    /* ============ 🆕 ЗВУКИ ============ */
+    /* ============ ЗВУКИ ============ */
     let audioCtx;
     function playClick() {
         try {
@@ -1453,9 +1365,9 @@
             if (p >= percent) { clearInterval(int); document.getElementById('goalPercent').innerText = percent + '%'; }
             else { p++; document.getElementById('goalPercent').innerText = p + '%'; }
         }, 20);
-    }, 1500);
+    }, 300);
 
-    /* ============ 🆕 СКРОЛЛ-ПРОГРЕСС ============ */
+    /* ============ СКРОЛЛ-ПРОГРЕСС ============ */
     const scrollProgress = document.getElementById('scrollProgress');
     window.addEventListener('scroll', () => {
         const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -1513,4 +1425,35 @@
         card.addEventListener('mouseleave', () => { card.style.transform = ''; });
     });
 
-    /* =========
+    /* ============ LIVE-ЛЕНТА ============ */
+    const purchases = [
+        { name: 'DragonSlayer', item: 'Pegas', icon: '🦄', time: 'только что' },
+        { name: 'CraftMaster', item: 'Редкий кейс', icon: '💎', time: '2 минуты назад' },
+        { name: 'ShadowKiller', item: 'Dracula', icon: '🧛', time: '5 минут назад' },
+        { name: 'Alex_Pro', item: '10 000 Рилликов', icon: '💰', time: '8 минут назад' },
+        { name: 'MegaMine', item: 'Кит Воина', icon: '🗡️', time: '12 минут назад' },
+        { name: 'KingCraft', item: 'God', icon: '⚡', time: '15 минут назад' },
+        { name: 'NightWolf', item: 'Tiger', icon: '🐯', time: '18 минут назад' },
+        { name: 'BuilderBoy', item: 'Обычный кейс', icon: '📦', time: '22 минуты назад' },
+    ];
+    function showLivePurchase() {
+        const feed = document.getElementById('liveFeed');
+        const p = purchases[Math.floor(Math.random() * purchases.length)];
+        const toast = document.createElement('div');
+        toast.className = 'live-toast';
+        toast.innerHTML = `
+            <div class="live-avatar">${p.name.charAt(0)}</div>
+            <div class="live-text">
+                <strong>${p.name}</strong> купил ${p.icon} <strong>${p.item}</strong>
+                <div class="time">${p.time}</div>
+            </div>
+        `;
+        feed.appendChild(toast);
+        setTimeout(() => toast.remove(), 6000);
+    }
+    setTimeout(showLivePurchase, 3500);
+    setInterval(showLivePurchase, 9000);
+</script>
+
+</body>
+</html>
